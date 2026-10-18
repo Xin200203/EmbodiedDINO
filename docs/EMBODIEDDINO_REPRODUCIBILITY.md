@@ -2,7 +2,7 @@
 
 ## 1. Choose the experiment before choosing the command
 
-Known blockers are listed in [the source recheck](SOURCE_RECHECK_20261018.md): the transfer-repeat runner lacks its two default SceneNN configs, and the cls198 object-only runners lack their default joint config. Do not start those runners on the assumption that all archived experiment entrypoints are complete.
+The previously missing transfer and cls198 object-only configs have been recovered from both servers. Select the matching complete workspace using [the remote recovery guide](REMOTE_SOURCE_SYNC_20261018.md); older and newer model implementations are preserved separately.
 
 The main MSRI configuration is `configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py`. It enables `dino_enable`, `dino_require`, and `backbone.use_dino`, uses 1024-dimensional features, and disables `dual_output`, `decoder.dual_path`, and `owner_residual`. This is proposal-stream injection, not the historical semantic-only branch.
 
@@ -14,7 +14,7 @@ The matched host configuration is `configs/codex_v5/AutoSeg3D_scannet200_stage1_
 
 Use the upstream installation guide for the CUDA/MMDetection3D/MinkowskiEngine stack. Do not interpret a successful Python syntax check as an import or CUDA compatibility test. Import `oneformer3d` from this repository and check the resolved `__file__` before launching a run if other checkouts are on `PYTHONPATH`.
 
-The inherited package list is not an exhaustive environment lock: core code also imports `torch_scatter`, `networkx` and `easydict`, which are not explicitly listed there. Recover their compatible versions from the training environment before claiming an exact reproduction.
+The inherited package list is not an exhaustive environment lock. Actual versions of `torch_scatter`, `networkx`, `easydict` and the CUDA/MMEngine stack have now been read from both machines and recorded in [the observed environment table](REMOTE_SOURCE_SYNC_20261018.md). Use that evidence when preparing the matching environment.
 
 ```bash
 export PYTHONPATH="$PWD:${PYTHONPATH:-}"

@@ -1,0 +1,27 @@
+[
+  {
+    "source": "remote_sources/host76_object_world/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5cls1_dino_cls198.py",
+    "destination": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5cls1_dino_cls198.py",
+    "sha256": "30dba032018e3c51ccefe717dacdfd4a522bbe6ef41f808b8d08e53855046582"
+  },
+  {
+    "source": "remote_sources/host76_object_world/configs/codex_owf/AutoSeg3D_scannet200_stage1_v5cls1_owf_objectonly_joint.py",
+    "destination": "configs/codex_owf/AutoSeg3D_scannet200_stage1_v5cls1_owf_objectonly_joint.py",
+    "sha256": "c0c5ddb1814d994a36af78cf03843a4c752347c34375e055c3c6975905ec711c"
+  },
+  {
+    "source": "remote_sources/host76_object_world/configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab0_owf_objectonly_fullval.py",
+    "destination": "configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab0_owf_objectonly_fullval.py",
+    "sha256": "1c9528e53f92376f3cdbd7c3ad9ca34c97bf4a141df67c7eafe30f2f01c56e61"
+  },
+  {
+    "source": "remote_sources/host184_transfer/configs/codex_v5/AutoSeg3D_v5ab0_eval_scenenn.py",
+    "destination": "configs/codex_v5/AutoSeg3D_v5ab0_eval_scenenn.py",
+    "sha256": "808112e4510d00ec1f4615f1b846ffcadb7443282de2a4ae1b609cd6c3d4857d"
+  },
+  {
+    "source": "remote_sources/host184_transfer/configs/codex_v5/AutoSeg3D_v5ab1_eval_scenenn.py",
+    "destination": "configs/codex_v5/AutoSeg3D_v5ab1_eval_scenenn.py",
+    "sha256": "e039854f27af85fd57326e3b19ca05a078de68a41a388a818bbe25ed50106b10"
+  }
+]

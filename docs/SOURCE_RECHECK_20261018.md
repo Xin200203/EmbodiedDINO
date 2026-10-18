@@ -1,5 +1,7 @@
 # EmbodiedDINO source recheck, 2026-10-18
 
+**Historical record, resolved in the subsequent remote sync:** campus connectivity was restored and the three missing configs plus their source workspaces have been recovered. See [remote recovery](REMOTE_SOURCE_SYNC_20261018.md) for current status, hashes and runtime config-load checks. The archive corruption below remains a historical fact; its associated source code was recovered directly from the server.
+
 ## Result
 
 The published code/evidence inventory is synchronized with its declared local sources. It is **not yet a complete runnable reproduction of every experiment**. This audit was performed against remote code revision `ca64402ff07428892c758ec220ceea86c28948c8`; the subsequent commit records these findings without changing model or experiment code.

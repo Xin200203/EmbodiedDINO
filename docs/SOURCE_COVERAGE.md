@@ -1,5 +1,7 @@
 # Source coverage audit
 
+The later [remote source recovery](REMOTE_SOURCE_SYNC_20261018.md) extends this local-only inventory with six server/workstation snapshots (644 source files) and resolves the three missing experiment configurations. The 392-entry inventory below remains the original local comparison baseline.
+
 ## Correction to the first sync
 
 The later [2026-10-18 recheck](SOURCE_RECHECK_20261018.md) identified three referenced experiment configs absent even from the local source collection, plus a truncated historical export. The coverage counts below are source-preservation counts and do not certify the completeness of all runnable experiment paths.

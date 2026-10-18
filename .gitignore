@@ -20,3 +20,5 @@ data/*
 .venv/
 *.bak
 *.code-workspace
+remote_sources/**/data/
+remote_sources/**/ckpts/

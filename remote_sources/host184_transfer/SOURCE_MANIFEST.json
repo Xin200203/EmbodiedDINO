@@ -1,0 +1,440 @@
+{
+  "root": "/home/nebula/xxy/AutoSeg3D_v5_transfer_20260706",
+  "files": [
+    {
+      "path": "oneformer3d/__init__.py",
+      "size": 1327,
+      "sha256": "197692b89ae8f48c7365edd571b5d14d373935fb027c3479787a010c970f0b9a"
+    },
+    {
+      "path": "oneformer3d/data_preprocessor.py",
+      "size": 6201,
+      "sha256": "559d6e09060442fd6b697fee25f8180efb41a2e2661cfcc010a9713a0aa8053b"
+    },
+    {
+      "path": "oneformer3d/dino_sparse_fpn.py",
+      "size": 2188,
+      "sha256": "3661e2ba1541e97a49359e6e3b805dd3a44653a73ac6770d40433480e4c2a073"
+    },
+    {
+      "path": "oneformer3d/dq_utils.py",
+      "size": 19864,
+      "sha256": "a2aaefd4dabb847afa5eda14a2932a95fd226703ddf79614697705fa5b384832"
+    },
+    {
+      "path": "oneformer3d/formatting.py",
+      "size": 15077,
+      "sha256": "f05baf5c7f1e9b94398a0cc25008b70cf539e35445ede46261106b3adcb1b510"
+    },
+    {
+      "path": "oneformer3d/geo_aware_pool.py",
+      "size": 2753,
+      "sha256": "40ad61e33847ceaff40619f864af1365d7c86861be6818fdc2c17dcf4248b137"
+    },
+    {
+      "path": "oneformer3d/img_backbone.py",
+      "size": 13605,
+      "sha256": "cfd7bb8ce3cbaf96b475790eeb8f38c4d572c4b970685042ebe2e82de6f7a80d"
+    },
+    {
+      "path": "oneformer3d/instance_criterion.py",
+      "size": 42252,
+      "sha256": "cc326eb615d1f6fc7911a9a80e5e70a68dd3949fa928890597b57604d9605129"
+    },
+    {
+      "path": "oneformer3d/instance_merge.py",
+      "size": 51299,
+      "sha256": "8f51ca3bc123d09436cb25d009b34a680e92c26191c43831ba4a48300e99f504"
+    },
+    {
+      "path": "oneformer3d/instance_seg_eval.py",
+      "size": 8322,
+      "sha256": "766b9aa8551643b8792a370e58f93236ff2aceb5b2dcc9bb0b963869a876c33d"
+    },
+    {
+      "path": "oneformer3d/instance_seg_metric.py",
+      "size": 3874,
+      "sha256": "c15077d1d1cafc75516aabc48dcefde5efc9dc7cce6c5386f13ea9406c1b30a9"
+    },
+    {
+      "path": "oneformer3d/loading.py",
+      "size": 33465,
+      "sha256": "187f88cd67170e024dbe617ded6afb29c0cd49dd5324b3e0311f19dadad0ecaa"
+    },
+    {
+      "path": "oneformer3d/mask_matrix_nms.py",
+      "size": 4672,
+      "sha256": "40c7e2b4d398a19fdce0b1ab5dcdf5caa81ac3e2fd5209207606e84f4af736a2"
+    },
+    {
+      "path": "oneformer3d/merge_criterion.py",
+      "size": 8158,
+      "sha256": "63f2d307dea3a212df80c98945653cfe316bd1723e2458da39fb3db3ece2c1b4"
+    },
+    {
+      "path": "oneformer3d/merge_head.py",
+      "size": 1545,
+      "sha256": "10e0a401b72b38ca259d751407b51a89cbf1f587ae886272430ae6238f3a3ef4"
+    },
+    {
+      "path": "oneformer3d/mink_unet.py",
+      "size": 35416,
+      "sha256": "8ce45a86bad12bd0ec9d4bfdcd35f6e37b49fa282340453893fd29ee47b2e5d9"
+    },
+    {
+      "path": "oneformer3d/mixformer3d.py",
+      "size": 176471,
+      "sha256": "441964bfde10ca83370352c2a937a55026762c31e72c9ce83ee79ddd9a253d9e"
+    },
+    {
+      "path": "oneformer3d/motr_utils.py",
+      "size": 5714,
+      "sha256": "571d5f0802236aa09fb08d091b627d3dd8e21475c0d49fc1e66c217b68bc7172"
+    },
+    {
+      "path": "oneformer3d/multilevel_memory.py",
+      "size": 13118,
+      "sha256": "cd2564cabc793cf85f7799d404f3cf3bdde9a6ae54af00a17509eb2b67b423a1"
+    },
+    {
+      "path": "oneformer3d/oneformer3d.py",
+      "size": 44186,
+      "sha256": "4ff24029da8d723a7a6873665a6faaf7353be3b78ae1395f9c91b0afc2ab1be8"
+    },
+    {
+      "path": "oneformer3d/projection_utils.py",
+      "size": 10338,
+      "sha256": "d8b66656f021ce5264e007947b1740b58490c773b29432ec831295b403380106"
+    },
+    {
+      "path": "oneformer3d/query_decoder.py",
+      "size": 47213,
+      "sha256": "8e9083e39397898ac379da60fe85c5f4a77de1a6368f04fe27a756a1c03b6375"
+    },
+    {
+      "path": "oneformer3d/scannet_dataset.py",
+      "size": 14568,
+      "sha256": "3a30d68d50094fcb8780876beaba2680010c0378a2469495e72c13345a50044c"
+    },
+    {
+      "path": "oneformer3d/semantic_criterion.py",
+      "size": 2156,
+      "sha256": "6cf671b4f7b705ffa26738ec794c9461c460da2cad7133d885e3ca7628aeeb9d"
+    },
+    {
+      "path": "oneformer3d/structures/__init__.py",
+      "size": 478,
+      "sha256": "d18a79d2c9a148e9085ef7d33873716f399850bd9f2062dc827949bf018c033e"
+    },
+    {
+      "path": "oneformer3d/structures/boxes.py",
+      "size": 13994,
+      "sha256": "ea77177dd480426da0deed23b2298ba8d7d41b0f690d2c99d16d1c248e9a1d59"
+    },
+    {
+      "path": "oneformer3d/structures/instances.py",
+      "size": 10837,
+      "sha256": "d838a04029d6362f6ca49998a9e6b926b8a0e4bd2bccb2eafea3b52bc72f18bf"
+    },
+    {
+      "path": "oneformer3d/transforms_3d.py",
+      "size": 24828,
+      "sha256": "f426e224b59042cb10803f5a51c7abcbcde5643f2e3c790ecd4d6bab02472453"
+    },
+    {
+      "path": "oneformer3d/unified_criterion.py",
+      "size": 6718,
+      "sha256": "7b89aef50ac62d8675812e49e5abeeb71f09ba6901edd560964de7a8f42e0f92"
+    },
+    {
+      "path": "oneformer3d/unified_metric.py",
+      "size": 6417,
+      "sha256": "c5b743d007e0bf6bad5839354b97f31dc65adf2c738ab5f152203ac1b3f981de"
+    },
+    {
+      "path": "oneformer3d/util/__init__.py",
+      "size": 322,
+      "sha256": "b19aab3b2c00658c7183072a335fab3983c604a044f33234092a86c90221f5c5"
+    },
+    {
+      "path": "oneformer3d/util/box_ops.py",
+      "size": 3123,
+      "sha256": "09967f38202e5b9ee1ea59badc63c0bba21b476f423d9c77d502e5c0263e6bc0"
+    },
+    {
+      "path": "oneformer3d/util/checkpoint.py",
+      "size": 2051,
+      "sha256": "3bf4dece3f2be7a83adbcda69cb8c2b712221e964f5710f0adf71b561c197586"
+    },
+    {
+      "path": "oneformer3d/util/misc.py",
+      "size": 18694,
+      "sha256": "40fb20c9849c14c81663ce120e1fbf9fa86f4f1548e199a9c8f2d69528c149fb"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py",
+      "size": 513,
+      "sha256": "a61c71a31881a753768a918517ddf167ec2dd7975a6c219b4bb38ef087f549e2"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_seed42.py",
+      "size": 497,
+      "sha256": "89a12359f35434f2d0c39bb780f68bdd434bce91c8c967e4f4749c437869a8fe"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py",
+      "size": 17782,
+      "sha256": "f9c44c19f4681beea1ebfa63eeaa259e3904b666d88117e0de0815f2246ab1f3"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only_seed42.py",
+      "size": 17766,
+      "sha256": "633bb2f9deed8afedfca3881f3b473f10ce839d3fe78acef40dd0c83ac5ed710"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual.py",
+      "size": 17765,
+      "sha256": "b65b30c9e9a8a6c73a9d14b9782d4687c218635fb137b7a291220fb84a27e309"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual_seed42.py",
+      "size": 17756,
+      "sha256": "6523715a3d18e1578df69b6013e19e98fd19bb643fb99fa94b7144297338c31a"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab5_offline_dino_dual_no_detach.py",
+      "size": 17808,
+      "sha256": "1e08d02406117588edaf4314d6c4e47ca32d6d578a7e929f211fef8a08923452"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab6_offline_dino_dual_no_mergefusion.py",
+      "size": 17830,
+      "sha256": "07744190a80350f603933d49424403992cef4458917d6d9da260aa0fd31c08c8"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab7_pv_no_aug_reverse.py",
+      "size": 17805,
+      "sha256": "10b43630aeae66c5b2773cfa6362c2c0832dc0b3465c7632683406436225efbd"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab8_pv_zeroinit_fuse.py",
+      "size": 17798,
+      "sha256": "e9393ae2e099f31414c5f9708c11d40099d1bdec478cd2ed3baa7b24960d283f"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab8r2_pv_zeroinit_freshfuse.py",
+      "size": 17816,
+      "sha256": "f23ac0229877cdb90c37b5ebce13762e2599eb4a7cb637bda3208e123812fa6c"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage2_v5s2_ours_from_v5ab1e96.py",
+      "size": 17971,
+      "sha256": "421e19064870170a136026964292cb8ce8b5ff32af8fa094f47e350187c34867"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_v5ab0_eval_3rscan.py",
+      "size": 20753,
+      "sha256": "87cae3b6a7921c7d83e5cd20af4a84b822f36a6676d5a1ec337cba22bdbd02d0"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_v5ab0_eval_scenenn.py",
+      "size": 20761,
+      "sha256": "808112e4510d00ec1f4615f1b846ffcadb7443282de2a4ae1b609cd6c3d4857d"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_v5ab1_eval_3rscan.py",
+      "size": 20129,
+      "sha256": "2b04455557b7bbbc007cd8289c269bdd2bf0248c9c1720ab02eec9e8ef5cfa6a"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_v5ab1_eval_3rscan_g560.py",
+      "size": 20134,
+      "sha256": "6ebd19e93754df147debb41727ef9ab16cefdd0fbc96239c11c1c2abd32bac9b"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_v5ab1_eval_scenenn.py",
+      "size": 20136,
+      "sha256": "e039854f27af85fd57326e3b19ca05a078de68a41a388a818bbe25ed50106b10"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_v5s2_ours_eval_3rscan.py",
+      "size": 101752,
+      "sha256": "5d462733f481be377e1f46f7a68ebecd95d497f189ea703be27d8713672d573b"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_v5s2_ours_eval_scenenn.py",
+      "size": 101767,
+      "sha256": "ca21e0cc80d9e80a517b2fb7174b2f93e2982da9282bfa5d8d075200d1364596"
+    },
+    {
+      "path": "configs/codex_v5/validrate_v5ab1_eval_3rscan_20260727.py",
+      "size": 20525,
+      "sha256": "894df697bafa9fcec37618276e118abbbd7aad923666f401c21dbb374183d13c"
+    },
+    {
+      "path": "configs/codex_v5/validrate_v5ab1_eval_scannet200_20260727.py",
+      "size": 18030,
+      "sha256": "442e62879c60816c81463fa4f4b748fd1fbc4953b55e893d0b205608eac5c93d"
+    },
+    {
+      "path": "configs/codex_v5/validrate_v5ab1_eval_scenenn_20260727.py",
+      "size": 20533,
+      "sha256": "8e83669dfea79a8cd0702c886558976297b8db66b393e5602a4710ded923be55"
+    },
+    {
+      "path": "configs/scannet/AutoSeg3D_scannet_stage1.py",
+      "size": 10085,
+      "sha256": "09ebb113c345b33291be748dec0f2718fc92a3f3a5e07b438d0c73df358537e0"
+    },
+    {
+      "path": "configs/scannet/AutoSeg3D_scannet_stage2.py",
+      "size": 10812,
+      "sha256": "3ee3a2a32c320c1ebf002d43e1435c4746500321a72492b918d7e2e078ee0ba3"
+    },
+    {
+      "path": "configs/scannet/AutoSeg3D_sv_scannet.py",
+      "size": 7849,
+      "sha256": "1930110ed12d0546d97d66261d3617d413e3af77d9f6c00248cbbede13f80dc8"
+    },
+    {
+      "path": "configs/scannet200/AutoSeg3D_scannet200_stage1.py",
+      "size": 15424,
+      "sha256": "3d83a8f2e50412ec4165f6ec3c5e7384a51b22931508f2e3753fa1a1851fd4c4"
+    },
+    {
+      "path": "configs/scannet200/AutoSeg3D_scannet200_stage2.py",
+      "size": 15364,
+      "sha256": "d23c36b10a54c34eb1f57e54d62bb67e881530400e57b8af9fc27368cf28e4e4"
+    },
+    {
+      "path": "configs/scannet200/AutoSeg3D_sv_scannet200.py",
+      "size": 11685,
+      "sha256": "030c51264126e7769f36112e29938e3e1da3a4a8e91bfa256c03fcc957128ccf"
+    },
+    {
+      "path": "tools/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/create_data.py",
+      "size": 4031,
+      "sha256": "e5cd66839cf42153538bfc509080e81a20be6dc09e0a26d7737222d51a322f9e"
+    },
+    {
+      "path": "tools/dist_test.sh",
+      "size": 479,
+      "sha256": "bb00db6ed07c128c244ee9b0c8883b04d9cb4408e0b8b90580ad5b49b714a3e5"
+    },
+    {
+      "path": "tools/dist_train.sh",
+      "size": 442,
+      "sha256": "398535e01eb42257388f3e9dc559fb03f3c5476e23ee256ee468465a0a1489a7"
+    },
+    {
+      "path": "tools/extract_dinov2_features.py",
+      "size": 14464,
+      "sha256": "a1fe402e80f6fd68efb636a18c7cdf05cb2d346c0a244c63cae0ca36cc09081e"
+    },
+    {
+      "path": "tools/fix_spconv_checkpoint.py",
+      "size": 2868,
+      "sha256": "827db2fbf7af0a459a7da853f392a21df0406d8314fafdff80882de73aaaa2ab"
+    },
+    {
+      "path": "tools/indoor_converter.py",
+      "size": 5041,
+      "sha256": "ef952aae56245c77cd85656d5d78aba67180c5e30d8f83f2006501ee1810cb56"
+    },
+    {
+      "path": "tools/run_transfer_eval_repeats.sh",
+      "size": 1642,
+      "sha256": "f4858207015ac97847003fe941d5ff6cf514c1b37838aa7569dfc52857aab3e0"
+    },
+    {
+      "path": "tools/scannet_data_utils.py",
+      "size": 33569,
+      "sha256": "2e9da151305c44b6c9f95799d97eefc7017efbfaa11fa03fd8584c88c4905613"
+    },
+    {
+      "path": "tools/scenenn_data_utils.py",
+      "size": 12037,
+      "sha256": "2952e0e59e015da3550217f1869537120323eebe2d355bcd6decf0efab66cd8a"
+    },
+    {
+      "path": "tools/test.py",
+      "size": 5686,
+      "sha256": "1b3539e8a9a3fcf283f71ccd92f8e0af4fa8893e37bc16543a513bc50905cc9f"
+    },
+    {
+      "path": "tools/train.py",
+      "size": 5564,
+      "sha256": "679689a36ce3ba73c0e24e4002e4c751b4db12e5b7dcde2728ab663523d31e73"
+    },
+    {
+      "path": "tools/trscan_data_utils.py",
+      "size": 12028,
+      "sha256": "65ec2c9f548f7c5b1d3d1a2d45a528d2d160a9aa0d22553085068c2f41ab1eac"
+    },
+    {
+      "path": "tools/update_infos_to_v2.py",
+      "size": 43085,
+      "sha256": "de7ec573f91f7b840e5131c7da835058d54a31c638ea398a74c9232955b68b69"
+    },
+    {
+      "path": "scripts/codex_tools/build_mv_dino_manifest.py",
+      "size": 4684,
+      "sha256": "f9f262eefba72de8d3c3d9f8a5fde2cc87346e8f12ee0864f8bacb82671e162b"
+    },
+    {
+      "path": "scripts/codex_tools/compact_dino_cache.py",
+      "size": 3680,
+      "sha256": "123579c2540eba501964d3fcdbfb63967cf99c81afdff3307f5540006e02ad36"
+    },
+    {
+      "path": "scripts/codex_tools/dump_qualitative.py",
+      "size": 2710,
+      "sha256": "25d9ca55a1ec7ab7afdaae86601e23c1d81e5f12cf97aa2b73f861482e6e884e"
+    },
+    {
+      "path": "scripts/codex_tools/extract_mv_dino_cache.py",
+      "size": 7093,
+      "sha256": "45fcada6f2adcc5d2ad02c29ed7df95f758f110b8257a80c5389a0012239076d"
+    },
+    {
+      "path": "scripts/codex_tools/render_qualitative.py",
+      "size": 2779,
+      "sha256": "82c3727ba836db320a6fa3ba26852d5bce67d3faee84f27852dcce2851391ad2"
+    },
+    {
+      "path": "scripts/codex_tools/smoke_mv_dino_projection.py",
+      "size": 9858,
+      "sha256": "a97e25bc96f5eb3e7885f0a45958cb8429b79a2831e0e70af768658b744c9feb"
+    },
+    {
+      "path": "scripts/codex_tools/smoke_v5ab4_one_batch.py",
+      "size": 3772,
+      "sha256": "9f80939696d9a418e5a009d913294200a2905f74590ab99bb4fab0f1d91125cd"
+    },
+    {
+      "path": "scripts/codex_tools/watch_cache_then_launch_stage1.sh",
+      "size": 3173,
+      "sha256": "a130f2f364f5b7fa7a60ab1abcc15e5467a203068443e897c3170ae29d47c410"
+    },
+    {
+      "path": "scripts/codex_tools/wave0_run_job_20260705.sh",
+      "size": 1328,
+      "sha256": "c991535591dfadee44abd745f49a7f23d1cd1728cdea0fc8fd8752cc9df33dfe"
+    },
+    {
+      "path": "requirements.txt",
+      "size": 288,
+      "sha256": "0dd2c853ceb19ba7984442e66ab656dc0f0696efc90d7d2e2e6f4a28e5650bb5"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1066,
+      "sha256": "f27bc7475dd864ba4783b3e0b891675638efdc83fbe7eb64ecadd2c963946d1d"
+    }
+  ]
+}

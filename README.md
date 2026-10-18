@@ -4,6 +4,25 @@
 
 This is an EmbodiedDINO research-code snapshot built on AutoSeg3D/EmbodiedSAM. It does not imply conference acceptance or a fully packaged, one-command reproduction release.
 
+## 服务器补全已完成
+
+2026-10-18 已连接 76 训练服务器与 184 工作站，补回上次缺失的 SceneNN host/ours 评测配置、cls198 object-only 配置及配套继承配置。另收集多种子、类别敏感、CLIP/DINOv3 消融、耗时统计、定性分析及历史 granularity/joint 实验代码。
+
+完整保留 **6 个远端源码目录、644 个文件**，每个快照带 `SOURCE_MANIFEST.json`。4 个主要工作区的模型模块在原服务器环境导入成功，**122 个配置实际加载通过**；6 个快照的本地源码哈希、Python/Shell 语法和配置继承路径已验证。没有重新运行训练或 benchmark。
+
+请先阅读 [远端补全与快照选择指南](docs/REMOTE_SOURCE_SYNC_20261018.md)。旧审计中的三项配置缺失已经解决；历史压缩包的损坏记录仍保留，但相关消融源码已直接从服务器重新收集。范围是下表列出的项目源码目录，不代表复制了机器上的所有实验、数据或权重。
+
+| 快照 | 文件数 | 用途 |
+| --- | ---: | --- |
+| [`host76_object_world`](remote_sources/host76_object_world/) | 107 | 与根目录模型一致的 OCWE、表征诊断和 object-only 分支 |
+| [`host184_object_world`](remote_sources/host184_object_world/) | 101 | 工作站 OCWE / cls198 joint 实验版本 |
+| [`host76_stage1`](remote_sources/host76_stage1/) | 98 | stage-1 主结果、多种子、198 类、特征来源及耗时实验 |
+| [`host184_transfer`](remote_sources/host184_transfer/) | 87 | SceneNN、3RScan 迁移评测与投影 valid-rate 诊断 |
+| [`host76_granlearn`](remote_sources/host76_granlearn/) | 124 | 历史 granularity 消融源码 |
+| [`host76_phaseD`](remote_sources/host76_phaseD/) | 127 | 历史 Phase D joint 消融源码 |
+
+GitHub 源码包：[下载 main ZIP](https://github.com/Xin200203/EmbodiedDINO/archive/refs/heads/main.zip)。
+
 ## 同步覆盖范围
 
 首次提交 `d4566ed` 仅包含主研究快照及少量证据，**不是整个研究工作区的全部代码**。本次补充同步覆盖以下本地来源，并对每个来源文件与发布文件进行 SHA-256 比对：
@@ -17,9 +36,9 @@ This is an EmbodiedDINO research-code snapshot built on AutoSeg3D/EmbodiedSAM. I
 
 共 **392 个来源条目**，具体原路径、发布路径和哈希见 [覆盖清单](evidence/source_coverage.json)，范围说明见 [同步审计](docs/SOURCE_COVERAGE.md)。条目数包含文档、元数据和保留的重复版本，不等于独立可执行程序数。
 
-这证明已覆盖清单中列出的本地源码；尚未证明训练服务器上没有额外修改。核对时服务器 SSH 连接被重置。原始数据、权重、二进制特征缓存、机器专用 VPN/SSH 管理脚本和第三方完整依赖仓库不在此同步范围。
+这份 392 条清单记录初次本地补全范围；后续服务器源码覆盖单独记录在上方 6 个快照及其 manifest 中。原始数据、权重、二进制特征缓存、机器专用 VPN/SSH 管理脚本和第三方完整依赖仓库不在此同步范围。
 
-**2026-10-18 再次审计：仍有已知运行入口缺项。** `run_transfer_eval_repeats.sh` 引用的两个 SceneNN 配置，以及 cls198 object-only 运行脚本引用的一个配置，在原本地工作区和本仓库中均不存在。历史 `final_export_20260704.tgz` 也已截断。具体路径、影响和验证结果见 [二次审计记录](docs/SOURCE_RECHECK_20261018.md)。因此“本地源码已同步”不等于“所有实验均能直接复现”。
+连接恢复前的 [二次审计记录](docs/SOURCE_RECHECK_20261018.md) 保留当时的缺项证据。配置缺失和远程不可访问状态已由本次服务器补全解决；历史记录不再代表当前仓库状态。原始数据、权重及路径配置仍须自行准备。
 
 ## 从哪里开始
 
@@ -73,7 +92,7 @@ OCWE 冻结实验不是持久物体记忆，也不是主表全部增益的来源
 
 ## 环境、数据与权重
 
-参考上游[安装说明](docs/installation.md)和[数据准备](docs/dataset_preparation.md)。其历史环境为 Python 3.8、PyTorch 1.13.1、CUDA 11.6、MMEngine 0.10.3、MMDetection3D 1.4.0、MMCV 2.0.0、MMDetection 3.2.0、MinkowskiEngine 0.5.4。本次未在本地 Mac 上验证 GPU 训练环境。
+参考[数据准备](docs/dataset_preparation.md)与[实测服务器环境](docs/REMOTE_SOURCE_SYNC_20261018.md)。原[安装说明](docs/installation.md)属于历史上游记录，MMEngine/MMCV/CUDA 版本与当前服务器不完全相同。76 使用 PyTorch 1.13.1+cu117，184 使用 1.13.1+cu116；两端均为 MMEngine 0.10.7、MMCV 2.1.0、MMDetection3D 1.4.0。完整包版本已归档。本次验证了原服务器模块导入与配置加载，没有在 Mac 上安装 CUDA 环境。
 
 运行前需要准备：
 
@@ -108,7 +127,7 @@ python tools/test.py \
   --work-dir work_dirs/embodieddino_eval
 ```
 
-Matched host 使用 `configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py`。复现须同时匹配数据划分、初始化、seed、训练预算、checkpoint selection 和 evaluator。
+Matched host 使用 `configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py`。复现须同时匹配数据划分、初始化、seed、训练预算、checkpoint selection 和 evaluator。复现 stage-1 历史主表应选择 `remote_sources/host76_stage1/` 完整快照；复现迁移实验应选择 `remote_sources/host184_transfer/`，不要只将配置复制到另一版本的模型旁边。
 
 OCWE 完整验证集入口为 `configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py`，继承 subset50、sub10 和 LGQC 配置。不要单独复制一个配置。`OWF_*` 环境变量控制模式、特征组成、路径等设置；冻结 DINO-only 设置请对照冻结脚本，不能从通用默认值推断。
 
@@ -116,7 +135,7 @@ OCWE 完整验证集入口为 `configs/codex_owf/AutoSeg3D_scannet200_stage1_v5a
 
 更详细的缓存格式、OCWE 开关、运行顺序与故障定位见 [复现指南](docs/EMBODIEDDINO_REPRODUCIBILITY.md)。
 
-主实现同步自本地 `object_world_encoder_20260719` 研究目录，含后续实验选项；它与冻结 OCWE 两个核心文件不完全相同。冻结副本单独保存，不能混用后声称复现了冻结结果。
+根目录主实现最初同步自本地 `object_world_encoder_20260719`，现已确认其模型与 76 当前 object-world 工作区一致。其他服务器实验版本分别保留在 `remote_sources/`，它们可能具有不同的 `mink_unet.py`、`mixformer3d.py`、`instance_merge.py` 或 `loading.py`。冻结 OCWE 两个核心文件仍单独保存，不能混用后声称复现了冻结结果。
 
 冻结 `mink_unet.py` SHA-256：
 `64d993c38977815b62b974678b3fdb428f91d3b81b0615e9b8765bc3b15aa1b6`

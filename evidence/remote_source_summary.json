@@ -1,0 +1,44 @@
+[
+  {
+    "snapshot": "host184_object_world",
+    "root": "/home/nebula/xxy/AutoSeg3D_v5_object_world_20260719",
+    "files": 101,
+    "local_bases_checked": 8,
+    "missing_bases": []
+  },
+  {
+    "snapshot": "host184_transfer",
+    "root": "/home/nebula/xxy/AutoSeg3D_v5_transfer_20260706",
+    "files": 87,
+    "local_bases_checked": 2,
+    "missing_bases": []
+  },
+  {
+    "snapshot": "host76_granlearn",
+    "root": "/datadisk1/xxy/AutoSeg3D_v5_granlearn_20260627",
+    "files": 124,
+    "local_bases_checked": 13,
+    "missing_bases": []
+  },
+  {
+    "snapshot": "host76_object_world",
+    "root": "/datadisk3/xxy/AutoSeg3D_v5_object_world_20260719",
+    "files": 107,
+    "local_bases_checked": 8,
+    "missing_bases": []
+  },
+  {
+    "snapshot": "host76_phaseD",
+    "root": "/datadisk1/xxy/AutoSeg3D_v5_phaseD_joint_20260704",
+    "files": 127,
+    "local_bases_checked": 16,
+    "missing_bases": []
+  },
+  {
+    "snapshot": "host76_stage1",
+    "root": "/datadisk1/xxy/AutoSeg3D_v5_stage1_clean_20260604",
+    "files": 98,
+    "local_bases_checked": 4,
+    "missing_bases": []
+  }
+]

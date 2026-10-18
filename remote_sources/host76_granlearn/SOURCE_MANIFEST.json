@@ -1,0 +1,625 @@
+{
+  "root": "/datadisk1/xxy/AutoSeg3D_v5_granlearn_20260627",
+  "files": [
+    {
+      "path": "oneformer3d/__init__.py",
+      "size": 1327,
+      "sha256": "197692b89ae8f48c7365edd571b5d14d373935fb027c3479787a010c970f0b9a"
+    },
+    {
+      "path": "oneformer3d/data_preprocessor.py",
+      "size": 6201,
+      "sha256": "559d6e09060442fd6b697fee25f8180efb41a2e2661cfcc010a9713a0aa8053b"
+    },
+    {
+      "path": "oneformer3d/dino_sparse_fpn.py",
+      "size": 2188,
+      "sha256": "3661e2ba1541e97a49359e6e3b805dd3a44653a73ac6770d40433480e4c2a073"
+    },
+    {
+      "path": "oneformer3d/dq_utils.py",
+      "size": 19864,
+      "sha256": "a2aaefd4dabb847afa5eda14a2932a95fd226703ddf79614697705fa5b384832"
+    },
+    {
+      "path": "oneformer3d/formatting.py",
+      "size": 15077,
+      "sha256": "f05baf5c7f1e9b94398a0cc25008b70cf539e35445ede46261106b3adcb1b510"
+    },
+    {
+      "path": "oneformer3d/gci.py",
+      "size": 12004,
+      "sha256": "48d15ac29df310c6831479b0111d48b8cec303ff0bc5bd5540f6fd9329711871"
+    },
+    {
+      "path": "oneformer3d/geo_aware_pool.py",
+      "size": 2753,
+      "sha256": "40ad61e33847ceaff40619f864af1365d7c86861be6818fdc2c17dcf4248b137"
+    },
+    {
+      "path": "oneformer3d/img_backbone.py",
+      "size": 13605,
+      "sha256": "cfd7bb8ce3cbaf96b475790eeb8f38c4d572c4b970685042ebe2e82de6f7a80d"
+    },
+    {
+      "path": "oneformer3d/instance_criterion.py",
+      "size": 42252,
+      "sha256": "cc326eb615d1f6fc7911a9a80e5e70a68dd3949fa928890597b57604d9605129"
+    },
+    {
+      "path": "oneformer3d/instance_merge.py",
+      "size": 50233,
+      "sha256": "174535051d78d62606ac859cfa6ae0cdb025abb635387f29ce6156c1c7efee7a"
+    },
+    {
+      "path": "oneformer3d/instance_seg_eval.py",
+      "size": 8322,
+      "sha256": "766b9aa8551643b8792a370e58f93236ff2aceb5b2dcc9bb0b963869a876c33d"
+    },
+    {
+      "path": "oneformer3d/instance_seg_metric.py",
+      "size": 3874,
+      "sha256": "c15077d1d1cafc75516aabc48dcefde5efc9dc7cce6c5386f13ea9406c1b30a9"
+    },
+    {
+      "path": "oneformer3d/loading.py",
+      "size": 32098,
+      "sha256": "6a91b3a8e740e3de5b6d96b28c621f6c97d8f68c9e1b8c1f61a153bf3f44f58d"
+    },
+    {
+      "path": "oneformer3d/mask_matrix_nms.py",
+      "size": 4672,
+      "sha256": "40c7e2b4d398a19fdce0b1ab5dcdf5caa81ac3e2fd5209207606e84f4af736a2"
+    },
+    {
+      "path": "oneformer3d/merge_criterion.py",
+      "size": 8158,
+      "sha256": "63f2d307dea3a212df80c98945653cfe316bd1723e2458da39fb3db3ece2c1b4"
+    },
+    {
+      "path": "oneformer3d/merge_head.py",
+      "size": 1545,
+      "sha256": "10e0a401b72b38ca259d751407b51a89cbf1f587ae886272430ae6238f3a3ef4"
+    },
+    {
+      "path": "oneformer3d/mink_unet.py",
+      "size": 35044,
+      "sha256": "438fd0fc3a3612400ffc42cc84b777d53e30263f25db725332eab4b53ce41085"
+    },
+    {
+      "path": "oneformer3d/mixformer3d.py",
+      "size": 221289,
+      "sha256": "aa69c3d5a9c021e07c1b4151d49544c141e4ef20437c5b2918026958a1ef078a"
+    },
+    {
+      "path": "oneformer3d/motr_utils.py",
+      "size": 5714,
+      "sha256": "571d5f0802236aa09fb08d091b627d3dd8e21475c0d49fc1e66c217b68bc7172"
+    },
+    {
+      "path": "oneformer3d/multilevel_memory.py",
+      "size": 13118,
+      "sha256": "cd2564cabc793cf85f7799d404f3cf3bdde9a6ae54af00a17509eb2b67b423a1"
+    },
+    {
+      "path": "oneformer3d/oneformer3d.py",
+      "size": 44186,
+      "sha256": "4ff24029da8d723a7a6873665a6faaf7353be3b78ae1395f9c91b0afc2ab1be8"
+    },
+    {
+      "path": "oneformer3d/projection_utils.py",
+      "size": 10338,
+      "sha256": "d8b66656f021ce5264e007947b1740b58490c773b29432ec831295b403380106"
+    },
+    {
+      "path": "oneformer3d/query_decoder.py",
+      "size": 47213,
+      "sha256": "8e9083e39397898ac379da60fe85c5f4a77de1a6368f04fe27a756a1c03b6375"
+    },
+    {
+      "path": "oneformer3d/scannet_dataset.py",
+      "size": 14568,
+      "sha256": "3a30d68d50094fcb8780876beaba2680010c0378a2469495e72c13345a50044c"
+    },
+    {
+      "path": "oneformer3d/semantic_criterion.py",
+      "size": 2156,
+      "sha256": "6cf671b4f7b705ffa26738ec794c9461c460da2cad7133d885e3ca7628aeeb9d"
+    },
+    {
+      "path": "oneformer3d/structures/__init__.py",
+      "size": 478,
+      "sha256": "d18a79d2c9a148e9085ef7d33873716f399850bd9f2062dc827949bf018c033e"
+    },
+    {
+      "path": "oneformer3d/structures/boxes.py",
+      "size": 13994,
+      "sha256": "ea77177dd480426da0deed23b2298ba8d7d41b0f690d2c99d16d1c248e9a1d59"
+    },
+    {
+      "path": "oneformer3d/structures/instances.py",
+      "size": 10837,
+      "sha256": "d838a04029d6362f6ca49998a9e6b926b8a0e4bd2bccb2eafea3b52bc72f18bf"
+    },
+    {
+      "path": "oneformer3d/transforms_3d.py",
+      "size": 24828,
+      "sha256": "f426e224b59042cb10803f5a51c7abcbcde5643f2e3c790ecd4d6bab02472453"
+    },
+    {
+      "path": "oneformer3d/unified_criterion.py",
+      "size": 6718,
+      "sha256": "7b89aef50ac62d8675812e49e5abeeb71f09ba6901edd560964de7a8f42e0f92"
+    },
+    {
+      "path": "oneformer3d/unified_metric.py",
+      "size": 6417,
+      "sha256": "c5b743d007e0bf6bad5839354b97f31dc65adf2c738ab5f152203ac1b3f981de"
+    },
+    {
+      "path": "oneformer3d/util/__init__.py",
+      "size": 322,
+      "sha256": "b19aab3b2c00658c7183072a335fab3983c604a044f33234092a86c90221f5c5"
+    },
+    {
+      "path": "oneformer3d/util/box_ops.py",
+      "size": 3123,
+      "sha256": "09967f38202e5b9ee1ea59badc63c0bba21b476f423d9c77d502e5c0263e6bc0"
+    },
+    {
+      "path": "oneformer3d/util/checkpoint.py",
+      "size": 2051,
+      "sha256": "3bf4dece3f2be7a83adbcda69cb8c2b712221e964f5710f0adf71b561c197586"
+    },
+    {
+      "path": "oneformer3d/util/misc.py",
+      "size": 18694,
+      "sha256": "40fb20c9849c14c81663ce120e1fbf9fa86f4f1548e199a9c8f2d69528c149fb"
+    },
+    {
+      "path": "configs/codex_dgi/AutoSeg3D_scannet200_stage1_v5ab1_dgi_infer.py",
+      "size": 18288,
+      "sha256": "60aaebfb333c34b185c5f48220b4c88da4248db73c469b6485bf9505b5b3673d"
+    },
+    {
+      "path": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_feature_residual_sub10.py",
+      "size": 19581,
+      "sha256": "3adcdbf1a1435234f92c7b35802f50d623c671aed22037550cf366cb44a93e35"
+    },
+    {
+      "path": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_feature_residual_subset50.py",
+      "size": 19587,
+      "sha256": "b008dc66ae23da03c393b7d583ac04d5a9bf326f49aca4c8a4ca77ac73a7fdab"
+    },
+    {
+      "path": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_fullval.py",
+      "size": 18288,
+      "sha256": "705e5af347eeb0e0c4d72c84402b66a7efb68dffe418d1e3395ff1cf1329dbb0"
+    },
+    {
+      "path": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_subset50.py",
+      "size": 18553,
+      "sha256": "a5e17f9755b2507faab52bb8a3e3955162a81feffe25e5aaebc40e548668e725"
+    },
+    {
+      "path": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_cc_fullval.py",
+      "size": 18936,
+      "sha256": "591c477d65e9e04a926769d0f8932a2bec02f8708dc73eaa646d5112a0355e35"
+    },
+    {
+      "path": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_cc_subset50.py",
+      "size": 19061,
+      "sha256": "550cf4b5052dc1565f7a9a7c8d5d7fa0499cd66c5a39eb9b5e768913cc6dc606"
+    },
+    {
+      "path": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_fullval.py",
+      "size": 18688,
+      "sha256": "bfb6c445cdb19f748943678f47136162b424c0e077c90d203df8c6ad93008f55"
+    },
+    {
+      "path": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_subset50.py",
+      "size": 18813,
+      "sha256": "4616c4fd3d81f800eab3ba56da01f72be84c6504eec31b88b56dec46892faaba"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_control_sub10.py",
+      "size": 18876,
+      "sha256": "30012ae138e4aeccff0cc8446df6423a02adfb4c589323b1bf1cd1a19f7f1f45"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_control_subset50.py",
+      "size": 18879,
+      "sha256": "7ea99cdc845a8e25648714ad25b88bae9fb627ae87439136ab025857f3e34d06"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_dino_only_subset50.py",
+      "size": 18972,
+      "sha256": "4977e0bd09ded90861f857044b4dc6df843a8eaef5f6091ab8a6e792bd4b3ac0"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_dino_only_subset50_sub10smoke.py",
+      "size": 18980,
+      "sha256": "b4764ad09c9a73f77fd091ebb276c41f4df30627aaa8c506c55bee6efdc83298"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_geometry_only_subset50.py",
+      "size": 18957,
+      "sha256": "e59c4dc1b609640a11e3b0ac6fbf902d9049cda934a2f186f894f84a224a1ecd"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_geometry_only_subset50_sub10smoke.py",
+      "size": 18965,
+      "sha256": "c1151a0dd13d49191ada66e3ce443b8be8fbd7dfde2f60d23162d3b78653a239"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_oracle_gt_candidates_sub10_debug.py",
+      "size": 18973,
+      "sha256": "2c4e334996bc868c62afe10ea0ed3e369e6996b6f4f6bd6f49dfcb3579d18d6a"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_oracle_gt_candidates_subset50.py",
+      "size": 18970,
+      "sha256": "41300299b1794bfc93574b46f19ca29116eb89ebdc3c9425be2c82ca377c2c66"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_oracle_gt_candidates_subset50_sub10smoke.py",
+      "size": 18978,
+      "sha256": "4a1e50cc89ae39c7d281ca696cd9dfad7c994b793e8b97a87a887164842d20ac"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_random_matched_subset50.py",
+      "size": 18959,
+      "sha256": "26782ca8c55475e89a578e02c5545f4f3bba1c6e28f0ed6548fd1e9cba7293a5"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseA_random_matched_subset50_sub10smoke.py",
+      "size": 18967,
+      "sha256": "04fcd6acb2e2232fc8b9f74c2ed35956a6ff5bf70a2c8fbebc2ba7d8e4ba3537"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_control_subset50_ft4ep.py",
+      "size": 19032,
+      "sha256": "da37085eaea4f2b9ac2bda98f368fa3201bad16ac33cc6415b6f5604b7a600ef"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_eval_fullval_base_epoch96.py",
+      "size": 567,
+      "sha256": "2141b6312e833a12cd156588d94c3d3caec57974ac9d2a1cc5e64dd8f790400d"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_eval_fullval_control_ft4ep.py",
+      "size": 586,
+      "sha256": "be4168dcc6c1f2d770f46cc78f10ac585cecdeb8e3b62eec89522844ea48b5aa"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_eval_fullval_lam002_dino_weighted.py",
+      "size": 619,
+      "sha256": "dc94a2f2e28c26d6476a94cde4273ca1fed006deee79975a2914e9f83482bd7b"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_eval_fullval_lam005_dino_weighted.py",
+      "size": 650,
+      "sha256": "3d9221cd31bc79fb99804ec4318a9ab28bfb138ad492e903a00a9318f7fe656e"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_eval_fullval_lam010_dino.py",
+      "size": 597,
+      "sha256": "02bd0c9a0ced38adc1fec3cac34752467b0e187b2cd2efc835897b8b4106ea13"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_eval_fullval_lam010_dino_weighted.py",
+      "size": 648,
+      "sha256": "857429db15a9438337b1971e34a95a713accc2352620e19ece5ebeb5aa51842d"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_eval_fullval_lam010_no_dino.py",
+      "size": 627,
+      "sha256": "c51c2efba2c36e8f81755147ff107f10ecc8e0afc608636acec9fb49e7cccc79"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_pairloss_sub10_smoke_lam005.py",
+      "size": 19414,
+      "sha256": "918d0e7d4f7541bc3042dd9b1e57713f32b0aa8368d9d9db0a77e8e594fe16a1"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_pairloss_subset50_ft4ep_lam002_dino_weighted.py",
+      "size": 19281,
+      "sha256": "f84b9898c736d0fd60017dec0d908daa00c60934f6bfc79b731868f08eeba049"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_pairloss_subset50_ft4ep_lam005_dino.py",
+      "size": 19198,
+      "sha256": "31eb3f2fb302a37cb844d4c11523828bb02c6b5c6b85919524bbdf39759bf251"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_pairloss_subset50_ft4ep_lam005_dino_weighted.py",
+      "size": 19281,
+      "sha256": "267d49f6e36250ee9d2060bb71059e56ce473c5313ca5f431446844a13720d41"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_pairloss_subset50_ft4ep_lam005_no_dino.py",
+      "size": 19202,
+      "sha256": "0bb634287314885d9c8d6d238f1efb193b92ce425922c872a49096397dd9fd45"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_pairloss_subset50_ft4ep_lam010_dino.py",
+      "size": 19198,
+      "sha256": "f6dff3b0658ffd85c2d6b60d60f1221b86485048bfa3ca3fb981f2ec8e67b5fa"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_pairloss_subset50_ft4ep_lam010_dino_weighted.py",
+      "size": 19281,
+      "sha256": "d46bb9335236f77582f25924a580b607ed21520b8b099fc65320aa3a9d9be158"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseB_pairloss_subset50_ft4ep_lam010_no_dino.py",
+      "size": 19245,
+      "sha256": "1b840c5f4d986a3d6d6c8f31c459e8c13a1b54190b739088a2afd08076a5b8be"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseC_fulltrain_ft4ep_control.py",
+      "size": 972,
+      "sha256": "9a93c658087b1a8e2088cb69bc7611808d6cf357fed6b10d4bec9d56aec80ead"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseC_fulltrain_ft4ep_lam005_dino_weighted.py",
+      "size": 1156,
+      "sha256": "28e894275f2a64d7f80ff84f8d469d1cc16b110cbe00d614474092c3153444ef"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseC_fulltrain_ft4ep_lam010_dino.py",
+      "size": 1155,
+      "sha256": "72d7ee80edaf3d360ee87dfa74ad7afaa4d0090177c8ed51597ece43041850f7"
+    },
+    {
+      "path": "configs/codex_granlearn/phaseC_fulltrain_ft4ep_lam010_no_dino.py",
+      "size": 1129,
+      "sha256": "4a9a9ef7b14cbe2c8889462a78d6f392b2c052f85f93668dcae41a8f6af4596e"
+    },
+    {
+      "path": "configs/codex_lgqc/AutoSeg3D_scannet200_stage1_v5ab1_lgqc_adapter_full.py",
+      "size": 19630,
+      "sha256": "263abb0d975f557cd259f8e6a328ad17f976e661d109b9ea52527cb894704585"
+    },
+    {
+      "path": "configs/codex_lgqc/AutoSeg3D_scannet200_stage1_v5ab1_lgqc_adapter_sub10_smoke.py",
+      "size": 19868,
+      "sha256": "a10d491188eb1d742266f8f65a13a999260bdb4c6bcf26c243e771546f064253"
+    },
+    {
+      "path": "configs/codex_lgqc/AutoSeg3D_scannet200_stage1_v5ab1_lgqc_adapter_subset50.py",
+      "size": 19866,
+      "sha256": "6b6221bdeed2eb8ebbb437ff21f928729465fc9e9b466996cf73458d9864c962"
+    },
+    {
+      "path": "configs/codex_seedcalib/v5ab1_control_fullval.py",
+      "size": 18868,
+      "sha256": "c9580af7a2dade74262bb7b45ae06e36ba2ebc9a60ad978310f751bc8ea36a2b"
+    },
+    {
+      "path": "configs/codex_seedcalib/v5ab1_control_sub10.py",
+      "size": 18872,
+      "sha256": "9a0eb968bd928d8161d6fcfce789b24cfd8bd7978784b128f5dab865bffbde77"
+    },
+    {
+      "path": "configs/codex_seedcalib/v5ab1_control_subset50.py",
+      "size": 18878,
+      "sha256": "5a05f25443b54fe3772823c5745e3dd0c158b775316bd0722c72c6b9d3bda0ec"
+    },
+    {
+      "path": "configs/codex_seedcalib/v5ab1_seedcalib_fullval_thr070_d05_keep085.py",
+      "size": 18887,
+      "sha256": "75b71b31aab4e1199c9c4c4b5df72d686283165685be460d3969494af92b196e"
+    },
+    {
+      "path": "configs/codex_seedcalib/v5ab1_seedcalib_sub10_thr070_d05_keep085.py",
+      "size": 18891,
+      "sha256": "75ced949c3b63c3cfdeddeac4b60a2053fb14d2643d4763fab234c74ffaaf020"
+    },
+    {
+      "path": "configs/codex_seedcalib/v5ab1_seedcalib_sub10_thr075_d05_keep090.py",
+      "size": 18891,
+      "sha256": "6cc51ad22787d5192311937c5f0d1ae0d877f58a62feca0f0f99f062f9ab817d"
+    },
+    {
+      "path": "configs/codex_seedcalib/v5ab1_seedcalib_subset50_thr070_d05_keep085.py",
+      "size": 18897,
+      "sha256": "d912045d48a60a9ba835387db234d7865578f63379cf77db631784e51c973df3"
+    },
+    {
+      "path": "configs/codex_seedcalib/v5ab1_seedcalib_subset50_thr075_d05_keep090.py",
+      "size": 18897,
+      "sha256": "4ae0a445ba2ff881635419bf2815984da3ab0e4cf98a24d5b8cef650af137661"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py",
+      "size": 513,
+      "sha256": "a61c71a31881a753768a918517ddf167ec2dd7975a6c219b4bb38ef087f549e2"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_seed42.py",
+      "size": 497,
+      "sha256": "89a12359f35434f2d0c39bb780f68bdd434bce91c8c967e4f4749c437869a8fe"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py",
+      "size": 17782,
+      "sha256": "f9c44c19f4681beea1ebfa63eeaa259e3904b666d88117e0de0815f2246ab1f3"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual.py",
+      "size": 17765,
+      "sha256": "b65b30c9e9a8a6c73a9d14b9782d4687c218635fb137b7a291220fb84a27e309"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual_seed42.py",
+      "size": 17756,
+      "sha256": "6523715a3d18e1578df69b6013e19e98fd19bb643fb99fa94b7144297338c31a"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab5_offline_dino_dual_no_detach.py",
+      "size": 17808,
+      "sha256": "1e08d02406117588edaf4314d6c4e47ca32d6d578a7e929f211fef8a08923452"
+    },
+    {
+      "path": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab6_offline_dino_dual_no_mergefusion.py",
+      "size": 17830,
+      "sha256": "07744190a80350f603933d49424403992cef4458917d6d9da260aa0fd31c08c8"
+    },
+    {
+      "path": "configs/scannet/AutoSeg3D_scannet_stage1.py",
+      "size": 10085,
+      "sha256": "09ebb113c345b33291be748dec0f2718fc92a3f3a5e07b438d0c73df358537e0"
+    },
+    {
+      "path": "configs/scannet/AutoSeg3D_scannet_stage2.py",
+      "size": 10812,
+      "sha256": "3ee3a2a32c320c1ebf002d43e1435c4746500321a72492b918d7e2e078ee0ba3"
+    },
+    {
+      "path": "configs/scannet/AutoSeg3D_sv_scannet.py",
+      "size": 7849,
+      "sha256": "1930110ed12d0546d97d66261d3617d413e3af77d9f6c00248cbbede13f80dc8"
+    },
+    {
+      "path": "configs/scannet200/AutoSeg3D_scannet200_stage1.py",
+      "size": 15424,
+      "sha256": "3d83a8f2e50412ec4165f6ec3c5e7384a51b22931508f2e3753fa1a1851fd4c4"
+    },
+    {
+      "path": "configs/scannet200/AutoSeg3D_scannet200_stage2.py",
+      "size": 15364,
+      "sha256": "d23c36b10a54c34eb1f57e54d62bb67e881530400e57b8af9fc27368cf28e4e4"
+    },
+    {
+      "path": "configs/scannet200/AutoSeg3D_sv_scannet200.py",
+      "size": 11685,
+      "sha256": "030c51264126e7769f36112e29938e3e1da3a4a8e91bfa256c03fcc957128ccf"
+    },
+    {
+      "path": "tools/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/codex/eval_gci_seed_calibrator.py",
+      "size": 8293,
+      "sha256": "f2975f37c65df80fb85df0941af0e1c8adfe2888d1d2eb9e853c7fb3cf839f53"
+    },
+    {
+      "path": "tools/codex/gci_granularity_diagnostics.py",
+      "size": 18207,
+      "sha256": "ab0bfddda34d5e57e48d9dd22edffd3bc5fc806f6cf3440a12a30a9f7ffdd009"
+    },
+    {
+      "path": "tools/codex/gci_seed_simulation.py",
+      "size": 7234,
+      "sha256": "825dae8e37617e246d823c0a2db1983b40e2fdb29cc13c7cf090ce7ce0557727"
+    },
+    {
+      "path": "tools/codex/train_gci_edge_calibrator.py",
+      "size": 12348,
+      "sha256": "0fedfa344d16aa0100a123b3fe55c327fc601bfaeb96fd571d0612a99780563f"
+    },
+    {
+      "path": "tools/create_data.py",
+      "size": 4031,
+      "sha256": "e5cd66839cf42153538bfc509080e81a20be6dc09e0a26d7737222d51a322f9e"
+    },
+    {
+      "path": "tools/dist_test.sh",
+      "size": 479,
+      "sha256": "bb00db6ed07c128c244ee9b0c8883b04d9cb4408e0b8b90580ad5b49b714a3e5"
+    },
+    {
+      "path": "tools/dist_train.sh",
+      "size": 442,
+      "sha256": "398535e01eb42257388f3e9dc559fb03f3c5476e23ee256ee468465a0a1489a7"
+    },
+    {
+      "path": "tools/extract_dinov2_features.py",
+      "size": 14464,
+      "sha256": "a1fe402e80f6fd68efb636a18c7cdf05cb2d346c0a244c63cae0ca36cc09081e"
+    },
+    {
+      "path": "tools/fix_spconv_checkpoint.py",
+      "size": 2868,
+      "sha256": "827db2fbf7af0a459a7da853f392a21df0406d8314fafdff80882de73aaaa2ab"
+    },
+    {
+      "path": "tools/indoor_converter.py",
+      "size": 5041,
+      "sha256": "ef952aae56245c77cd85656d5d78aba67180c5e30d8f83f2006501ee1810cb56"
+    },
+    {
+      "path": "tools/scannet_data_utils.py",
+      "size": 33569,
+      "sha256": "2e9da151305c44b6c9f95799d97eefc7017efbfaa11fa03fd8584c88c4905613"
+    },
+    {
+      "path": "tools/scenenn_data_utils.py",
+      "size": 12037,
+      "sha256": "2952e0e59e015da3550217f1869537120323eebe2d355bcd6decf0efab66cd8a"
+    },
+    {
+      "path": "tools/test.py",
+      "size": 5686,
+      "sha256": "1b3539e8a9a3fcf283f71ccd92f8e0af4fa8893e37bc16543a513bc50905cc9f"
+    },
+    {
+      "path": "tools/train.py",
+      "size": 5564,
+      "sha256": "679689a36ce3ba73c0e24e4002e4c751b4db12e5b7dcde2728ab663523d31e73"
+    },
+    {
+      "path": "tools/trscan_data_utils.py",
+      "size": 12028,
+      "sha256": "65ec2c9f548f7c5b1d3d1a2d45a528d2d160a9aa0d22553085068c2f41ab1eac"
+    },
+    {
+      "path": "tools/update_infos_to_v2.py",
+      "size": 43085,
+      "sha256": "de7ec573f91f7b840e5131c7da835058d54a31c638ea398a74c9232955b68b69"
+    },
+    {
+      "path": "scripts/codex_tools/build_mv_dino_manifest.py",
+      "size": 4684,
+      "sha256": "f9f262eefba72de8d3c3d9f8a5fde2cc87346e8f12ee0864f8bacb82671e162b"
+    },
+    {
+      "path": "scripts/codex_tools/compact_dino_cache.py",
+      "size": 3680,
+      "sha256": "123579c2540eba501964d3fcdbfb63967cf99c81afdff3307f5540006e02ad36"
+    },
+    {
+      "path": "scripts/codex_tools/extract_mv_dino_cache.py",
+      "size": 7093,
+      "sha256": "45fcada6f2adcc5d2ad02c29ed7df95f758f110b8257a80c5389a0012239076d"
+    },
+    {
+      "path": "scripts/codex_tools/smoke_mv_dino_projection.py",
+      "size": 9858,
+      "sha256": "a97e25bc96f5eb3e7885f0a45958cb8429b79a2831e0e70af768658b744c9feb"
+    },
+    {
+      "path": "scripts/codex_tools/smoke_v5ab4_one_batch.py",
+      "size": 3772,
+      "sha256": "9f80939696d9a418e5a009d913294200a2905f74590ab99bb4fab0f1d91125cd"
+    },
+    {
+      "path": "scripts/codex_tools/watch_cache_then_launch_stage1.sh",
+      "size": 3173,
+      "sha256": "a130f2f364f5b7fa7a60ab1abcc15e5467a203068443e897c3170ae29d47c410"
+    },
+    {
+      "path": "requirements.txt",
+      "size": 288,
+      "sha256": "0dd2c853ceb19ba7984442e66ab656dc0f0696efc90d7d2e2e6f4a28e5650bb5"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1066,
+      "sha256": "f27bc7475dd864ba4783b3e0b891675638efdc83fbe7eb64ecadd2c963946d1d"
+    }
+  ]
+}
