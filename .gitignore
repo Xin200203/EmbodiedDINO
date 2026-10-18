@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.env
+.env.*
+work_dirs/
+data/
+*.pth
+*.pt
+*.ckpt
+*.pkl
+*.npy
+*.npz
+.venv/
+*.bak
+*.code-workspace
