@@ -2,6 +2,8 @@
 
 ## Correction to the first sync
 
+The later [2026-10-18 recheck](SOURCE_RECHECK_20261018.md) identified three referenced experiment configs absent even from the local source collection, plus a truncated historical export. The coverage counts below are source-preservation counts and do not certify the completeness of all runnable experiment paths.
+
 Commit `d4566ed` published 105 files. It covered the copied main model snapshot, but omitted workspace-level experiment runners, figure/analysis code, historical ablation/configuration files and upstream preprocessing programs. A clean Git working tree established only that the prepared release had been pushed; it did not establish that all project code had been collected.
 
 ## Reproducible local inventory

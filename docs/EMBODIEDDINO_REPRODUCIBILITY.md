@@ -2,6 +2,8 @@
 
 ## 1. Choose the experiment before choosing the command
 
+Known blockers are listed in [the source recheck](SOURCE_RECHECK_20261018.md): the transfer-repeat runner lacks its two default SceneNN configs, and the cls198 object-only runners lack their default joint config. Do not start those runners on the assumption that all archived experiment entrypoints are complete.
+
 The main MSRI configuration is `configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py`. It enables `dino_enable`, `dino_require`, and `backbone.use_dino`, uses 1024-dimensional features, and disables `dual_output`, `decoder.dual_path`, and `owner_residual`. This is proposal-stream injection, not the historical semantic-only branch.
 
 The matched host configuration is `configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py`. Confirm initialization and the actual evaluator against your chosen experiment record. A generic config alone does not identify a paper-table checkpoint.
@@ -11,6 +13,8 @@ The matched host configuration is `configs/codex_v5/AutoSeg3D_scannet200_stage1_
 ## 2. Prepare the sparse-convolution environment
 
 Use the upstream installation guide for the CUDA/MMDetection3D/MinkowskiEngine stack. Do not interpret a successful Python syntax check as an import or CUDA compatibility test. Import `oneformer3d` from this repository and check the resolved `__file__` before launching a run if other checkouts are on `PYTHONPATH`.
+
+The inherited package list is not an exhaustive environment lock: core code also imports `torch_scatter`, `networkx` and `easydict`, which are not explicitly listed there. Recover their compatible versions from the training environment before claiming an exact reproduction.
 
 ```bash
 export PYTHONPATH="$PWD:${PYTHONPATH:-}"

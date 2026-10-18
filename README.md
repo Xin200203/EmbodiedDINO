@@ -19,6 +19,8 @@ This is an EmbodiedDINO research-code snapshot built on AutoSeg3D/EmbodiedSAM. I
 
 这证明已覆盖清单中列出的本地源码；尚未证明训练服务器上没有额外修改。核对时服务器 SSH 连接被重置。原始数据、权重、二进制特征缓存、机器专用 VPN/SSH 管理脚本和第三方完整依赖仓库不在此同步范围。
 
+**2026-10-18 再次审计：仍有已知运行入口缺项。** `run_transfer_eval_repeats.sh` 引用的两个 SceneNN 配置，以及 cls198 object-only 运行脚本引用的一个配置，在原本地工作区和本仓库中均不存在。历史 `final_export_20260704.tgz` 也已截断。具体路径、影响和验证结果见 [二次审计记录](docs/SOURCE_RECHECK_20261018.md)。因此“本地源码已同步”不等于“所有实验均能直接复现”。
+
 ## 从哪里开始
 
 | 路径 | 用途 |
