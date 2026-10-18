@@ -1,0 +1,46 @@
+experiment_id: autoseg3d_stage2_repro_planned
+status: planned_no_training_started
+method_family: AutoSeg3D official stage2
+setting: ScanNet200 class-agnostic online MV
+local_repo: /Users/xin/Research/Code/research/Online_3D/AutoSeg3D
+config_path: configs/scannet200/AutoSeg3D_scannet200_stage2.py
+recommended_work_dir: work_dirs/AutoSeg3D_scannet200_stage2_repro_frozen_data/
+init_checkpoint_from_config: work_dirs/best.pth  # placeholder; must point to reproduced or official stage1 best
+stage_role: train association/MOT modules from stage1 detector checkpoint
+key_flags:
+  use_query_memory: true
+  use_one2many: false
+  use_mot: true
+  mot_type: dq_track
+  train_asso_only: true
+  merge_sp_masks: true
+  use_relative_asso: true
+  asso_loss_weight: 0.5
+thresholds:
+  topk_insts: 100
+  inscat_topk_insts: 100
+  inst_score_thr: 0.3
+  sp_score_thr: 0.4
+  npoint_thr: 100
+  nms: true
+  matrix_nms_kernel: linear
+  obj_normalization: true
+  merge_type: learnable_online
+dataset_path: data/scannet200-mv_fast/
+split_files:
+  train: scannet200_mv_oneformer3d_infos_train.pkl
+  val: scannet200_mv_oneformer3d_infos_val.pkl
+num_frames_train: 8
+num_frames_val: -1
+num_sample: 20000
+max_epochs: 36
+val_interval: 4
+checkpoint_policy: interval_4_max_keep_50_no_explicit_save_best_in_default_hook_seen
+commands_to_run_later:
+  train: CUDA_VISIBLE_DEVICES=0 python tools/train.py configs/scannet200/AutoSeg3D_scannet200_stage2.py --work-dir work_dirs/AutoSeg3D_scannet200_stage2_repro_frozen_data/
+  eval: CUDA_VISIBLE_DEVICES=0 python tools/test.py configs/scannet200/AutoSeg3D_scannet200_stage2.py <stage2_or_stage1_ckpt_to_verify> --work-dir work_dirs/AutoSeg3D_scannet200_stage2_repro_frozen_data/
+pre_run_gates:
+  - replace load_from placeholder with exact stage1 checkpoint path
+  - resolve docs/run.md ambiguity where stage2 test command points to stage1 checkpoint
+  - hash stage1 checkpoint and config
+  - run small debug first to check association loss, det2track shapes, and scene reset

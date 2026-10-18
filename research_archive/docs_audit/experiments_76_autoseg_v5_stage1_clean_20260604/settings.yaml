@@ -1,0 +1,55 @@
+created_at: "2026-06-04T22:25:00+08:00"
+owner: "Codex experiment lead"
+local_record_dir: "/Users/xin/Research/Code/research/Online_3D/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604"
+remote:
+  main_host: "10.176.56.76"
+  main_workspace: "/datadisk1/xxy/AutoSeg3D_v5_stage1_clean_20260604"
+  base_autoseg_repo: "/datadisk1/xxy/AutoSeg3D_official_clone"
+  v5_donor_snapshot: "/datadisk1/xxy/3D_Reconstruction_v5_184sync_20260603"
+  conda_env: "ESAM"
+  python: "/datadisk1/xxy/miniconda3/envs/ESAM/bin/python"
+  excluded_host: "10.177.69.184"
+base:
+  repository: "https://github.com/AutoLab-SAI-SJTU/AutoSeg3D.git"
+  head: "0da18380e04ca769c61ce7d1096bc80e44ab8164"
+  branch: "v5_stage1_clean_20260604"
+protocol:
+  canonical_seed: 2050318485
+  randomness: "dict(seed=2050318485, deterministic=False)"
+  dataset: "ScanNet200 MV/Fast, class-agnostic stage1 first unless otherwise noted"
+  primary_vfm: "FastSAM"
+  secondary_vfm: "SAM"
+  primary_setting: "ScanNet200 class-agnostic"
+  secondary_setting: "ScanNet class-sensitive/class-aware"
+  num_frames_train: 8
+  num_sample: 20000
+  stage1_core_flags:
+    use_query_memory: true
+    use_one2many: true
+    use_mot: false
+    merge_sp_masks: false
+  dino_projection_warning_threshold: 0.90
+  expected_projection_valid_rate: ">=0.99 on valid smoke/eval samples"
+  dino_feature_mode: "offline_2d_feature_map_cache_plus_online_projection"
+  dino_arch: "dinov2_vitl14_reg"
+  dino_input_size_hw: [420, 560]
+  dino_feature_hw: [30, 40]
+  dino_cache_dtype: "fp16"
+  formal_training_online_dino: false
+policy:
+  no_training_on_184_for_this_line: true
+  use_clean_autoseg_workspace_as_base: true
+  register_every_run_before_launch: true
+  copy_config_and_metrics_to_local_records: true
+
+data_processing:
+  primary_manifest_rule: "derive DINO cache manifest only from scannet200_mv_oneformer3d_infos_train/val.pkl data_list[*].img_paths; do not scan all raw 2D frames"
+  primary_dataset_root: "data/scannet200-mv_fast"
+  train_pkl_sha256: "81e4a5402c7095ff2e9a08c5d0fe73a78022cc180d5f4884b64c3edb110beecf"
+  val_pkl_sha256: "ba6778f88bcdff868331bb1ac1f80e9a059f6a76ba810a7251abf711ba3785bb"
+  train_unique_mv_used_frames: 95232
+  val_unique_mv_used_frames: 13430
+  combined_unique_mv_used_frames: 108662
+  estimated_dino_cache_gib_fp16: 248.7076
+  primary_cache_root: "/datadisk3/xxy/dino_cache/autoseg3d_v5_stage1_clean_20260604/scannet200_mv_fast/dinov2_vitl14_reg4_420x560_fp16"
+  fallback_cache_root: "/datadisk4/xxy/dino_cache/autoseg3d_v5_stage1_clean_20260604/scannet200_mv_fast/dinov2_vitl14_reg4_420x560_fp16"

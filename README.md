@@ -4,6 +4,21 @@
 
 This is an EmbodiedDINO research-code snapshot built on AutoSeg3D/EmbodiedSAM. It does not imply conference acceptance or a fully packaged, one-command reproduction release.
 
+## 同步覆盖范围
+
+首次提交 `d4566ed` 仅包含主研究快照及少量证据，**不是整个研究工作区的全部代码**。本次补充同步覆盖以下本地来源，并对每个来源文件与发布文件进行 SHA-256 比对：
+
+| 来源 | 校验条目数 | 发布位置 |
+| --- | ---: | --- |
+| 主模型、配置、缓存与训练评测脚本 | 88 | `oneformer3d/`、`configs/`、`tools/`、`scripts/` |
+| 工作区顶层实验运行、监控和分析脚本 | 25 | `tools/` |
+| 论文图表脚本、补充实验配置、历史代码与补丁 | 174 | `research_archive/` |
+| AutoSeg3D/ESAM 数据预处理代码、说明与文本元数据 | 105 | `data/` |
+
+共 **392 个来源条目**，具体原路径、发布路径和哈希见 [覆盖清单](evidence/source_coverage.json)，范围说明见 [同步审计](docs/SOURCE_COVERAGE.md)。条目数包含文档、元数据和保留的重复版本，不等于独立可执行程序数。
+
+这证明已覆盖清单中列出的本地源码；尚未证明训练服务器上没有额外修改。核对时服务器 SSH 连接被重置。原始数据、权重、二进制特征缓存、机器专用 VPN/SSH 管理脚本和第三方完整依赖仓库不在此同步范围。
+
 ## 从哪里开始
 
 | 路径 | 用途 |
@@ -13,6 +28,8 @@ This is an EmbodiedDINO research-code snapshot built on AutoSeg3D/EmbodiedSAM. I
 | [`configs/codex_owf/`](configs/codex_owf/) | OCWE/object-feedback adapter 与 joint 实验配置 |
 | [`frozen_ocwe/`](frozen_ocwe/) | 2026-07-20 冻结 OCWE 核心源码、配置、脚本；不是独立完整工程 |
 | [`evidence/embodieddino/multiseed.md`](evidence/embodieddino/multiseed.md) | 三个 paired seeds 的独立进程评测记录 |
+| [`research_archive/`](research_archive/) | 按原路径保存的历史实验配置、消融、图表脚本与补丁；不自动替换主模型 |
+| [`data/`](data/) | 预处理源代码、README、划分与标签文本元数据；不包含原始 RGB-D 数据 |
 | [`上游 README`](docs/README_UPSTREAM_AUTOSEG3D.md) | AutoSeg3D 原介绍、结果、致谢与引用 |
 
 ## 方法说明
@@ -36,6 +53,9 @@ OCWE 冻结实验不是持久物体记忆，也不是主表全部增益的来源
 | 数据、缓存加载 | [`loading.py`](oneformer3d/loading.py) |
 | 缓存准备与投影检查 | [`scripts/codex_tools/`](scripts/codex_tools/) |
 | 训练 / 评测 | [`train.py`](tools/train.py)、[`test.py`](tools/test.py) |
+| OCWE 联合训练 / 配对控制 | [`run_owf_joint_stage1.sh`](tools/run_owf_joint_stage1.sh)、[`run_owf_matched_triplet.sh`](tools/run_owf_matched_triplet.sh) |
+| 表征诊断 / 分析 | [`run_representation_diagnostics.sh`](tools/run_representation_diagnostics.sh)、[`analyze_representation_dumps.py`](tools/analyze_representation_dumps.py) |
+| 多种子汇总 / 迁移重评 | [`summarize_owf_seed_sweep.py`](tools/summarize_owf_seed_sweep.py)、[`run_transfer_eval_repeats.sh`](tools/run_transfer_eval_repeats.sh) |
 
 ## 已归档结果
 
@@ -102,7 +122,7 @@ OCWE 完整验证集入口为 `configs/codex_owf/AutoSeg3D_scannet200_stage1_v5a
 冻结 `mixformer3d.py` SHA-256：
 `058e3fa4d188d4dca0ab9a2e8b583f4081e33e9247c16df14fc34bc0efa16b83`
 
-同步文件校验值见 [`SHA256SUMS`](SHA256SUMS)。本次验证覆盖 Python 语法、研究配置继承文件、文件完整性及 README 链接；未执行 CUDA 训练或重评。完整复现仍需上述数据、权重和环境。
+同步文件校验值见 [`SHA256SUMS`](SHA256SUMS)。验证覆盖可执行 Python 源文件语法、Shell 语法、主研究配置继承文件、文件完整性及入口文档链接；历史归档中的 DGI 摘录不是完整 Python 模块，已在审计中单独说明。未执行 CUDA 训练或重评。完整复现仍需上述数据、权重和环境。
 
 ## 上游归属
 

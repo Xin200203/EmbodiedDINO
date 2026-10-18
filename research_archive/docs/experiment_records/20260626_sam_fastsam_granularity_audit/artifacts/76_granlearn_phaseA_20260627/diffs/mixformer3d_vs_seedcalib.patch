@@ -1,0 +1,145 @@
+--- /datadisk1/xxy/AutoSeg3D_v5_seedcalib_20260626/oneformer3d/mixformer3d.py	2026-06-26 14:35:30.039260073 +0000
++++ /datadisk1/xxy/AutoSeg3D_v5_granlearn_20260627/oneformer3d/mixformer3d.py	2026-06-27 12:21:08.755331331 +0000
+@@ -559,6 +559,8 @@
+                  gci_freeze_base=False,
+                  gci_debug=False,
+                  seedcalib_enable=False,
++                 seedcalib_mode='learned',
++                 seedcalib_random_seed=2050318485,
+                  seedcalib_min_keep_ratio=0.85,
+                  seedcalib_min_cluster_size=2,
+                  seedcalib_repr='largest',
+@@ -737,6 +739,8 @@
+         self._gci_calibrator_payload = None
+         self._gci_calibrator_model = None
+         self.seedcalib_enable = bool(seedcalib_enable)
++        self.seedcalib_mode = str(seedcalib_mode)
++        self.seedcalib_random_seed = int(seedcalib_random_seed)
+         self.seedcalib_min_keep_ratio = float(seedcalib_min_keep_ratio)
+         self.seedcalib_min_cluster_size = int(seedcalib_min_cluster_size)
+         self.seedcalib_repr = str(seedcalib_repr)
+@@ -1180,6 +1184,96 @@
+                 self._gci_debug_count += 1
+         return out
+ 
++    def _seedcalib_compute_labels_for_sample(self, sp_mask_t, xyz_t, batch_idx, frame_i, data_sample=None):
++        """Compute candidate seed groups for Phase-A granularity diagnostics."""
++        feats_list = getattr(self, '_last_dino_point_feats', [])
++        valid_list = getattr(self, '_last_dino_point_valids', [])
++        if (batch_idx >= len(feats_list) or feats_list[batch_idx] is None or
++                batch_idx >= len(valid_list) or valid_list[batch_idx] is None):
++            return None, None
++        dino_t = feats_list[batch_idx]
++        valid_t = valid_list[batch_idx]
++        if sp_mask_t.numel() == 0:
++            return None, None
++        sp_np = sp_mask_t.detach().cpu().numpy().astype(np.int64)
++        xyz_np = xyz_t.detach().cpu().numpy().astype(np.float32)
++        dino_np = dino_t.detach().float().cpu().numpy().astype(np.float32)
++        valid_np = valid_t.detach().cpu().numpy().astype(bool)
++        sp_ids, inv = np.unique(sp_np, return_inverse=True)
++        n_sp = int(len(sp_ids))
++        if n_sp <= 1:
++            return None, None
++        point_counts = np.bincount(inv, minlength=n_sp).astype(np.float32)
++        valid_counts = np.bincount(inv[valid_np], minlength=n_sp).astype(np.float32) if valid_np.any() else np.zeros(n_sp, dtype=np.float32)
++        proto_sum = np.zeros((n_sp, dino_np.shape[1]), dtype=np.float32)
++        if valid_np.any():
++            np.add.at(proto_sum, inv[valid_np], dino_np[valid_np])
++        proto = proto_sum / np.maximum(valid_counts[:, None], 1.0)
++        proto = gci_core.l2_normalize(proto)
++        ok = valid_counts >= float(self.gci_min_valid_points)
++        centroids = np.zeros((n_sp, 3), dtype=np.float32)
++        np.add.at(centroids, inv, xyz_np[:, :3])
++        centroids = centroids / np.maximum(point_counts[:, None], 1.0)
++        if self.gci_topk > 0:
++            pairs = gci_core.make_candidate_pairs_topk(
++                ok, centroids=centroids, max_dist=self.gci_dist_thr,
++                topk=self.gci_topk, max_pairs=self.gci_max_candidate_edges)
++        else:
++            pairs = gci_core.make_candidate_pairs(ok, centroids=centroids, max_dist=self.gci_dist_thr)
++        if len(pairs) == 0:
++            return None, None
++        mode = str(getattr(self, 'seedcalib_mode', 'learned'))
++        compute_mode = 'learned' if mode == 'random_matched' else mode
++        if compute_mode == 'learned':
++            payload, model = self._load_gci_calibrator()
++            feats = gci_core.edge_features(proto, centroids, point_counts, valid_counts, pairs)
++            mean = payload['feature_mean'].astype(np.float32)
++            std = payload['feature_std'].astype(np.float32)
++            x_in = torch.from_numpy((feats - mean) / std).float()
++            with torch.no_grad():
++                scores = torch.sigmoid(model(x_in)).cpu().numpy().astype(np.float32)
++            threshold = self.gci_score_thr
++        elif compute_mode == 'dino_only':
++            scores = np.sum(proto[pairs[:, 0]] * proto[pairs[:, 1]], axis=1).astype(np.float32)
++            threshold = self.gci_dino_thr
++        elif compute_mode == 'geometry_only':
++            dist = np.linalg.norm(centroids[pairs[:, 0]] - centroids[pairs[:, 1]], axis=1).astype(np.float32)
++            denom = max(float(self.gci_dist_thr), 1e-6)
++            scores = np.clip(1.0 - dist / denom, 0.0, 1.0).astype(np.float32)
++            threshold = self.gci_score_thr
++        elif compute_mode == 'oracle_gt_candidates':
++            if data_sample is None or not hasattr(data_sample.gt_pts_seg, 'pts_instance_mask'):
++                return None, None
++            gt_t = data_sample.gt_pts_seg.pts_instance_mask[frame_i]
++            gt_np = gt_t.detach().cpu().numpy().astype(np.int64)
++            major = np.full(n_sp, -1, dtype=np.int64)
++            purity = np.zeros(n_sp, dtype=np.float32)
++            for sid in range(n_sp):
++                vals = gt_np[inv == sid]
++                vals = vals[vals >= 0]
++                if vals.size == 0:
++                    continue
++                counts = np.bincount(vals)
++                major[sid] = int(counts.argmax())
++                purity[sid] = float(counts.max()) / float(vals.size)
++            same = (major[pairs[:, 0]] >= 0) & (major[pairs[:, 0]] == major[pairs[:, 1]])
++            same = same & (purity[pairs[:, 0]] >= 0.60) & (purity[pairs[:, 1]] >= 0.60)
++            scores = same.astype(np.float32)
++            threshold = 0.5
++        else:
++            raise RuntimeError(f'[SeedCalib] unsupported seedcalib_mode={mode}')
++        if self.gci_cluster_mode == 'cc':
++            labels, accepted, stats = gci_core.connected_component_clusters(n_sp, pairs, scores, threshold=threshold)
++        else:
++            labels, accepted, stats = gci_core.complete_link_clusters(n_sp, pairs, scores, threshold=threshold)
++        stat = dict(frame=int(frame_i), batch=int(batch_idx), mode=mode,
++                    before_sp=int(n_sp), after_sp=int(len(np.unique(labels))),
++                    accepted_edges=int(len(accepted)), candidate_edges=int(len(pairs)),
++                    threshold=float(threshold), dist_thr=float(self.gci_dist_thr),
++                    topk=int(self.gci_topk), max_candidate_edges=int(self.gci_max_candidate_edges),
++                    cluster_mode=str(self.gci_cluster_mode), apply_mode='seedcalib')
++        return labels, stat
++
+     def _seedcalib_build_keep_masks_predict(self, x, batch_data_samples, all_xyz, frame_i):
+         """Build inference-only duplicate-query keep masks without mutating decoder inputs.
+ 
+@@ -1198,8 +1292,8 @@
+             if n_before <= 1:
+                 continue
+             sp_mask_t = data_sample.gt_pts_seg.sp_pts_mask[frame_i]
+-            labels_np, stat = self._gci_compute_labels_for_sample(
+-                sp_mask_t, all_xyz[batch_idx], batch_idx, frame_i)
++            labels_np, stat = self._seedcalib_compute_labels_for_sample(
++                sp_mask_t, all_xyz[batch_idx], batch_idx, frame_i, data_sample=data_sample)
+             if labels_np is None or stat is None:
+                 continue
+             labels = torch.as_tensor(labels_np, device=x[batch_idx].device, dtype=torch.long)
+@@ -1245,6 +1339,16 @@
+                     order = torch.argsort(point_counts[dropped], descending=True)[:need]
+                     keep[dropped[order]] = True
+ 
++            if str(getattr(self, 'seedcalib_mode', 'learned')) == 'random_matched':
++                drop_count = int(n_before - int(keep.sum().item()))
++                keep = torch.ones(n_before, dtype=torch.bool, device=x[batch_idx].device)
++                if drop_count > 0:
++                    gen = torch.Generator(device=x[batch_idx].device)
++                    gen.manual_seed(int(self.seedcalib_random_seed) + int(frame_i) * 1009 + int(batch_idx) * 9176)
++                    perm = torch.randperm(n_before, device=x[batch_idx].device, generator=gen)[:drop_count]
++                    keep[perm] = False
++                stat['random_matched_drop_count'] = int(drop_count)
++
+             n_after = int(keep.sum().item())
+             stat.update(apply_mode='post_decoder_seed_filter', before_queries=n_before,
+                         after_queries=n_after, dropped_queries=int(n_before - n_after),

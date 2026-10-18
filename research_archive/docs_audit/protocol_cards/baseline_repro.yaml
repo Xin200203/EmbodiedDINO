@@ -1,0 +1,38 @@
+experiment_id: baseline_repro
+status: completed_remote_log_parsed
+method_family: ESAM local reproduction
+setting: ScanNet200 class-agnostic online MV
+remote_root: /home/nebula/xxy/3D_Reconstruction
+config_path: configs/ESAM_CA/ESAM_online_scannet200_CA_baseline_repro.py
+work_dir: work_dirs/ESAM_online_scannet200_CA_baseline_repro/
+config_snapshot: work_dirs/ESAM_online_scannet200_CA_baseline_repro/ESAM_online_scannet200_CA_baseline_repro.py
+raw_train_val_log: work_dirs/ESAM_online_scannet200_CA_baseline_repro/20260506_194156/20260506_194156.log
+init_checkpoint: /home/nebula/xxy/3D_Reconstruction/work_dirs/ESAM_sv_scannet200_CA/best_all_ap_50%_epoch_128.pth
+checkpoint_selection_rule: saved_best_all_ap_50_percent
+saved_best_checkpoint: work_dirs/ESAM_online_scannet200_CA_baseline_repro/best_all_ap_50%_epoch_125.pth
+final_checkpoint: work_dirs/ESAM_online_scannet200_CA_baseline_repro/epoch_128.pth
+best_ap_epoch: 125
+best_ap_metrics: {AP: 41.27, AP50: 63.15, AP25: 79.09}
+best_ap50_epoch: 125
+final_epoch_128_metrics: {AP: 39.55, AP50: 61.58, AP25: 77.83}
+seed_from_log: unknown_in_current_remote_parse
+cudnn_benchmark: unknown_in_current_remote_parse
+dataset_path: data/scannet200-mv_fast_or_config_snapshot_pending
+split_files:
+  train: scannet200_mv_oneformer3d_infos_train.pkl
+  val: scannet200_mv_oneformer3d_infos_val.pkl
+scene_count_train: pending_pkl_count
+scene_count_val: 312_inferred_from_val_log_if_same_dataloader
+num_frames_train: 8
+num_frames_val: -1
+num_sample: 20000
+point_sampling_strategy: preprocessed_random_20k_plus_loader_random_begin_frame
+uses_mv_fast: likely_true_but_confirm_config_snapshot
+VFM_mask_source: FastSAM_style
+DINO_mode: none
+evaluator_type: UnifiedSegMetric
+metrics_source: remote_log_parsed_2026-05-28
+hashes_required: [config_snapshot, init_checkpoint, saved_best_checkpoint, final_checkpoint, train_pkl, val_pkl]
+notes:
+  - Best AP and saved best AP50 coincide at E125.
+  - Verify exact data_root from config snapshot before using as table baseline.

@@ -1,0 +1,68 @@
+experiment_id: ours_v5_dual_path_dino
+status: completed_remote_log_parsed
+method_family: Ours v5
+setting: ScanNet200 class-agnostic online MV
+remote_root: /home/nebula/xxy/3D_Reconstruction
+remote_branch: owner-residual-query
+remote_head: bfa7950
+remote_worktree: dirty_snapshot_required
+config_path: configs/ESAM_CA/ESAM_online_scannet200_CA_dual_path_dino.py
+work_dir: work_dirs/ESAM_online_scannet200_CA_dual_path_dino_v5/
+config_snapshot: work_dirs/ESAM_online_scannet200_CA_dual_path_dino_v5/ESAM_online_scannet200_CA_dual_path_dino.py
+raw_train_val_log: work_dirs/ESAM_online_scannet200_CA_dual_path_dino_v5/20260512_224240/20260512_224240.log
+init_checkpoint: work_dirs/ESAM_sv_scannet200_CA/epoch_128.pth
+checkpoint_selection_rule: saved_best_all_ap_50_percent
+saved_best_checkpoint: work_dirs/ESAM_online_scannet200_CA_dual_path_dino_v5/best_all_ap_50%_epoch_115.pth
+final_checkpoint: work_dirs/ESAM_online_scannet200_CA_dual_path_dino_v5/epoch_128.pth
+best_ap_epoch: 115
+best_ap_metrics: {AP: 43.54, AP50: 65.05, AP25: 80.24}
+best_ap50_epoch: 115
+final_epoch_128_metrics: {AP: 42.99, AP50: 64.51, AP25: 79.82}
+seed_from_log: 2050318485
+cudnn_benchmark: false
+python: 3.8.20
+pytorch: 1.13.1+cu116
+gpu: NVIDIA GeForce RTX 4090
+dataset_path: data/scannet200-mv_fast/
+split_files:
+  train: scannet200_mv_oneformer3d_infos_train.pkl
+  val: scannet200_mv_oneformer3d_infos_val.pkl
+scene_count_train: 1201_likely_from_301_train_iters_x_batch4_minus_last_batch_pending_pkl_count
+scene_count_val: 312_from_val_log
+data_root_provenance: pending_hash_and_timestamp
+num_frames_train: 8
+num_frames_val: -1
+num_sample: 20000
+point_sampling_strategy: preprocessed_random_20k_plus_loader_random_begin_frame
+uses_mv_fast: true
+VFM_mask_source: FastSAM_style_preprocessed_masks
+DINO_mode: online_required
+dino_require: true
+dino_online_only: true
+DINO_checkpoint: /home/nebula/xxy/dataset/models/dinov2_vitl14_reg4_pretrain.pth
+DINO_input_size: [420, 560]
+DINO_valid_rate_mean_late_training: approx_0.989
+DINO_hit_ratio_mean_late_training: approx_0.986
+model_flags:
+  owner_residual: true
+  dual_path: true
+  backbone_dual_output: true
+  merge_criterion: {tmp: true, p2s: false}
+  merge_fusion_init: I_plus_I
+thresholds:
+  topk_insts: 20
+  inscat_topk_insts: 100
+  inst_score_thr: 0.25
+  sp_score_thr: 0.4
+  npoint_thr: 100
+  nms: true
+  matrix_nms_kernel: linear
+  obj_normalization: true
+  merge_type: learnable_online
+evaluator_type: UnifiedSegMetric
+metrics_source: remote_log_parsed_2026-05-28
+hashes_required: [active_config, config_snapshot, init_checkpoint, saved_best_checkpoint, final_checkpoint, train_pkl, val_pkl, DINO_checkpoint]
+notes:
+  - Current v5 is above local baseline_repro but below official AutoSeg3D.
+  - Current v5 uses TMP only; P2S must be a separate ablation if enabled later.
+  - All-ignore CE guard is active and logs NaN_DIAG warnings while keeping loss finite.

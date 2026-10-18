@@ -1,0 +1,318 @@
+--- /datadisk1/xxy/AutoSeg3D_v5_seedcalib_20260626/oneformer3d/mixformer3d.py	2026-06-26 14:35:30.039260073 +0000
++++ /datadisk1/xxy/AutoSeg3D_v5_granlearn_20260627/oneformer3d/mixformer3d.py	2026-06-27 14:05:36.476222404 +0000
+@@ -559,10 +559,22 @@
+                  gci_freeze_base=False,
+                  gci_debug=False,
+                  seedcalib_enable=False,
++                 seedcalib_mode='learned',
++                 seedcalib_random_seed=2050318485,
+                  seedcalib_min_keep_ratio=0.85,
+                  seedcalib_min_cluster_size=2,
+                  seedcalib_repr='largest',
+                  seedcalib_debug=False,
++                 granlearn_enable=False,
++                 granlearn_loss_weight=0.05,
++                 granlearn_max_pairs=512,
++                 granlearn_pos_radius=0.50,
++                 granlearn_neg_radius=0.80,
++                 granlearn_min_purity=0.60,
++                 granlearn_use_dino=True,
++                 granlearn_dino_weighted=False,
++                 granlearn_min_pair_weight=0.20,
++                 granlearn_debug=False,
+                  use_query_merge_fusion=True
+                  ):
+         super(Base3DDetector, self).__init__(
+@@ -737,12 +749,31 @@
+         self._gci_calibrator_payload = None
+         self._gci_calibrator_model = None
+         self.seedcalib_enable = bool(seedcalib_enable)
++        self.seedcalib_mode = str(seedcalib_mode)
++        self.seedcalib_random_seed = int(seedcalib_random_seed)
+         self.seedcalib_min_keep_ratio = float(seedcalib_min_keep_ratio)
+         self.seedcalib_min_cluster_size = int(seedcalib_min_cluster_size)
+         self.seedcalib_repr = str(seedcalib_repr)
+         self.seedcalib_debug = bool(seedcalib_debug)
+         self._seedcalib_debug_count = 0
+         self._last_seedcalib_stats = []
++        self.granlearn_enable = bool(granlearn_enable)
++        self.granlearn_loss_weight = float(granlearn_loss_weight)
++        self.granlearn_max_pairs = int(granlearn_max_pairs)
++        self.granlearn_pos_radius = float(granlearn_pos_radius)
++        self.granlearn_neg_radius = float(granlearn_neg_radius)
++        self.granlearn_min_purity = float(granlearn_min_purity)
++        self.granlearn_use_dino = bool(granlearn_use_dino)
++        self.granlearn_dino_weighted = bool(granlearn_dino_weighted)
++        self.granlearn_min_pair_weight = float(granlearn_min_pair_weight)
++        self.granlearn_debug = bool(granlearn_debug)
++        self._granlearn_debug_count = 0
++        if self.granlearn_enable:
++            qdim = int(getattr(self.decoder, 'd_model', 256))
++            self.granlearn_pair_head = nn.Sequential(
++                nn.Linear(4 * qdim + 2, qdim),
++                nn.ReLU(inplace=True),
++                nn.Linear(qdim, 1))
+         self.init_weights()
+         if self.gci_freeze_base:
+             self._freeze_non_gci_residual_params()
+@@ -1180,6 +1211,96 @@
+                 self._gci_debug_count += 1
+         return out
+ 
++    def _seedcalib_compute_labels_for_sample(self, sp_mask_t, xyz_t, batch_idx, frame_i, data_sample=None):
++        """Compute candidate seed groups for Phase-A granularity diagnostics."""
++        feats_list = getattr(self, '_last_dino_point_feats', [])
++        valid_list = getattr(self, '_last_dino_point_valids', [])
++        if (batch_idx >= len(feats_list) or feats_list[batch_idx] is None or
++                batch_idx >= len(valid_list) or valid_list[batch_idx] is None):
++            return None, None
++        dino_t = feats_list[batch_idx]
++        valid_t = valid_list[batch_idx]
++        if sp_mask_t.numel() == 0:
++            return None, None
++        sp_np = sp_mask_t.detach().cpu().numpy().astype(np.int64)
++        xyz_np = xyz_t.detach().cpu().numpy().astype(np.float32)
++        dino_np = dino_t.detach().float().cpu().numpy().astype(np.float32)
++        valid_np = valid_t.detach().cpu().numpy().astype(bool)
++        sp_ids, inv = np.unique(sp_np, return_inverse=True)
++        n_sp = int(len(sp_ids))
++        if n_sp <= 1:
++            return None, None
++        point_counts = np.bincount(inv, minlength=n_sp).astype(np.float32)
++        valid_counts = np.bincount(inv[valid_np], minlength=n_sp).astype(np.float32) if valid_np.any() else np.zeros(n_sp, dtype=np.float32)
++        proto_sum = np.zeros((n_sp, dino_np.shape[1]), dtype=np.float32)
++        if valid_np.any():
++            np.add.at(proto_sum, inv[valid_np], dino_np[valid_np])
++        proto = proto_sum / np.maximum(valid_counts[:, None], 1.0)
++        proto = gci_core.l2_normalize(proto)
++        ok = valid_counts >= float(self.gci_min_valid_points)
++        centroids = np.zeros((n_sp, 3), dtype=np.float32)
++        np.add.at(centroids, inv, xyz_np[:, :3])
++        centroids = centroids / np.maximum(point_counts[:, None], 1.0)
++        if self.gci_topk > 0:
++            pairs = gci_core.make_candidate_pairs_topk(
++                ok, centroids=centroids, max_dist=self.gci_dist_thr,
++                topk=self.gci_topk, max_pairs=self.gci_max_candidate_edges)
++        else:
++            pairs = gci_core.make_candidate_pairs(ok, centroids=centroids, max_dist=self.gci_dist_thr)
++        if len(pairs) == 0:
++            return None, None
++        mode = str(getattr(self, 'seedcalib_mode', 'learned'))
++        compute_mode = 'learned' if mode == 'random_matched' else mode
++        if compute_mode == 'learned':
++            payload, model = self._load_gci_calibrator()
++            feats = gci_core.edge_features(proto, centroids, point_counts, valid_counts, pairs)
++            mean = payload['feature_mean'].astype(np.float32)
++            std = payload['feature_std'].astype(np.float32)
++            x_in = torch.from_numpy((feats - mean) / std).float()
++            with torch.no_grad():
++                scores = torch.sigmoid(model(x_in)).cpu().numpy().astype(np.float32)
++            threshold = self.gci_score_thr
++        elif compute_mode == 'dino_only':
++            scores = np.sum(proto[pairs[:, 0]] * proto[pairs[:, 1]], axis=1).astype(np.float32)
++            threshold = self.gci_dino_thr
++        elif compute_mode == 'geometry_only':
++            dist = np.linalg.norm(centroids[pairs[:, 0]] - centroids[pairs[:, 1]], axis=1).astype(np.float32)
++            denom = max(float(self.gci_dist_thr), 1e-6)
++            scores = np.clip(1.0 - dist / denom, 0.0, 1.0).astype(np.float32)
++            threshold = self.gci_score_thr
++        elif compute_mode == 'oracle_gt_candidates':
++            if data_sample is None or not hasattr(data_sample.gt_pts_seg, 'pts_instance_mask'):
++                return None, None
++            gt_t = data_sample.gt_pts_seg.pts_instance_mask[frame_i]
++            gt_np = gt_t.detach().cpu().numpy().astype(np.int64)
++            major = np.full(n_sp, -1, dtype=np.int64)
++            purity = np.zeros(n_sp, dtype=np.float32)
++            for sid in range(n_sp):
++                vals = gt_np[inv == sid]
++                vals = vals[vals >= 0]
++                if vals.size == 0:
++                    continue
++                counts = np.bincount(vals)
++                major[sid] = int(counts.argmax())
++                purity[sid] = float(counts.max()) / float(vals.size)
++            same = (major[pairs[:, 0]] >= 0) & (major[pairs[:, 0]] == major[pairs[:, 1]])
++            same = same & (purity[pairs[:, 0]] >= 0.60) & (purity[pairs[:, 1]] >= 0.60)
++            scores = same.astype(np.float32)
++            threshold = 0.5
++        else:
++            raise RuntimeError(f'[SeedCalib] unsupported seedcalib_mode={mode}')
++        if self.gci_cluster_mode == 'cc':
++            labels, accepted, stats = gci_core.connected_component_clusters(n_sp, pairs, scores, threshold=threshold)
++        else:
++            labels, accepted, stats = gci_core.complete_link_clusters(n_sp, pairs, scores, threshold=threshold)
++        stat = dict(frame=int(frame_i), batch=int(batch_idx), mode=mode,
++                    before_sp=int(n_sp), after_sp=int(len(np.unique(labels))),
++                    accepted_edges=int(len(accepted)), candidate_edges=int(len(pairs)),
++                    threshold=float(threshold), dist_thr=float(self.gci_dist_thr),
++                    topk=int(self.gci_topk), max_candidate_edges=int(self.gci_max_candidate_edges),
++                    cluster_mode=str(self.gci_cluster_mode), apply_mode='seedcalib')
++        return labels, stat
++
+     def _seedcalib_build_keep_masks_predict(self, x, batch_data_samples, all_xyz, frame_i):
+         """Build inference-only duplicate-query keep masks without mutating decoder inputs.
+ 
+@@ -1198,8 +1319,8 @@
+             if n_before <= 1:
+                 continue
+             sp_mask_t = data_sample.gt_pts_seg.sp_pts_mask[frame_i]
+-            labels_np, stat = self._gci_compute_labels_for_sample(
+-                sp_mask_t, all_xyz[batch_idx], batch_idx, frame_i)
++            labels_np, stat = self._seedcalib_compute_labels_for_sample(
++                sp_mask_t, all_xyz[batch_idx], batch_idx, frame_i, data_sample=data_sample)
+             if labels_np is None or stat is None:
+                 continue
+             labels = torch.as_tensor(labels_np, device=x[batch_idx].device, dtype=torch.long)
+@@ -1245,6 +1366,16 @@
+                     order = torch.argsort(point_counts[dropped], descending=True)[:need]
+                     keep[dropped[order]] = True
+ 
++            if str(getattr(self, 'seedcalib_mode', 'learned')) == 'random_matched':
++                drop_count = int(n_before - int(keep.sum().item()))
++                keep = torch.ones(n_before, dtype=torch.bool, device=x[batch_idx].device)
++                if drop_count > 0:
++                    gen = torch.Generator(device=x[batch_idx].device)
++                    gen.manual_seed(int(self.seedcalib_random_seed) + int(frame_i) * 1009 + int(batch_idx) * 9176)
++                    perm = torch.randperm(n_before, device=x[batch_idx].device, generator=gen)[:drop_count]
++                    keep[perm] = False
++                stat['random_matched_drop_count'] = int(drop_count)
++
+             n_after = int(keep.sum().item())
+             stat.update(apply_mode='post_decoder_seed_filter', before_queries=n_before,
+                         after_queries=n_after, dropped_queries=int(n_before - n_after),
+@@ -1967,6 +2098,125 @@
+     def get_loss_track(self, track_instances, current_dict, mot_type):
+         loss_track = 0
+         return loss_track
++
++    def _granlearn_query_assignments(self, gt_instance, n_queries, device):
++        """Return per-query GT assignment from selected-query masks.
++
++        Conservative label rule: only query columns belonging to exactly one GT
++        are supervised; unlabeled/multi-GT columns are ignored to avoid teaching
++        false merges across boundaries.
++        """
++        if not hasattr(gt_instance, 'query_masks'):
++            return None
++        qmask = gt_instance.query_masks
++        if qmask is None or qmask.numel() == 0:
++            return None
++        qmask = qmask[:-self.sem_len, :n_queries].to(device).bool()
++        if qmask.numel() == 0 or qmask.shape[1] == 0:
++            return None
++        colsum = qmask.sum(0)
++        valid = colsum == 1
++        assign = torch.full((n_queries,), -1, dtype=torch.long, device=device)
++        if valid.any():
++            assign[valid] = qmask[:, valid].float().argmax(0).long()
++        return assign
++
++    def _granlearn_dino_pair_sim(self, batch_idx, data_sample, frame_i, n_queries, pairs, device):
++        if (not self.granlearn_use_dino or pairs.numel() == 0 or
++                batch_idx >= len(getattr(self, '_last_dino_point_feats', [])) or
++                batch_idx >= len(getattr(self, '_last_dino_point_valids', []))):
++            return torch.zeros((pairs.shape[0], 1), device=device)
++        feats = self._last_dino_point_feats[batch_idx]
++        valids = self._last_dino_point_valids[batch_idx]
++        if feats is None or valids is None:
++            return torch.zeros((pairs.shape[0], 1), device=device)
++        sp_ids = data_sample.gt_pts_seg.sp_pts_mask[frame_i].to(device).long().reshape(-1)
++        feats = feats.to(device).float()
++        valids = valids.to(device).bool().reshape(-1)
++        m = valids & (sp_ids >= 0) & (sp_ids < n_queries)
++        if not bool(m.any().item()):
++            return torch.zeros((pairs.shape[0], 1), device=device)
++        dim = feats.shape[1]
++        proto = feats.new_zeros((n_queries, dim))
++        counts = feats.new_zeros((n_queries, 1))
++        idx = sp_ids[m]
++        proto.index_add_(0, idx, feats[m])
++        counts.index_add_(0, idx, torch.ones((idx.numel(), 1), dtype=feats.dtype, device=device))
++        ok = counts.squeeze(1) >= float(self.gci_min_valid_points)
++        proto = F.normalize(proto / counts.clamp_min(1.0), dim=1)
++        sim = (proto[pairs[:, 0]] * proto[pairs[:, 1]]).sum(1, keepdim=True)
++        sim = torch.where((ok[pairs[:, 0]] & ok[pairs[:, 1]]).unsqueeze(1), sim, torch.zeros_like(sim))
++        return sim.detach()
++
++    def _granlearn_loss_for_frame(self, out, gt_instances, batch_data_samples, sp_xyz, frame_i):
++        if not self.granlearn_enable or not hasattr(self, 'granlearn_pair_head'):
++            return None
++        total = None
++        total_pairs = total_pos = total_neg = 0
++        for batch_idx, queries in enumerate(out.get('queries', [])):
++            if queries is None or queries.shape[0] < 2:
++                continue
++            device = queries.device
++            n_queries = int(queries.shape[0])
++            assign = self._granlearn_query_assignments(gt_instances[batch_idx], n_queries, device)
++            if assign is None:
++                continue
++            valid = assign >= 0
++            if int(valid.sum().item()) < 2:
++                continue
++            centers = sp_xyz[batch_idx][:n_queries, :3].to(device).float()
++            if centers.shape[0] != n_queries:
++                continue
++            dist = torch.cdist(centers, centers, p=2)
++            tri = torch.triu_indices(n_queries, n_queries, offset=1, device=device)
++            pair_dist = dist[tri[0], tri[1]]
++            pair_valid = valid[tri[0]] & valid[tri[1]] & (pair_dist <= self.granlearn_neg_radius)
++            if not bool(pair_valid.any().item()):
++                continue
++            tri = tri[:, pair_valid]
++            pair_dist = pair_dist[pair_valid]
++            same = assign[tri[0]] == assign[tri[1]]
++            pos_mask = same & (pair_dist <= self.granlearn_pos_radius)
++            neg_mask = ~same
++            pos_ids = torch.nonzero(pos_mask, as_tuple=False).flatten()
++            neg_ids = torch.nonzero(neg_mask, as_tuple=False).flatten()
++            if pos_ids.numel() == 0 or neg_ids.numel() == 0:
++                continue
++            half = max(1, self.granlearn_max_pairs // 2)
++            pos_order = torch.argsort(pair_dist[pos_ids])[:half]
++            neg_order = torch.argsort(pair_dist[neg_ids])[:half]
++            sel_pos = pos_ids[pos_order]
++            sel_neg = neg_ids[neg_order]
++            sel = torch.cat([sel_pos, sel_neg], dim=0)
++            pairs = tri[:, sel].T.contiguous()
++            targets = torch.cat([
++                torch.ones(sel_pos.numel(), device=device),
++                torch.zeros(sel_neg.numel(), device=device)], dim=0)
++            qi = queries[pairs[:, 0]]
++            qj = queries[pairs[:, 1]]
++            dfeat = (pair_dist[sel] / max(self.granlearn_neg_radius, 1e-6)).clamp(0, 2).unsqueeze(1).detach()
++            dino_sim = self._granlearn_dino_pair_sim(batch_idx, batch_data_samples[batch_idx], frame_i, n_queries, pairs, device)
++            feat = torch.cat([qi, qj, (qi - qj).abs(), qi * qj, dfeat, dino_sim], dim=1)
++            logits = self.granlearn_pair_head(feat).squeeze(1)
++            raw_loss = F.binary_cross_entropy_with_logits(logits, targets, reduction='none')
++            if self.granlearn_dino_weighted and self.granlearn_use_dino:
++                sim01 = ((dino_sim.squeeze(1).detach() + 1.0) * 0.5).clamp(0.0, 1.0)
++                pair_weight = torch.where(targets > 0.5, sim01, 1.0 - sim01)
++                pair_weight = pair_weight.clamp_min(float(self.granlearn_min_pair_weight))
++                loss = (raw_loss * pair_weight).sum() / pair_weight.sum().clamp_min(1.0)
++            else:
++                loss = raw_loss.mean()
++            total = loss if total is None else total + loss
++            total_pairs += int(targets.numel())
++            total_pos += int(sel_pos.numel())
++            total_neg += int(sel_neg.numel())
++        if total is None:
++            return None
++        if self.granlearn_debug and self._granlearn_debug_count < 80:
++            print(f'[GRANLEARN] frame={frame_i} pairs={total_pairs} pos={total_pos} neg={total_neg} loss={float(total.detach().cpu()):.4f} weight={self.granlearn_loss_weight:.3f} use_dino={self.granlearn_use_dino} dino_weighted={self.granlearn_dino_weighted}')
++            self._granlearn_debug_count += 1
++        return total * self.granlearn_loss_weight
++
+     def loss(self, batch_inputs_dict, batch_data_samples, **kwargs):
+         """Calculate losses from a batch of inputs dict and data samples.
+         """
+@@ -2342,6 +2592,9 @@
+                         for key in loss.keys():
+                             if key in self.reweight_dict:
+                                 loss[key] = loss[key] * self.reweight_dict[key]
++                    gran_loss = self._granlearn_loss_for_frame(x, gt_instances, batch_data_samples, sp_xyz, frame_i)
++                    if gran_loss is not None:
++                        loss['loss_granlearn'] = gran_loss
+             # print(loss)
+             for key, value in loss.items():
+                 if key in losses:

@@ -4,7 +4,13 @@ __pycache__/
 .env
 .env.*
 work_dirs/
-data/
+data/*
+!data/**/
+!data/**/*.py
+!data/**/*.sh
+!data/**/*.md
+!data/**/*.txt
+!data/**/*.tsv
 *.pth
 *.pt
 *.ckpt

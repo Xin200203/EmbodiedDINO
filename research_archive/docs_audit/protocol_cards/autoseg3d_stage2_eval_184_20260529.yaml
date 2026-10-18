@@ -1,0 +1,33 @@
+experiment_id: autoseg3d_stage2_eval_184_20260529
+status: completed
+server: nebula@10.177.69.184
+code_root: /home/nebula/xxy/AutoSeg3D_official_0da1838
+code_commit: 0da18380e04ca769c61ce7d1096bc80e44ab8164
+purpose: official AutoSeg3D ScanNet200-MV class-agnostic stage2 checkpoint evaluation under controlled local protocol
+config: configs/scannet200/codex_20260529_stage2_noload_full.py
+config_sha256: ff6d858ddd92c3967eb424fe896d172393d6b8a06e7ad937b404f243878f8a9c
+config_note: generated from official AutoSeg3D_scannet200_stage2.py with only load_interval=1 removed for installed mmdet3d compatibility
+checkpoint: work_dirs/source_ckpts/stage2_epoch36.pth
+checkpoint_realpath: /home/nebula/xxy/AutoSeg3D/work_dirs/AutoSeg3D_scannet200_stage2/epoch_36.pth
+checkpoint_sha256: 931d898b0390ac2b678aed39e05f43e422f72ce5e4f93bb4cdf351c5e2a9cdf8
+data:
+  mv_root: /home/nebula/xxy/3D_Reconstruction/data/scannet200-mv
+  rec_root: /home/nebula/xxy/3D_Reconstruction/data/scannet200
+  raw_scans: /home/nebula/xxy/dataset/scannet_v2/scans
+  val_pkl_sha256: ba6778f88bcdff868331bb1ac1f80e9a059f6a76ba810a7251abf711ba3785bb
+  val_scenes: 312
+command: >-
+  CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/home/nebula/xxy/ESAM/thirdparty/FastSAM:$PWD:$PYTHONPATH
+  /home/nebula/miniconda3/envs/ESAM/bin/python tools/test.py
+  configs/scannet200/codex_20260529_stage2_noload_full.py
+  work_dirs/source_ckpts/stage2_epoch36.pth
+  --work-dir work_dirs/codex_20260529_official_stage2_eval_epoch36_compat_retry2
+raw_log: /home/nebula/xxy/AutoSeg3D_official_0da1838/work_dirs/codex_20260529_logs/official_stage1_stage2_eval_compat_retry2.log
+metrics:
+  AP: 45.27
+  AP50: 66.76
+  AP25: 81.35
+raw_metric_line: "05/29 01:00:41 - mmengine - INFO - Epoch(test) [312/312]    all_ap: 0.4527  all_ap_50%: 0.6676  all_ap_25%: 0.8135"
+notes:
+  - Local stage2 improves over local stage1 by +0.38 AP / +0.29 AP50 / +0.34 AP25.
+  - Still below reported AutoSeg3D official 46.2/67.9/81.7; likely data preprocessing/seed/checkpoint differences remain.

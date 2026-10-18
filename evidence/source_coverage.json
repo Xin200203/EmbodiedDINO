@@ -1,0 +1,2757 @@
+{
+  "scope": "Local source roots enumerated in source_map; remote-only code not verified.",
+  "checked_revision": "working_tree",
+  "excluded": {
+    "tools/vpn_keepalive.sh": "Machine-specific VPN maintenance, not research code.",
+    "docs_audit/ssh_184_robust.sh": "Machine-specific SSH connectivity helper."
+  },
+  "counts": {
+    "identical": 392
+  },
+  "files": [
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/__init__.py",
+      "destination": "oneformer3d/__init__.py",
+      "category": "model_snapshot",
+      "sha256": "197692b89ae8f48c7365edd571b5d14d373935fb027c3479787a010c970f0b9a",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/data_preprocessor.py",
+      "destination": "oneformer3d/data_preprocessor.py",
+      "category": "model_snapshot",
+      "sha256": "559d6e09060442fd6b697fee25f8180efb41a2e2661cfcc010a9713a0aa8053b",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/dino_sparse_fpn.py",
+      "destination": "oneformer3d/dino_sparse_fpn.py",
+      "category": "model_snapshot",
+      "sha256": "3661e2ba1541e97a49359e6e3b805dd3a44653a73ac6770d40433480e4c2a073",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/dq_utils.py",
+      "destination": "oneformer3d/dq_utils.py",
+      "category": "model_snapshot",
+      "sha256": "a2aaefd4dabb847afa5eda14a2932a95fd226703ddf79614697705fa5b384832",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/formatting.py",
+      "destination": "oneformer3d/formatting.py",
+      "category": "model_snapshot",
+      "sha256": "f05baf5c7f1e9b94398a0cc25008b70cf539e35445ede46261106b3adcb1b510",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/gci.py",
+      "destination": "oneformer3d/gci.py",
+      "category": "model_snapshot",
+      "sha256": "48d15ac29df310c6831479b0111d48b8cec303ff0bc5bd5540f6fd9329711871",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/geo_aware_pool.py",
+      "destination": "oneformer3d/geo_aware_pool.py",
+      "category": "model_snapshot",
+      "sha256": "40ad61e33847ceaff40619f864af1365d7c86861be6818fdc2c17dcf4248b137",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/img_backbone.py",
+      "destination": "oneformer3d/img_backbone.py",
+      "category": "model_snapshot",
+      "sha256": "cfd7bb8ce3cbaf96b475790eeb8f38c4d572c4b970685042ebe2e82de6f7a80d",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/instance_criterion.py",
+      "destination": "oneformer3d/instance_criterion.py",
+      "category": "model_snapshot",
+      "sha256": "cc326eb615d1f6fc7911a9a80e5e70a68dd3949fa928890597b57604d9605129",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/instance_merge.py",
+      "destination": "oneformer3d/instance_merge.py",
+      "category": "model_snapshot",
+      "sha256": "174535051d78d62606ac859cfa6ae0cdb025abb635387f29ce6156c1c7efee7a",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/instance_seg_eval.py",
+      "destination": "oneformer3d/instance_seg_eval.py",
+      "category": "model_snapshot",
+      "sha256": "766b9aa8551643b8792a370e58f93236ff2aceb5b2dcc9bb0b963869a876c33d",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/instance_seg_metric.py",
+      "destination": "oneformer3d/instance_seg_metric.py",
+      "category": "model_snapshot",
+      "sha256": "c15077d1d1cafc75516aabc48dcefde5efc9dc7cce6c5386f13ea9406c1b30a9",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/loading.py",
+      "destination": "oneformer3d/loading.py",
+      "category": "model_snapshot",
+      "sha256": "6a91b3a8e740e3de5b6d96b28c621f6c97d8f68c9e1b8c1f61a153bf3f44f58d",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/mask_matrix_nms.py",
+      "destination": "oneformer3d/mask_matrix_nms.py",
+      "category": "model_snapshot",
+      "sha256": "40c7e2b4d398a19fdce0b1ab5dcdf5caa81ac3e2fd5209207606e84f4af736a2",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/merge_criterion.py",
+      "destination": "oneformer3d/merge_criterion.py",
+      "category": "model_snapshot",
+      "sha256": "63f2d307dea3a212df80c98945653cfe316bd1723e2458da39fb3db3ece2c1b4",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/merge_head.py",
+      "destination": "oneformer3d/merge_head.py",
+      "category": "model_snapshot",
+      "sha256": "10e0a401b72b38ca259d751407b51a89cbf1f587ae886272430ae6238f3a3ef4",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/mink_unet.py",
+      "destination": "oneformer3d/mink_unet.py",
+      "category": "model_snapshot",
+      "sha256": "c8127d691f5e9dab246eb675e61703b37976058a051b6c366f7b9b3f1c714332",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/mixformer3d.py",
+      "destination": "oneformer3d/mixformer3d.py",
+      "category": "model_snapshot",
+      "sha256": "b2ec772a4323fffbbe287731609ff29eb6df94f7ab0ddb628c23c5e8fc35c624",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/motr_utils.py",
+      "destination": "oneformer3d/motr_utils.py",
+      "category": "model_snapshot",
+      "sha256": "571d5f0802236aa09fb08d091b627d3dd8e21475c0d49fc1e66c217b68bc7172",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/multilevel_memory.py",
+      "destination": "oneformer3d/multilevel_memory.py",
+      "category": "model_snapshot",
+      "sha256": "cd2564cabc793cf85f7799d404f3cf3bdde9a6ae54af00a17509eb2b67b423a1",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/oneformer3d.py",
+      "destination": "oneformer3d/oneformer3d.py",
+      "category": "model_snapshot",
+      "sha256": "4ff24029da8d723a7a6873665a6faaf7353be3b78ae1395f9c91b0afc2ab1be8",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/projection_utils.py",
+      "destination": "oneformer3d/projection_utils.py",
+      "category": "model_snapshot",
+      "sha256": "d8b66656f021ce5264e007947b1740b58490c773b29432ec831295b403380106",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/query_decoder.py",
+      "destination": "oneformer3d/query_decoder.py",
+      "category": "model_snapshot",
+      "sha256": "8e9083e39397898ac379da60fe85c5f4a77de1a6368f04fe27a756a1c03b6375",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/scannet_dataset.py",
+      "destination": "oneformer3d/scannet_dataset.py",
+      "category": "model_snapshot",
+      "sha256": "3a30d68d50094fcb8780876beaba2680010c0378a2469495e72c13345a50044c",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/semantic_criterion.py",
+      "destination": "oneformer3d/semantic_criterion.py",
+      "category": "model_snapshot",
+      "sha256": "6cf671b4f7b705ffa26738ec794c9461c460da2cad7133d885e3ca7628aeeb9d",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/structures/__init__.py",
+      "destination": "oneformer3d/structures/__init__.py",
+      "category": "model_snapshot",
+      "sha256": "d18a79d2c9a148e9085ef7d33873716f399850bd9f2062dc827949bf018c033e",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/structures/boxes.py",
+      "destination": "oneformer3d/structures/boxes.py",
+      "category": "model_snapshot",
+      "sha256": "ea77177dd480426da0deed23b2298ba8d7d41b0f690d2c99d16d1c248e9a1d59",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/structures/instances.py",
+      "destination": "oneformer3d/structures/instances.py",
+      "category": "model_snapshot",
+      "sha256": "d838a04029d6362f6ca49998a9e6b926b8a0e4bd2bccb2eafea3b52bc72f18bf",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/transforms_3d.py",
+      "destination": "oneformer3d/transforms_3d.py",
+      "category": "model_snapshot",
+      "sha256": "f426e224b59042cb10803f5a51c7abcbcde5643f2e3c790ecd4d6bab02472453",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/unified_criterion.py",
+      "destination": "oneformer3d/unified_criterion.py",
+      "category": "model_snapshot",
+      "sha256": "7b89aef50ac62d8675812e49e5abeeb71f09ba6901edd560964de7a8f42e0f92",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/unified_metric.py",
+      "destination": "oneformer3d/unified_metric.py",
+      "category": "model_snapshot",
+      "sha256": "c5b743d007e0bf6bad5839354b97f31dc65adf2c738ab5f152203ac1b3f981de",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/util/__init__.py",
+      "destination": "oneformer3d/util/__init__.py",
+      "category": "model_snapshot",
+      "sha256": "b19aab3b2c00658c7183072a335fab3983c604a044f33234092a86c90221f5c5",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/util/box_ops.py",
+      "destination": "oneformer3d/util/box_ops.py",
+      "category": "model_snapshot",
+      "sha256": "09967f38202e5b9ee1ea59badc63c0bba21b476f423d9c77d502e5c0263e6bc0",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/util/checkpoint.py",
+      "destination": "oneformer3d/util/checkpoint.py",
+      "category": "model_snapshot",
+      "sha256": "3bf4dece3f2be7a83adbcda69cb8c2b712221e964f5710f0adf71b561c197586",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/oneformer3d/util/misc.py",
+      "destination": "oneformer3d/util/misc.py",
+      "category": "model_snapshot",
+      "sha256": "40fb20c9849c14c81663ce120e1fbf9fa86f4f1548e199a9c8f2d69528c149fb",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_dgi/AutoSeg3D_scannet200_stage1_v5ab1_dgi_infer.py",
+      "destination": "configs/codex_dgi/AutoSeg3D_scannet200_stage1_v5ab1_dgi_infer.py",
+      "category": "model_snapshot",
+      "sha256": "60aaebfb333c34b185c5f48220b4c88da4248db73c469b6485bf9505b5b3673d",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_feature_residual_sub10.py",
+      "destination": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_feature_residual_sub10.py",
+      "category": "model_snapshot",
+      "sha256": "3adcdbf1a1435234f92c7b35802f50d623c671aed22037550cf366cb44a93e35",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_feature_residual_subset50.py",
+      "destination": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_feature_residual_subset50.py",
+      "category": "model_snapshot",
+      "sha256": "b008dc66ae23da03c393b7d583ac04d5a9bf326f49aca4c8a4ca77ac73a7fdab",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_fullval.py",
+      "destination": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_fullval.py",
+      "category": "model_snapshot",
+      "sha256": "705e5af347eeb0e0c4d72c84402b66a7efb68dffe418d1e3395ff1cf1329dbb0",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_subset50.py",
+      "destination": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_subset50.py",
+      "category": "model_snapshot",
+      "sha256": "a5e17f9755b2507faab52bb8a3e3955162a81feffe25e5aaebc40e548668e725",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_cc_fullval.py",
+      "destination": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_cc_fullval.py",
+      "category": "model_snapshot",
+      "sha256": "591c477d65e9e04a926769d0f8932a2bec02f8708dc73eaa646d5112a0355e35",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_cc_subset50.py",
+      "destination": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_cc_subset50.py",
+      "category": "model_snapshot",
+      "sha256": "550cf4b5052dc1565f7a9a7c8d5d7fa0499cd66c5a39eb9b5e768913cc6dc606",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_fullval.py",
+      "destination": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_fullval.py",
+      "category": "model_snapshot",
+      "sha256": "bfb6c445cdb19f748943678f47136162b424c0e077c90d203df8c6ad93008f55",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_subset50.py",
+      "destination": "configs/codex_gci/AutoSeg3D_scannet200_stage1_v5ab1_gci_learned_prequery_topk16_subset50.py",
+      "category": "model_snapshot",
+      "sha256": "4616c4fd3d81f800eab3ba56da01f72be84c6504eec31b88b56dec46892faaba",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_lgqc/AutoSeg3D_scannet200_stage1_v5ab1_lgqc_adapter_full.py",
+      "destination": "configs/codex_lgqc/AutoSeg3D_scannet200_stage1_v5ab1_lgqc_adapter_full.py",
+      "category": "model_snapshot",
+      "sha256": "263abb0d975f557cd259f8e6a328ad17f976e661d109b9ea52527cb894704585",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_lgqc/AutoSeg3D_scannet200_stage1_v5ab1_lgqc_adapter_sub10_smoke.py",
+      "destination": "configs/codex_lgqc/AutoSeg3D_scannet200_stage1_v5ab1_lgqc_adapter_sub10_smoke.py",
+      "category": "model_snapshot",
+      "sha256": "0e2b7965edeebec7784ccb0821092fd2f145ab626e671c677d5ed006f8bc63a2",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_lgqc/AutoSeg3D_scannet200_stage1_v5ab1_lgqc_adapter_subset50.py",
+      "destination": "configs/codex_lgqc/AutoSeg3D_scannet200_stage1_v5ab1_lgqc_adapter_subset50.py",
+      "category": "model_snapshot",
+      "sha256": "6b6221bdeed2eb8ebbb437ff21f928729465fc9e9b466996cf73458d9864c962",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "destination": "configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "category": "model_snapshot",
+      "sha256": "0b8484a716386c48e28f0bd5ad5a7d71881f1343e6d3c2ff5d0e42973a5d294e",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_joint.py",
+      "destination": "configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_joint.py",
+      "category": "model_snapshot",
+      "sha256": "7b525d0eef54a21f7b875743b013b24280ce2975d3e493b1d7097799ce34d869",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_sub10.py",
+      "destination": "configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_sub10.py",
+      "category": "model_snapshot",
+      "sha256": "d15be7b9bd72b4e479981080356465aacc4c7db5fd5a1c481ae819e7bdfc9c0f",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "model_snapshot",
+      "sha256": "c2201cc817d2955615f49984ee5dd6ac1e1636d7ef9455d9e99f1e3849d8161d",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py",
+      "destination": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py",
+      "category": "model_snapshot",
+      "sha256": "a61c71a31881a753768a918517ddf167ec2dd7975a6c219b4bb38ef087f549e2",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_seed42.py",
+      "destination": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_seed42.py",
+      "category": "model_snapshot",
+      "sha256": "89a12359f35434f2d0c39bb780f68bdd434bce91c8c967e4f4749c437869a8fe",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py",
+      "destination": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py",
+      "category": "model_snapshot",
+      "sha256": "f9c44c19f4681beea1ebfa63eeaa259e3904b666d88117e0de0815f2246ab1f3",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual.py",
+      "destination": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual.py",
+      "category": "model_snapshot",
+      "sha256": "b65b30c9e9a8a6c73a9d14b9782d4687c218635fb137b7a291220fb84a27e309",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual_seed42.py",
+      "destination": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual_seed42.py",
+      "category": "model_snapshot",
+      "sha256": "6523715a3d18e1578df69b6013e19e98fd19bb643fb99fa94b7144297338c31a",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab5_offline_dino_dual_no_detach.py",
+      "destination": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab5_offline_dino_dual_no_detach.py",
+      "category": "model_snapshot",
+      "sha256": "1e08d02406117588edaf4314d6c4e47ca32d6d578a7e929f211fef8a08923452",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab6_offline_dino_dual_no_mergefusion.py",
+      "destination": "configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab6_offline_dino_dual_no_mergefusion.py",
+      "category": "model_snapshot",
+      "sha256": "07744190a80350f603933d49424403992cef4458917d6d9da260aa0fd31c08c8",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/scannet/AutoSeg3D_scannet_stage1.py",
+      "destination": "configs/scannet/AutoSeg3D_scannet_stage1.py",
+      "category": "model_snapshot",
+      "sha256": "09ebb113c345b33291be748dec0f2718fc92a3f3a5e07b438d0c73df358537e0",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/scannet/AutoSeg3D_scannet_stage2.py",
+      "destination": "configs/scannet/AutoSeg3D_scannet_stage2.py",
+      "category": "model_snapshot",
+      "sha256": "3ee3a2a32c320c1ebf002d43e1435c4746500321a72492b918d7e2e078ee0ba3",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/scannet/AutoSeg3D_sv_scannet.py",
+      "destination": "configs/scannet/AutoSeg3D_sv_scannet.py",
+      "category": "model_snapshot",
+      "sha256": "1930110ed12d0546d97d66261d3617d413e3af77d9f6c00248cbbede13f80dc8",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/scannet200/AutoSeg3D_scannet200_stage1.py",
+      "destination": "configs/scannet200/AutoSeg3D_scannet200_stage1.py",
+      "category": "model_snapshot",
+      "sha256": "3d83a8f2e50412ec4165f6ec3c5e7384a51b22931508f2e3753fa1a1851fd4c4",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/scannet200/AutoSeg3D_scannet200_stage2.py",
+      "destination": "configs/scannet200/AutoSeg3D_scannet200_stage2.py",
+      "category": "model_snapshot",
+      "sha256": "d23c36b10a54c34eb1f57e54d62bb67e881530400e57b8af9fc27368cf28e4e4",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/configs/scannet200/AutoSeg3D_sv_scannet200.py",
+      "destination": "configs/scannet200/AutoSeg3D_sv_scannet200.py",
+      "category": "model_snapshot",
+      "sha256": "030c51264126e7769f36112e29938e3e1da3a4a8e91bfa256c03fcc957128ccf",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/__init__.py",
+      "destination": "tools/__init__.py",
+      "category": "model_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/codex/audit_object_fragment_quality.py",
+      "destination": "tools/codex/audit_object_fragment_quality.py",
+      "category": "model_snapshot",
+      "sha256": "ea6f481ab4647309dd16ffcf5e1edb072115cdecbb984dd9ebffda37cd3e62c7",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/codex/eval_gci_seed_calibrator.py",
+      "destination": "tools/codex/eval_gci_seed_calibrator.py",
+      "category": "model_snapshot",
+      "sha256": "f2975f37c65df80fb85df0941af0e1c8adfe2888d1d2eb9e853c7fb3cf839f53",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/codex/gci_granularity_diagnostics.py",
+      "destination": "tools/codex/gci_granularity_diagnostics.py",
+      "category": "model_snapshot",
+      "sha256": "ab0bfddda34d5e57e48d9dd22edffd3bc5fc806f6cf3440a12a30a9f7ffdd009",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/codex/gci_seed_simulation.py",
+      "destination": "tools/codex/gci_seed_simulation.py",
+      "category": "model_snapshot",
+      "sha256": "825dae8e37617e246d823c0a2db1983b40e2fdb29cc13c7cf090ce7ce0557727",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/codex/train_gci_edge_calibrator.py",
+      "destination": "tools/codex/train_gci_edge_calibrator.py",
+      "category": "model_snapshot",
+      "sha256": "0fedfa344d16aa0100a123b3fe55c327fc601bfaeb96fd571d0612a99780563f",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/create_data.py",
+      "destination": "tools/create_data.py",
+      "category": "model_snapshot",
+      "sha256": "e5cd66839cf42153538bfc509080e81a20be6dc09e0a26d7737222d51a322f9e",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/dist_test.sh",
+      "destination": "tools/dist_test.sh",
+      "category": "model_snapshot",
+      "sha256": "bb00db6ed07c128c244ee9b0c8883b04d9cb4408e0b8b90580ad5b49b714a3e5",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/dist_train.sh",
+      "destination": "tools/dist_train.sh",
+      "category": "model_snapshot",
+      "sha256": "398535e01eb42257388f3e9dc559fb03f3c5476e23ee256ee468465a0a1489a7",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/extract_dinov2_features.py",
+      "destination": "tools/extract_dinov2_features.py",
+      "category": "model_snapshot",
+      "sha256": "a1fe402e80f6fd68efb636a18c7cdf05cb2d346c0a244c63cae0ca36cc09081e",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/fix_spconv_checkpoint.py",
+      "destination": "tools/fix_spconv_checkpoint.py",
+      "category": "model_snapshot",
+      "sha256": "827db2fbf7af0a459a7da853f392a21df0406d8314fafdff80882de73aaaa2ab",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/indoor_converter.py",
+      "destination": "tools/indoor_converter.py",
+      "category": "model_snapshot",
+      "sha256": "ef952aae56245c77cd85656d5d78aba67180c5e30d8f83f2006501ee1810cb56",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/scannet_data_utils.py",
+      "destination": "tools/scannet_data_utils.py",
+      "category": "model_snapshot",
+      "sha256": "2e9da151305c44b6c9f95799d97eefc7017efbfaa11fa03fd8584c88c4905613",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/scenenn_data_utils.py",
+      "destination": "tools/scenenn_data_utils.py",
+      "category": "model_snapshot",
+      "sha256": "2952e0e59e015da3550217f1869537120323eebe2d355bcd6decf0efab66cd8a",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/test.py",
+      "destination": "tools/test.py",
+      "category": "model_snapshot",
+      "sha256": "1b3539e8a9a3fcf283f71ccd92f8e0af4fa8893e37bc16543a513bc50905cc9f",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/train.py",
+      "destination": "tools/train.py",
+      "category": "model_snapshot",
+      "sha256": "679689a36ce3ba73c0e24e4002e4c751b4db12e5b7dcde2728ab663523d31e73",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/trscan_data_utils.py",
+      "destination": "tools/trscan_data_utils.py",
+      "category": "model_snapshot",
+      "sha256": "65ec2c9f548f7c5b1d3d1a2d45a528d2d160a9aa0d22553085068c2f41ab1eac",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/tools/update_infos_to_v2.py",
+      "destination": "tools/update_infos_to_v2.py",
+      "category": "model_snapshot",
+      "sha256": "de7ec573f91f7b840e5131c7da835058d54a31c638ea398a74c9232955b68b69",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/scripts/codex_tools/build_mv_dino_manifest.py",
+      "destination": "scripts/codex_tools/build_mv_dino_manifest.py",
+      "category": "model_snapshot",
+      "sha256": "f9f262eefba72de8d3c3d9f8a5fde2cc87346e8f12ee0864f8bacb82671e162b",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/scripts/codex_tools/compact_dino_cache.py",
+      "destination": "scripts/codex_tools/compact_dino_cache.py",
+      "category": "model_snapshot",
+      "sha256": "123579c2540eba501964d3fcdbfb63967cf99c81afdff3307f5540006e02ad36",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/scripts/codex_tools/extract_mv_dino_cache.py",
+      "destination": "scripts/codex_tools/extract_mv_dino_cache.py",
+      "category": "model_snapshot",
+      "sha256": "45fcada6f2adcc5d2ad02c29ed7df95f758f110b8257a80c5389a0012239076d",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/scripts/codex_tools/smoke_mv_dino_projection.py",
+      "destination": "scripts/codex_tools/smoke_mv_dino_projection.py",
+      "category": "model_snapshot",
+      "sha256": "a97e25bc96f5eb3e7885f0a45958cb8429b79a2831e0e70af768658b744c9feb",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/scripts/codex_tools/smoke_v5ab4_one_batch.py",
+      "destination": "scripts/codex_tools/smoke_v5ab4_one_batch.py",
+      "category": "model_snapshot",
+      "sha256": "9f80939696d9a418e5a009d913294200a2905f74590ab99bb4fab0f1d91125cd",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/scripts/codex_tools/watch_cache_then_launch_stage1.sh",
+      "destination": "scripts/codex_tools/watch_cache_then_launch_stage1.sh",
+      "category": "model_snapshot",
+      "sha256": "a130f2f364f5b7fa7a60ab1abcc15e5467a203068443e897c3170ae29d47c410",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/patches/v5ab4_offline_dino_dual_autoseg3d_clean_20260619.patch",
+      "destination": "research_archive/snapshot_patches/v5ab4_offline_dino_dual_autoseg3d_clean_20260619.patch",
+      "category": "history",
+      "sha256": "8948d61e0b9b67bb2674a97f5b3d5fb638b6d5521d78ba5ad3378b5a486805bc",
+      "status": "identical"
+    },
+    {
+      "source": ".codex_worktrees/object_world_encoder_20260719/patches/v5ab4_plus_core_ablation_autoseg3d_clean_20260619.patch",
+      "destination": "research_archive/snapshot_patches/v5ab4_plus_core_ablation_autoseg3d_clean_20260619.patch",
+      "category": "history",
+      "sha256": "68ee310075659b9464eea39388b739e00b3fcc996a4362cb80b1b77eaa20e113",
+      "status": "identical"
+    },
+    {
+      "source": "tools/analyze_representation_dumps.py",
+      "destination": "tools/analyze_representation_dumps.py",
+      "category": "experiment_tools",
+      "sha256": "a373b9cfd5714cf21cd5fee03b8f7227462acd2e4acb7c905307cc8212b1992c",
+      "status": "identical"
+    },
+    {
+      "source": "tools/create_pkl_complement.py",
+      "destination": "tools/create_pkl_complement.py",
+      "category": "experiment_tools",
+      "sha256": "9e7b059b4b972d1f611a8610a7cf42d701c60da7bef4a8acc5876897c1610379",
+      "status": "identical"
+    },
+    {
+      "source": "tools/monitor_owf_ca_objectonly_adapter_184.sh",
+      "destination": "tools/monitor_owf_ca_objectonly_adapter_184.sh",
+      "category": "experiment_tools",
+      "sha256": "2990c60eba987777fafdfa7021ff72050dae617ad6022370840839e57772f676",
+      "status": "identical"
+    },
+    {
+      "source": "tools/monitor_owf_ca_objectonly_dual.sh",
+      "destination": "tools/monitor_owf_ca_objectonly_dual.sh",
+      "category": "experiment_tools",
+      "sha256": "5c71ea5289cf40d5c47b74ae0a1d6018c452229714069c34fed8d9af863e716a",
+      "status": "identical"
+    },
+    {
+      "source": "tools/monitor_owf_cls198_184.sh",
+      "destination": "tools/monitor_owf_cls198_184.sh",
+      "category": "experiment_tools",
+      "sha256": "1620e4195314a39aa162a01a510d535efca8d4f3b335a2f23ea4f7b3fc752227",
+      "status": "identical"
+    },
+    {
+      "source": "tools/monitor_owf_cls198_objectonly_pair.sh",
+      "destination": "tools/monitor_owf_cls198_objectonly_pair.sh",
+      "category": "experiment_tools",
+      "sha256": "c2444b76af71109f0378648ae993d4273216fe431c574b28a0d08ccefb1fe21f",
+      "status": "identical"
+    },
+    {
+      "source": "tools/monitor_owf_fulltrain_multiseed.sh",
+      "destination": "tools/monitor_owf_fulltrain_multiseed.sh",
+      "category": "experiment_tools",
+      "sha256": "a9f25976a429efc8a03b01d7604670fb0ae208915ff4ca237fe3ac12536c0415",
+      "status": "identical"
+    },
+    {
+      "source": "tools/monitor_owf_joint_stage1.sh",
+      "destination": "tools/monitor_owf_joint_stage1.sh",
+      "category": "experiment_tools",
+      "sha256": "a74b0d4af35711be41663259b910b3efeea54025e76c7f8131fe27985cd3f074",
+      "status": "identical"
+    },
+    {
+      "source": "tools/queue_owf_cls198_objectonly_off_184.sh",
+      "destination": "tools/queue_owf_cls198_objectonly_off_184.sh",
+      "category": "experiment_tools",
+      "sha256": "b3f25eef1d66a022ab4635692d914b0aee22bab6a8f8ebe986247e7cf7f65ae9",
+      "status": "identical"
+    },
+    {
+      "source": "tools/render_representation_paper_figure.py",
+      "destination": "tools/render_representation_paper_figure.py",
+      "category": "experiment_tools",
+      "sha256": "b175120dd9bd87e1d2303d0f947a57d80274fc4e51f18a11407025e73f097a4b",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_owf_epoch_grid.sh",
+      "destination": "tools/run_owf_epoch_grid.sh",
+      "category": "experiment_tools",
+      "sha256": "bf332ee9525e6dab22ee46bf1640f7fab897b70a6d27453aac96b1ede62022c5",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_owf_fulltrain_adapter.sh",
+      "destination": "tools/run_owf_fulltrain_adapter.sh",
+      "category": "experiment_tools",
+      "sha256": "ece6e0333b8dc5ef408fea13eeba3ca9d9e761606177f0a859689f981c28d256",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_owf_joint_postpilot.sh",
+      "destination": "tools/run_owf_joint_postpilot.sh",
+      "category": "experiment_tools",
+      "sha256": "caa3b28a308805ebc45446a7afb300a8e1d66ee9f42170a36732f662c4bd0c67",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_owf_joint_stage1.sh",
+      "destination": "tools/run_owf_joint_stage1.sh",
+      "category": "experiment_tools",
+      "sha256": "6398ba055fa1a8940457304664f1a308678e3ddd76e4043c16519eadfa0d8f75",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_owf_matched_triplet.sh",
+      "destination": "tools/run_owf_matched_triplet.sh",
+      "category": "experiment_tools",
+      "sha256": "a65c251b4805c560d7e484bdcdc1a6fe39e21d6b46b7136c4ab77fe24955cae8",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_owf_scale_grid.sh",
+      "destination": "tools/run_owf_scale_grid.sh",
+      "category": "experiment_tools",
+      "sha256": "21609adf8c8c183a79210a90e1ebee0177d7c6d3f5c6bf80185d0cdcd6b5a3ac",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_owf_seed_controls.sh",
+      "destination": "tools/run_owf_seed_controls.sh",
+      "category": "experiment_tools",
+      "sha256": "5a242073a666e3aa998afb79e30a4f490e2effc02fe663783ae6f2904e4f46e2",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_owf_seed_sweep.sh",
+      "destination": "tools/run_owf_seed_sweep.sh",
+      "category": "experiment_tools",
+      "sha256": "c1bac408f7eada3df50deda6cf365efae7aee716008f17ce3d2558450e524602",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_owf_selected_heldout_eval.sh",
+      "destination": "tools/run_owf_selected_heldout_eval.sh",
+      "category": "experiment_tools",
+      "sha256": "680c2fec142afad81239741ac274acca21fa58666279f79c8f3694b80f79e8fa",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_representation_diagnostics.sh",
+      "destination": "tools/run_representation_diagnostics.sh",
+      "category": "experiment_tools",
+      "sha256": "e6c7785b44692bdd257229eabc5506a3cc2dda8cafd214d0a37f71462b581a96",
+      "status": "identical"
+    },
+    {
+      "source": "tools/run_transfer_eval_repeats.sh",
+      "destination": "tools/run_transfer_eval_repeats.sh",
+      "category": "experiment_tools",
+      "sha256": "f4858207015ac97847003fe941d5ff6cf514c1b37838aa7569dfc52857aab3e0",
+      "status": "identical"
+    },
+    {
+      "source": "tools/summarize_owf_seed_sweep.py",
+      "destination": "tools/summarize_owf_seed_sweep.py",
+      "category": "experiment_tools",
+      "sha256": "39a9d8c54358449c758419ac600fcb5f12ff9d401ca87620d48950bbbc1d2253",
+      "status": "identical"
+    },
+    {
+      "source": "tools/supervise_owf_cls198_objectonly_eval.sh",
+      "destination": "tools/supervise_owf_cls198_objectonly_eval.sh",
+      "category": "experiment_tools",
+      "sha256": "684e233087f7722a3ecd878e21a3342273da572e5939730fc7e116aa8140cc75",
+      "status": "identical"
+    },
+    {
+      "source": "tools/supervise_owf_joint_final_eval.sh",
+      "destination": "tools/supervise_owf_joint_final_eval.sh",
+      "category": "experiment_tools",
+      "sha256": "2f5b83964d0fe00b99b40dae06a11fe3fc93ca6e3733509680c8e5a9c9e38983",
+      "status": "identical"
+    },
+    {
+      "source": "tools/supervise_owf_joint_stage1.sh",
+      "destination": "tools/supervise_owf_joint_stage1.sh",
+      "category": "experiment_tools",
+      "sha256": "5ad0b8b0b642e7e54269a8ba253e6c6249203132798e428ff1f4ef44f51596c5",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260621_184_dgi_overseg_init/AutoSeg3D_scannet200_stage1_v5ab1_dgi_infer.py",
+      "destination": "research_archive/docs/experiment_records/20260621_184_dgi_overseg_init/AutoSeg3D_scannet200_stage1_v5ab1_dgi_infer.py",
+      "category": "history",
+      "sha256": "ab02c2744043a9464e899e8074a2c706ec9333a978b0826c57b29284f8019506",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260621_184_dgi_overseg_init/mixformer3d_dgi_excerpt.py",
+      "destination": "research_archive/docs/experiment_records/20260621_184_dgi_overseg_init/mixformer3d_dgi_excerpt.py",
+      "category": "history",
+      "sha256": "c20876527c9facd6f8b6af7cd33a56241755fdc4dac68913ff81eaa0fd713187",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260622_184_gci_first_principles_validation/gci_granularity_diagnostics.py",
+      "destination": "research_archive/docs/experiment_records/20260622_184_gci_first_principles_validation/gci_granularity_diagnostics.py",
+      "category": "history",
+      "sha256": "ab0bfddda34d5e57e48d9dd22edffd3bc5fc806f6cf3440a12a30a9f7ffdd009",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260622_184_gci_first_principles_validation/gci_seed_simulation.py",
+      "destination": "research_archive/docs/experiment_records/20260622_184_gci_first_principles_validation/gci_seed_simulation.py",
+      "category": "history",
+      "sha256": "825dae8e37617e246d823c0a2db1983b40e2fdb29cc13c7cf090ce7ce0557727",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_control_sub10.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_control_sub10.py",
+      "category": "history",
+      "sha256": "30012ae138e4aeccff0cc8446df6423a02adfb4c589323b1bf1cd1a19f7f1f45",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_control_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_control_subset50.py",
+      "category": "history",
+      "sha256": "7ea99cdc845a8e25648714ad25b88bae9fb627ae87439136ab025857f3e34d06",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_dino_only_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_dino_only_subset50.py",
+      "category": "history",
+      "sha256": "4977e0bd09ded90861f857044b4dc6df843a8eaef5f6091ab8a6e792bd4b3ac0",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_dino_only_subset50_sub10smoke.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_dino_only_subset50_sub10smoke.py",
+      "category": "history",
+      "sha256": "b4764ad09c9a73f77fd091ebb276c41f4df30627aaa8c506c55bee6efdc83298",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_geometry_only_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_geometry_only_subset50.py",
+      "category": "history",
+      "sha256": "e59c4dc1b609640a11e3b0ac6fbf902d9049cda934a2f186f894f84a224a1ecd",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_geometry_only_subset50_sub10smoke.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_geometry_only_subset50_sub10smoke.py",
+      "category": "history",
+      "sha256": "c1151a0dd13d49191ada66e3ce443b8be8fbd7dfde2f60d23162d3b78653a239",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_oracle_gt_candidates_sub10_debug.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_oracle_gt_candidates_sub10_debug.py",
+      "category": "history",
+      "sha256": "2c4e334996bc868c62afe10ea0ed3e369e6996b6f4f6bd6f49dfcb3579d18d6a",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_oracle_gt_candidates_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_oracle_gt_candidates_subset50.py",
+      "category": "history",
+      "sha256": "41300299b1794bfc93574b46f19ca29116eb89ebdc3c9425be2c82ca377c2c66",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_oracle_gt_candidates_subset50_sub10smoke.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_oracle_gt_candidates_subset50_sub10smoke.py",
+      "category": "history",
+      "sha256": "4a1e50cc89ae39c7d281ca696cd9dfad7c994b793e8b97a87a887164842d20ac",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_random_matched_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_random_matched_subset50.py",
+      "category": "history",
+      "sha256": "26782ca8c55475e89a578e02c5545f4f3bba1c6e28f0ed6548fd1e9cba7293a5",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_random_matched_subset50_sub10smoke.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/configs/phaseA_random_matched_subset50_sub10smoke.py",
+      "category": "history",
+      "sha256": "04fcd6acb2e2232fc8b9f74c2ed35956a6ff5bf70a2c8fbebc2ba7d8e4ba3537",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/diffs/mixformer3d_vs_seedcalib.patch",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseA_20260627/diffs/mixformer3d_vs_seedcalib.patch",
+      "category": "history",
+      "sha256": "343c837df98cb3029b6fe0a87b7569c4dde650a6ec690c8b8f69e4136a6c46dd",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_control_subset50_ft4ep.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_control_subset50_ft4ep.py",
+      "category": "history",
+      "sha256": "da37085eaea4f2b9ac2bda98f368fa3201bad16ac33cc6415b6f5604b7a600ef",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_base_epoch96.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_base_epoch96.py",
+      "category": "history",
+      "sha256": "2141b6312e833a12cd156588d94c3d3caec57974ac9d2a1cc5e64dd8f790400d",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_control_ft4ep.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_control_ft4ep.py",
+      "category": "history",
+      "sha256": "be4168dcc6c1f2d770f46cc78f10ac585cecdeb8e3b62eec89522844ea48b5aa",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam002_dino_weighted.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam002_dino_weighted.py",
+      "category": "history",
+      "sha256": "dc94a2f2e28c26d6476a94cde4273ca1fed006deee79975a2914e9f83482bd7b",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam005_dino_weighted.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam005_dino_weighted.py",
+      "category": "history",
+      "sha256": "3d9221cd31bc79fb99804ec4318a9ab28bfb138ad492e903a00a9318f7fe656e",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam010_dino.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam010_dino.py",
+      "category": "history",
+      "sha256": "02bd0c9a0ced38adc1fec3cac34752467b0e187b2cd2efc835897b8b4106ea13",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam010_dino_weighted.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam010_dino_weighted.py",
+      "category": "history",
+      "sha256": "857429db15a9438337b1971e34a95a713accc2352620e19ece5ebeb5aa51842d",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam010_no_dino.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_eval_fullval_lam010_no_dino.py",
+      "category": "history",
+      "sha256": "c51c2efba2c36e8f81755147ff107f10ecc8e0afc608636acec9fb49e7cccc79",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_sub10_smoke_lam005.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_sub10_smoke_lam005.py",
+      "category": "history",
+      "sha256": "918d0e7d4f7541bc3042dd9b1e57713f32b0aa8368d9d9db0a77e8e594fe16a1",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam002_dino_weighted.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam002_dino_weighted.py",
+      "category": "history",
+      "sha256": "f84b9898c736d0fd60017dec0d908daa00c60934f6bfc79b731868f08eeba049",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam005_dino.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam005_dino.py",
+      "category": "history",
+      "sha256": "31eb3f2fb302a37cb844d4c11523828bb02c6b5c6b85919524bbdf39759bf251",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam005_dino_weighted.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam005_dino_weighted.py",
+      "category": "history",
+      "sha256": "267d49f6e36250ee9d2060bb71059e56ce473c5313ca5f431446844a13720d41",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam005_no_dino.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam005_no_dino.py",
+      "category": "history",
+      "sha256": "0bb634287314885d9c8d6d238f1efb193b92ce425922c872a49096397dd9fd45",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam010_dino.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam010_dino.py",
+      "category": "history",
+      "sha256": "f6dff3b0658ffd85c2d6b60d60f1221b86485048bfa3ca3fb981f2ec8e67b5fa",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam010_dino_weighted.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam010_dino_weighted.py",
+      "category": "history",
+      "sha256": "d46bb9335236f77582f25924a580b607ed21520b8b099fc65320aa3a9d9be158",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam010_no_dino.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/configs/phaseB_pairloss_subset50_ft4ep_lam010_no_dino.py",
+      "category": "history",
+      "sha256": "1b840c5f4d986a3d6d6c8f31c459e8c13a1b54190b739088a2afd08076a5b8be",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/diffs/mixformer3d_vs_seedcalib_with_granlearn.patch",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseB_20260627/diffs/mixformer3d_vs_seedcalib_with_granlearn.patch",
+      "category": "history",
+      "sha256": "4f89e9da8f93973c42ce864cc353a1f5ea93558e766caccf956b864e36b5d92d",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseC_20260628/configs/phaseC_fulltrain_ft4ep_control.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseC_20260628/configs/phaseC_fulltrain_ft4ep_control.py",
+      "category": "history",
+      "sha256": "9a93c658087b1a8e2088cb69bc7611808d6cf357fed6b10d4bec9d56aec80ead",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseC_20260628/configs/phaseC_fulltrain_ft4ep_lam005_dino_weighted.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseC_20260628/configs/phaseC_fulltrain_ft4ep_lam005_dino_weighted.py",
+      "category": "history",
+      "sha256": "28e894275f2a64d7f80ff84f8d469d1cc16b110cbe00d614474092c3153444ef",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseC_20260628/configs/phaseC_fulltrain_ft4ep_lam010_dino.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseC_20260628/configs/phaseC_fulltrain_ft4ep_lam010_dino.py",
+      "category": "history",
+      "sha256": "72d7ee80edaf3d360ee87dfa74ad7afaa4d0090177c8ed51597ece43041850f7",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseC_20260628/configs/phaseC_fulltrain_ft4ep_lam010_no_dino.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/76_granlearn_phaseC_20260628/configs/phaseC_fulltrain_ft4ep_lam010_no_dino.py",
+      "category": "history",
+      "sha256": "4a9a9ef7b14cbe2c8889462a78d6f392b2c052f85f93668dcae41a8f6af4596e",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/wave0_20260705/wave0_add_ablation_knobs.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/wave0_20260705/wave0_add_ablation_knobs.py",
+      "category": "history",
+      "sha256": "791ee00ccaf35a68ea54d162c99c23bf95c7abe959fddef9ca3a11ff865f3921",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/wave0_20260705/wave0_make_ab78_configs.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/artifacts/wave0_20260705/wave0_make_ab78_configs.py",
+      "category": "history",
+      "sha256": "63f0c25d88bdcb12690c00b3832ad80135a2a0ff82c5d2303a7cd76afba247f5",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/scripts/parse_granlearn_logs.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/scripts/parse_granlearn_logs.py",
+      "category": "history",
+      "sha256": "8676cd6bcd3129c0146b52a71ba9f6ccdec106f2dac16c40f13f22a919d6d280",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/scripts/run_multiseed_independent_eval_20260713.sh",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/scripts/run_multiseed_independent_eval_20260713.sh",
+      "category": "history",
+      "sha256": "7c4d16c54c932b07def2f6d1dbbb4a10758ac9b56564ded94a1a934be0fb8c93",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/scripts/sam_fastsam_2d_stats.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/scripts/sam_fastsam_2d_stats.py",
+      "category": "history",
+      "sha256": "3040c1264ce15c13cf610a8362c7c3a26f57c29f898090e79835a0d68c2fea7b",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260626_sam_fastsam_granularity_audit/scripts/sam_fastsam_granularity_audit.py",
+      "destination": "research_archive/docs/experiment_records/20260626_sam_fastsam_granularity_audit/scripts/sam_fastsam_granularity_audit.py",
+      "category": "history",
+      "sha256": "006effb215e4140770d8ba616956fcce7c000af8dc668df73883c32b4d30d48d",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_1/20260720_135047/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_1/20260720_135047/vis_data/config.py",
+      "category": "history",
+      "sha256": "745a3e948c510bec4521850da1b93d9b80e3c9eae722f5174493246dc6414fc9",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_1/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_1/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "745a3e948c510bec4521850da1b93d9b80e3c9eae722f5174493246dc6414fc9",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_2/20260720_135315/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_2/20260720_135315/vis_data/config.py",
+      "category": "history",
+      "sha256": "c64fa71174217b4c73e69e1c5b938953daf9657d36e1a3b90599ec8efd362c45",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_2/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_2/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "c64fa71174217b4c73e69e1c5b938953daf9657d36e1a3b90599ec8efd362c45",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_3/20260720_135548/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_3/20260720_135548/vis_data/config.py",
+      "category": "history",
+      "sha256": "30f4e0b54cfec8e4896f7f8d075e54bd16517645d9b942970d8c15388b651f43",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_3/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/epoch_grid_dinoonly/epoch_3/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "30f4e0b54cfec8e4896f7f8d075e54bd16517645d9b942970d8c15388b651f43",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_aligned/20260720_140054/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_aligned/20260720_140054/vis_data/config.py",
+      "category": "history",
+      "sha256": "59cebebb9ec664dbd170877e815cffcafd0ac154944072aab938e4e56d0506a6",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "59cebebb9ec664dbd170877e815cffcafd0ac154944072aab938e4e56d0506a6",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_no_injection/20260720_135825/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_no_injection/20260720_135825/vis_data/config.py",
+      "category": "history",
+      "sha256": "588d538759eba19e1833dfd51cf548e346f4e5b2943e86cf8295d2124f6a76d5",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_no_injection/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_no_injection/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "588d538759eba19e1833dfd51cf548e346f4e5b2943e86cf8295d2124f6a76d5",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_shuffled/20260720_140322/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_shuffled/20260720_140322/vis_data/config.py",
+      "category": "history",
+      "sha256": "c9d8a977821c9755100b088148eea69fae4230fed29c2036b10f6e6855400858",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_shuffled/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r1_shuffled/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "c9d8a977821c9755100b088148eea69fae4230fed29c2036b10f6e6855400858",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_aligned/20260720_140817/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_aligned/20260720_140817/vis_data/config.py",
+      "category": "history",
+      "sha256": "db58c4704e7deac466cf9987ec7f527f6f21eb7b6bd633fe4a7fd8504dff50b8",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "db58c4704e7deac466cf9987ec7f527f6f21eb7b6bd633fe4a7fd8504dff50b8",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_no_injection/20260720_140549/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_no_injection/20260720_140549/vis_data/config.py",
+      "category": "history",
+      "sha256": "568ddd6ddb7f08b08e0607fead42ed4d783db9ead8a56c1d1c70aa4b45000d79",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_no_injection/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_no_injection/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "568ddd6ddb7f08b08e0607fead42ed4d783db9ead8a56c1d1c70aa4b45000d79",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_shuffled/20260720_141043/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_shuffled/20260720_141043/vis_data/config.py",
+      "category": "history",
+      "sha256": "4948e3e78609c7384cf8cc45834188cb57bec54fefdadb1db5f08623d68386fd",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_shuffled/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host184/matched_triplet_dinoonly_e1/r2_shuffled/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "4948e3e78609c7384cf8cc45834188cb57bec54fefdadb1db5f08623d68386fd",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/fullval_pair_dinoonly_e4_s1/r1_no_injection_s0/20260720_074404/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/fullval_pair_dinoonly_e4_s1/r1_no_injection_s0/20260720_074404/vis_data/config.py",
+      "category": "history",
+      "sha256": "937f4ac375aaa49aef879916f4ec239456a7b0e23fc7baa2f4276811ec255944",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/fullval_pair_dinoonly_e4_s1/r1_no_injection_s0/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/fullval_pair_dinoonly_e4_s1/r1_no_injection_s0/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "category": "history",
+      "sha256": "937f4ac375aaa49aef879916f4ec239456a7b0e23fc7baa2f4276811ec255944",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/fullval_pair_dinoonly_e4_s1/r1_object_injection_s1p0/20260720_081331/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/fullval_pair_dinoonly_e4_s1/r1_object_injection_s1p0/20260720_081331/vis_data/config.py",
+      "category": "history",
+      "sha256": "7403c0dc697ae9713f82dd416447491f27ce6eae6691dad0dc6f2546d9b663bc",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/fullval_pair_dinoonly_e4_s1/r1_object_injection_s1p0/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/fullval_pair_dinoonly_e4_s1/r1_object_injection_s1p0/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "category": "history",
+      "sha256": "7403c0dc697ae9713f82dd416447491f27ce6eae6691dad0dc6f2546d9b663bc",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_aligned/20260720_060836/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_aligned/20260720_060836/vis_data/config.py",
+      "category": "history",
+      "sha256": "3d2ffe4a85dc0c6dcee46bc177f8d083699897aa98371b2eb41f6faab66bd48f",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "3d2ffe4a85dc0c6dcee46bc177f8d083699897aa98371b2eb41f6faab66bd48f",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_no_injection/20260720_060326/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_no_injection/20260720_060326/vis_data/config.py",
+      "category": "history",
+      "sha256": "2a215f4fc42b257da5a4634977df561824707f1349916b13916f2932fb5a8789",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_no_injection/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_no_injection/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "2a215f4fc42b257da5a4634977df561824707f1349916b13916f2932fb5a8789",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_shuffled/20260720_061351/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_shuffled/20260720_061351/vis_data/config.py",
+      "category": "history",
+      "sha256": "dfca1345eaac57a22d151b3883bda14fbf6f937287fdb9dcd48041cebf5e7a9c",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_shuffled/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r1_shuffled/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "dfca1345eaac57a22d151b3883bda14fbf6f937287fdb9dcd48041cebf5e7a9c",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_aligned/20260720_062356/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_aligned/20260720_062356/vis_data/config.py",
+      "category": "history",
+      "sha256": "fee09e73e7780d405d3d95e7060f51508a7ad6a6988d620dc6ef6b7366923031",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "fee09e73e7780d405d3d95e7060f51508a7ad6a6988d620dc6ef6b7366923031",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_no_injection/20260720_061853/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_no_injection/20260720_061853/vis_data/config.py",
+      "category": "history",
+      "sha256": "f1c3db8f4dd60db056bd709612f1417f0b9f549aa65a6bc5b52565838977b76e",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_no_injection/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_no_injection/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "f1c3db8f4dd60db056bd709612f1417f0b9f549aa65a6bc5b52565838977b76e",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_shuffled/20260720_062854/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_shuffled/20260720_062854/vis_data/config.py",
+      "category": "history",
+      "sha256": "9856696043935362086367e5231af25aef35f6a537e9de36e39cf409d16c214d",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_shuffled/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/matched_triplet_dinoonly_e4_s1/r2_shuffled/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "9856696043935362086367e5231af25aef35f6a537e9de36e39cf409d16c214d",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_no_injection_s0/20260720_054251/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_no_injection_s0/20260720_054251/vis_data/config.py",
+      "category": "history",
+      "sha256": "b08e870b888f441461f76d556c4e30cadb822de4af415ed8f7dabeac01c838d4",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_no_injection_s0/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_no_injection_s0/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "b08e870b888f441461f76d556c4e30cadb822de4af415ed8f7dabeac01c838d4",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s0p25/20260720_054803/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s0p25/20260720_054803/vis_data/config.py",
+      "category": "history",
+      "sha256": "ba7dd5e98cf80354a1012c6876b68c3305a5ea85a37537f5412d243f60424487",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s0p25/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s0p25/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "ba7dd5e98cf80354a1012c6876b68c3305a5ea85a37537f5412d243f60424487",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s0p5/20260720_055259/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s0p5/20260720_055259/vis_data/config.py",
+      "category": "history",
+      "sha256": "1468a190d0cb72fc665207d46050da736450652099db0e1ca50636795e6cd70e",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s0p5/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s0p5/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "1468a190d0cb72fc665207d46050da736450652099db0e1ca50636795e6cd70e",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s1p0/20260720_055756/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s1p0/20260720_055756/vis_data/config.py",
+      "category": "history",
+      "sha256": "d400eed364cdf021384073d0838027d9dbb79830cc21e6f98eb1f1ff69e2b5a8",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s1p0/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/scale_grid_dinoonly_e4/r1_object_injection_s1p0/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "d400eed364cdf021384073d0838027d9dbb79830cc21e6f98eb1f1ff69e2b5a8",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/training_selected/resolved_config.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/host76/training_selected/resolved_config.py",
+      "category": "history",
+      "sha256": "190dffd66f8734635c47f0499fb6729b0aec2de153a01999a9fed1d82d1c3b81",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/configs/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/configs/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "category": "history",
+      "sha256": "0b8484a716386c48e28f0bd5ad5a7d71881f1343e6d3c2ff5d0e42973a5d294e",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/configs/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/configs/AutoSeg3D_scannet200_stage1_v5ab1_owf_subset50.py",
+      "category": "history",
+      "sha256": "c2201cc817d2955615f49984ee5dd6ac1e1636d7ef9455d9e99f1e3849d8161d",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/oneformer3d/mink_unet.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/oneformer3d/mink_unet.py",
+      "category": "history",
+      "sha256": "64d993c38977815b62b974678b3fdb428f91d3b81b0615e9b8765bc3b15aa1b6",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/oneformer3d/mixformer3d.py",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/oneformer3d/mixformer3d.py",
+      "category": "history",
+      "sha256": "058e3fa4d188d4dca0ab9a2e8b583f4081e33e9247c16df14fc34bc0efa16b83",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/tools/run_owf_matched_triplet.sh",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/tools/run_owf_matched_triplet.sh",
+      "category": "history",
+      "sha256": "a65c251b4805c560d7e484bdcdc1a6fe39e21d6b46b7136c4ab77fe24955cae8",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/tools/run_owf_scale_grid.sh",
+      "destination": "research_archive/docs/experiment_records/20260719_object_conditioned_world_encoder/artifacts/reproducibility_snapshot/tools/run_owf_scale_grid.sh",
+      "category": "history",
+      "sha256": "21609adf8c8c183a79210a90e1ebee0177d7c6d3f5c6bf80185d0cdcd6b5a3ac",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_heldout262/aligned/20260720_121801/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_heldout262/aligned/20260720_121801/vis_data/config.py",
+      "category": "history",
+      "sha256": "72f55073348dc089f9307ff31f12295b51d6a2fb7ac6bd7ac6b139761b3d0362",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_heldout262/aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "destination": "research_archive/docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_heldout262/aligned/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "category": "history",
+      "sha256": "72f55073348dc089f9307ff31f12295b51d6a2fb7ac6bd7ac6b139761b3d0362",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_heldout262/no_write/20260720_115204/vis_data/config.py",
+      "destination": "research_archive/docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_heldout262/no_write/20260720_115204/vis_data/config.py",
+      "category": "history",
+      "sha256": "2ac448037572a2094538a25a0b5ad76ab0767d7c544f1d5450d42b0eb7b51a2c",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_heldout262/no_write/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "destination": "research_archive/docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_heldout262/no_write/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py",
+      "category": "history",
+      "sha256": "2ac448037572a2094538a25a0b5ad76ab0767d7c544f1d5450d42b0eb7b51a2c",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_representation_val312/launch_val312.sh",
+      "destination": "research_archive/docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_representation_val312/launch_val312.sh",
+      "category": "history",
+      "sha256": "8dc7ef52aa7326ae70da112817852d2ad223786798acd8eb7de420f588d2fdd1",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_representation_val312/make_split_views.py",
+      "destination": "research_archive/docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_representation_val312/make_split_views.py",
+      "category": "history",
+      "sha256": "4f4d0c5a2b9d1275f82066984ec2fb0359a2bd62ecc17d51db58f8bf881db8ba",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_representation_val312/run_representation_diagnostics_2arm.sh",
+      "destination": "research_archive/docs/experiment_records/20260720_seed_sweep_and_experiment_audit/artifacts/host76_representation_val312/run_representation_diagnostics_2arm.sh",
+      "category": "history",
+      "sha256": "27deb2853ae3d2943545891e382fdf7d7f5728a592a2da5aafd357ebe2a34d82",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260725_ca_objectonly_adapter/AutoSeg3D_scannet200_stage1_v5ab0_owf_objectonly_fullval.py",
+      "destination": "research_archive/docs/experiment_records/20260725_ca_objectonly_adapter/AutoSeg3D_scannet200_stage1_v5ab0_owf_objectonly_fullval.py",
+      "category": "history",
+      "sha256": "1c9528e53f92376f3cdbd7c3ad9ca34c97bf4a141df67c7eafe30f2f01c56e61",
+      "status": "identical"
+    },
+    {
+      "source": "docs/experiment_records/20260725_ca_objectonly_adapter/AutoSeg3D_scannet200_stage1_v5ab0_owf_objectonly_joint_formal.py",
+      "destination": "research_archive/docs/experiment_records/20260725_ca_objectonly_adapter/AutoSeg3D_scannet200_stage1_v5ab0_owf_objectonly_joint_formal.py",
+      "category": "history",
+      "sha256": "a78b1a87fae5083ee71ff3cc83b4e9df05f830e33b139a61d1e6162f0d37cad6",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_planning/lit_survey_20260707/lit_survey.py",
+      "destination": "research_archive/docs/paper_planning/lit_survey_20260707/lit_survey.py",
+      "category": "history",
+      "sha256": "0addce79cca2996f57cfefa0016207aeb7721c7f0363ca7e66a8e88d2eb56e86",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T1/eval_embodieddino/20260727_035936/vis_data/config.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T1/eval_embodieddino/20260727_035936/vis_data/config.py",
+      "category": "history",
+      "sha256": "bb6e07d178cda99bc4c8503697b828d8b078a2c9805d799aa4b1c12cd8bb7ee8",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T1/eval_embodieddino/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T1/eval_embodieddino/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py",
+      "category": "history",
+      "sha256": "bb6e07d178cda99bc4c8503697b828d8b078a2c9805d799aa4b1c12cd8bb7ee8",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T1/eval_host/20260727_035935/vis_data/config.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T1/eval_host/20260727_035935/vis_data/config.py",
+      "category": "history",
+      "sha256": "04d2d4a02d81fc8c83ed93391536229bfb290bb50f563ba07596527b23965a69",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T1/eval_host/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T1/eval_host/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py",
+      "category": "history",
+      "sha256": "04d2d4a02d81fc8c83ed93391536229bfb290bb50f563ba07596527b23965a69",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T1/launch_val312.sh",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T1/launch_val312.sh",
+      "category": "history",
+      "sha256": "8dc7ef52aa7326ae70da112817852d2ad223786798acd8eb7de420f588d2fdd1",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T1/make_split_views.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T1/make_split_views.py",
+      "category": "history",
+      "sha256": "4f4d0c5a2b9d1275f82066984ec2fb0359a2bd62ecc17d51db58f8bf881db8ba",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T1/run_representation_diagnostics_2arm.sh",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T1/run_representation_diagnostics_2arm.sh",
+      "category": "history",
+      "sha256": "27deb2853ae3d2943545891e382fdf7d7f5728a592a2da5aafd357ebe2a34d82",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T3/run_scannet200_only.sh",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T3/run_scannet200_only.sh",
+      "category": "history",
+      "sha256": "144d7cb2065bfc4d9c3e38d11bf7594c757ffdc9dd26ef1b5cb0821d82b744aa",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T3/run_validrate_evals.sh",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T3/run_validrate_evals.sh",
+      "category": "history",
+      "sha256": "f314a00be0f7c8fa1f4e06c986192c917ec7b89367c7e80e9e0bca811d59e3e7",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T3/validrate_v5ab1_eval_3rscan_20260727.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T3/validrate_v5ab1_eval_3rscan_20260727.py",
+      "category": "history",
+      "sha256": "17412fdee61e0b2c4e55a43cc2ed620cdb3926a813e3582e9e814f365654ac61",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T3/validrate_v5ab1_eval_scannet200_20260727.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T3/validrate_v5ab1_eval_scannet200_20260727.py",
+      "category": "history",
+      "sha256": "53345e2cbf368d9373a5ed1160d0c80031447d4486e2ebc60493c671e105407d",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T3/validrate_v5ab1_eval_scenenn_20260727.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T3/validrate_v5ab1_eval_scenenn_20260727.py",
+      "category": "history",
+      "sha256": "2ee8ee7d3ada739b0319203ea6c7ab13414392b47094e0592ccf9093e2151e01",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed123_disabled/config.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed123_disabled/config.py",
+      "category": "history",
+      "sha256": "16cc623c2aa98dce0dc2332e497ab2d96173b187e442179932c0c29ad3e6e634",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed123_enabled/config.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed123_enabled/config.py",
+      "category": "history",
+      "sha256": "e0b9c97684ba517c5757d67102b7255300e721611115a0c4fbc993315290d95f",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed2050318485_disabled/config.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed2050318485_disabled/config.py",
+      "category": "history",
+      "sha256": "bd7005eb4a89b4e61580611a17c92cfc5a86409b8f0bbd95a655be9352efdc5e",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed2050318485_enabled/config.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed2050318485_enabled/config.py",
+      "category": "history",
+      "sha256": "154dac37ff6cc917435261bc39429e04cce3fd0793476c189ef6a5b337a63949",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed7_disabled/config.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed7_disabled/config.py",
+      "category": "history",
+      "sha256": "674576965af08d69877adad0da159986a216bb42680f5e66de0a9b4780859a59",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed7_enabled/config.py",
+      "destination": "research_archive/docs/paper_writing/evidence/aaai27_sync/T4/t4_pack/seed7_enabled/config.py",
+      "category": "history",
+      "sha256": "a96b55e84e9b07262a384e00f0dc6766c3667ae6e730bfd6220785bba9daae55",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig1_motivation/build_fig1_motivation.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig1_motivation/build_fig1_motivation.py",
+      "category": "history",
+      "sha256": "ad4ddfa1a0630f6d87801c7a695f082b9b3561b2b8bed589ec2f576a9d3aa08f",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig1_motivation/render_motivation_panels.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig1_motivation/render_motivation_panels.py",
+      "category": "history",
+      "sha256": "8b12b0ee36e656a2e81c4d015ae9ff14043b1f7b5d90c08922da0cd1ece19561",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig1_motivation/render_scene_instances.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig1_motivation/render_scene_instances.py",
+      "category": "history",
+      "sha256": "403d24f252381abcd80a184591d398d446b74dc710c7f3e55bbf2a7a400a2a68",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig2_pipeline/build_pipeline_pptx.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig2_pipeline/build_pipeline_pptx.py",
+      "category": "history",
+      "sha256": "606f6007ddae1f4b6ee574d49ff82251db0a32f85238340a2a0ef6099f2d4df6",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig2_pipeline/render_scene_3d.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig2_pipeline/render_scene_3d.py",
+      "category": "history",
+      "sha256": "7b2841f32c75b8e9adda1a2ea746177fe3826d7a79a13e0f880dbec373da0e37",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig3_qualitative/dump_pred_instances.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig3_qualitative/dump_pred_instances.py",
+      "category": "history",
+      "sha256": "1af75ed820c0275fb3e12234a76cc3f4cecd2663604e2715ef12cc146c13a701",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig3_qualitative/frag_analysis.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig3_qualitative/frag_analysis.py",
+      "category": "history",
+      "sha256": "0e071d088977e55cd54c4f05457e991b3095dfd76bd78548be848ae17475d76c",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig3_qualitative/montage.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig3_qualitative/montage.py",
+      "category": "history",
+      "sha256": "00faa1ffb062cff20ea4c0c315fd973069f19bad29693b398568c12a2d249817",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig3_qualitative/rank_scenes.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig3_qualitative/rank_scenes.py",
+      "category": "history",
+      "sha256": "12e00ac1b3e475ae5f0b8a1a6d56304e164c382e41c7e0439112a727506933d7",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig3_qualitative/render_qualitative.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig3_qualitative/render_qualitative.py",
+      "category": "history",
+      "sha256": "f9c74718213b720f6bf969ef3b302133a90633568b5f49d037c623da3411423f",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig3_qualitative/vet_scenes.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig3_qualitative/vet_scenes.py",
+      "category": "history",
+      "sha256": "68ad88da38e1de2a62bbf392960aa2a94ccda13def18f6ee9dfe5203c39779ab",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/fig3_representation/make_fig3.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/fig3_representation/make_fig3.py",
+      "category": "history",
+      "sha256": "9c8de893f70436af89ffc328b1b5750e60679bf9a96e342cb8fdf5918d823f7d",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/figures_v2/qualitative/scripts/s2_sequence_length/frame_count_histogram.py",
+      "destination": "research_archive/docs/paper_writing/figures_v2/qualitative/scripts/s2_sequence_length/frame_count_histogram.py",
+      "category": "history",
+      "sha256": "5ea2e4f1dcedd6e9862a878ebc523283db2c0a29f4d1cb3e3dae3cf59a4efce9",
+      "status": "identical"
+    },
+    {
+      "source": "docs/paper_writing/latex/figures/render_qualitative.py",
+      "destination": "research_archive/docs/paper_writing/latex/figures/render_qualitative.py",
+      "category": "history",
+      "sha256": "175e0a30e301e7b3b9157122ee805d26c63c0d2772a8b9803b0456a83086d3ab",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py",
+      "category": "history",
+      "sha256": "a61c71a31881a753768a918517ddf167ec2dd7975a6c219b4bb38ef087f549e2",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_seed42.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_seed42.py",
+      "category": "history",
+      "sha256": "89a12359f35434f2d0c39bb780f68bdd434bce91c8c967e4f4749c437869a8fe",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only.py",
+      "category": "history",
+      "sha256": "f9c44c19f4681beea1ebfa63eeaa259e3904b666d88117e0de0815f2246ab1f3",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only_seed42.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab1_offline_dino_injection_only_seed42.py",
+      "category": "history",
+      "sha256": "633bb2f9deed8afedfca3881f3b473f10ce839d3fe78acef40dd0c83ac5ed710",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual.py",
+      "category": "history",
+      "sha256": "b65b30c9e9a8a6c73a9d14b9782d4687c218635fb137b7a291220fb84a27e309",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual_seed42.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual_seed42.py",
+      "category": "history",
+      "sha256": "6523715a3d18e1578df69b6013e19e98fd19bb643fb99fa94b7144297338c31a",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab5_offline_dino_dual_no_detach.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab5_offline_dino_dual_no_detach.py",
+      "category": "history",
+      "sha256": "1e08d02406117588edaf4314d6c4e47ca32d6d578a7e929f211fef8a08923452",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab6_offline_dino_dual_no_mergefusion.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab6_offline_dino_dual_no_mergefusion.py",
+      "category": "history",
+      "sha256": "07744190a80350f603933d49424403992cef4458917d6d9da260aa0fd31c08c8",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab7_pv_no_aug_reverse.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab7_pv_no_aug_reverse.py",
+      "category": "history",
+      "sha256": "10b43630aeae66c5b2773cfa6362c2c0832dc0b3465c7632683406436225efbd",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab8_pv_zeroinit_fuse.py",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/configs/AutoSeg3D_scannet200_stage1_v5ab8_pv_zeroinit_fuse.py",
+      "category": "history",
+      "sha256": "e9393ae2e099f31414c5f9708c11d40099d1bdec478cd2ed3baa7b24960d283f",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/patches/v5ab4_offline_dino_dual_autoseg3d_clean_20260619.patch",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/patches/v5ab4_offline_dino_dual_autoseg3d_clean_20260619.patch",
+      "category": "history",
+      "sha256": "8948d61e0b9b67bb2674a97f5b3d5fb638b6d5521d78ba5ad3378b5a486805bc",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/patches/v5ab4_plus_core_ablation_autoseg3d_clean_20260619.patch",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/patches/v5ab4_plus_core_ablation_autoseg3d_clean_20260619.patch",
+      "category": "history",
+      "sha256": "68ee310075659b9464eea39388b739e00b3fcc996a4362cb80b1b77eaa20e113",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/remote_76/docs_audit/local_tracking_settings_20260604.yaml",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/remote_76/docs_audit/local_tracking_settings_20260604.yaml",
+      "category": "history",
+      "sha256": "6fa5e15a3684cd68d04756f242d950af34b286d9debdab94e88969fea8e1f7dd",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/scripts_watch_cache_then_launch_stage1.sh",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/scripts_watch_cache_then_launch_stage1.sh",
+      "category": "history",
+      "sha256": "a130f2f364f5b7fa7a60ab1abcc15e5467a203068443e897c3170ae29d47c410",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/settings.yaml",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/settings.yaml",
+      "category": "history",
+      "sha256": "6e9366ff2d9827af1cfb20c0d36f05b44940eb9d031d9236d1426cb8960184c1",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/sync_from_76.sh",
+      "destination": "research_archive/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604/sync_from_76.sh",
+      "category": "history",
+      "sha256": "f3ea8b7e6f62976147db13e674cc1e665ae7ac0f18fee14a14b387c61c0e6496",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/protocol_cards/autoseg3d_stage1_eval_184_20260529.yaml",
+      "destination": "research_archive/docs_audit/protocol_cards/autoseg3d_stage1_eval_184_20260529.yaml",
+      "category": "history",
+      "sha256": "5a2c42c4edb349105c772990d7c9d17a32d48658ac7c85b886703722f5635f24",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/protocol_cards/autoseg3d_stage1_repro.yaml",
+      "destination": "research_archive/docs_audit/protocol_cards/autoseg3d_stage1_repro.yaml",
+      "category": "history",
+      "sha256": "cdc13f791b67d95ffad2e2e4f588a74c5521b75d509c3a13035737efdb2582a1",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/protocol_cards/autoseg3d_stage1_smoke_76_20260529.yaml",
+      "destination": "research_archive/docs_audit/protocol_cards/autoseg3d_stage1_smoke_76_20260529.yaml",
+      "category": "history",
+      "sha256": "fcb005e5d38c23c600a78fbac4389b3eb62ec0b31c535d31270052968fa917e8",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/protocol_cards/autoseg3d_stage2_eval_184_20260529.yaml",
+      "destination": "research_archive/docs_audit/protocol_cards/autoseg3d_stage2_eval_184_20260529.yaml",
+      "category": "history",
+      "sha256": "d540f318cd64ff12205c89f96ea5af4818a669e14ab132bdb6e7c1ffc7853bd6",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/protocol_cards/autoseg3d_stage2_repro.yaml",
+      "destination": "research_archive/docs_audit/protocol_cards/autoseg3d_stage2_repro.yaml",
+      "category": "history",
+      "sha256": "ed97ee776d62d6303ae25df39326ba2aa674395fdfceb77c21e9c9ed56c005db",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/protocol_cards/baseline_repro.yaml",
+      "destination": "research_archive/docs_audit/protocol_cards/baseline_repro.yaml",
+      "category": "history",
+      "sha256": "8da2af3b4c810cf0bd4f9f1a193311c15b27b1186fe8918b030e301aef545aa5",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/protocol_cards/mask_clean.yaml",
+      "destination": "research_archive/docs_audit/protocol_cards/mask_clean.yaml",
+      "category": "history",
+      "sha256": "faf7a2cd5dda0749c50d90428d35edaf88f320a1f65630633273d28e4ccaa232",
+      "status": "identical"
+    },
+    {
+      "source": "docs_audit/protocol_cards/ours_v5.yaml",
+      "destination": "research_archive/docs_audit/protocol_cards/ours_v5.yaml",
+      "category": "history",
+      "sha256": "32e6cef98c4ca330f65043aba8694a04e0614d25c56310e9bc1f46008516b1de",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/configs/ESAM_CA/ESAM_online_scannet200_CA_dual_path_dino.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/configs/ESAM_CA/ESAM_online_scannet200_CA_dual_path_dino.py",
+      "category": "history",
+      "sha256": "01443c4f3e2afe4957560f15bddae71bf81124bd40a4e80593178dbf62d09edc",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/configs/ESAM_CA/codex_20260603_184_v5_svdino_init_autoseg_stage1_full.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/configs/ESAM_CA/codex_20260603_184_v5_svdino_init_autoseg_stage1_full.py",
+      "category": "history",
+      "sha256": "8668706d691b03d051f971b6360b6b94a18e5621905a0cb75bd072c5b8ba200d",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/collate.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/collate.py",
+      "category": "history",
+      "sha256": "af283c73aa4fc8cd8809a65aafe1922a826a7e27df1cd15fa902590c74c34243",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/data_preprocessor.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/data_preprocessor.py",
+      "category": "history",
+      "sha256": "67efa2fcd552f3b2b12061f39fbaf570af7c28dad54558be14c1f981ba4d077d",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/dino_backbone.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/dino_backbone.py",
+      "category": "history",
+      "sha256": "271b3921f46f8c5107a7796f4053e35cd940566a55b706245ae8d220bea75581",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/dino_sanity_hook.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/dino_sanity_hook.py",
+      "category": "history",
+      "sha256": "c66228eb83ea6af5cbc3f50645da5d6ff50b892663d2659166b295cfe7471d6b",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/dino_sparse_fpn.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/dino_sparse_fpn.py",
+      "category": "history",
+      "sha256": "3661e2ba1541e97a49359e6e3b805dd3a44653a73ac6770d40433480e4c2a073",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/formatting.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/formatting.py",
+      "category": "history",
+      "sha256": "28dd534cec0ade9cf318387d49a98305520fab11d699b7530abeb4f6b6184be1",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/loading.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/loading.py",
+      "category": "history",
+      "sha256": "4f1c21028c17abf75b0963aa9d3d724e2337fdbfb9437f5ef473dabc52743d44",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/merge_criterion.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/merge_criterion.py",
+      "category": "history",
+      "sha256": "7cdb53c5d175a4b4a5b14cd8fc30bc1b1362820a64f714ea1453309832600b5b",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/merge_head.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/merge_head.py",
+      "category": "history",
+      "sha256": "10e0a401b72b38ca259d751407b51a89cbf1f587ae886272430ae6238f3a3ef4",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/mink_unet.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/mink_unet.py",
+      "category": "history",
+      "sha256": "c55109f0cb7d906de86f6601b52af68941bfc1f1bea6c871db908e894a96d1f3",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/mixformer3d.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/mixformer3d.py",
+      "category": "history",
+      "sha256": "e01ef2fdf9f5bac3e08cf5778c572dd9db7e5275bfd664de3eb067167a442223",
+      "status": "identical"
+    },
+    {
+      "source": "external_audit/current_v5_184_snapshot/oneformer3d/query_decoder.py",
+      "destination": "research_archive/external_audit/current_v5_184_snapshot/oneformer3d/query_decoder.py",
+      "category": "history",
+      "sha256": "de3703e60d425bf6eebc02bbd0155e1d3828d871f1540cfd89e01488fc91f9fa",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan-mv/3RScan.v2 Semantic Classes - Mapping.tsv",
+      "destination": "data/3RScan-mv/3RScan.v2 Semantic Classes - Mapping.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "9641202915b601acdb3c4650c8626980b432db397b5e2a9e22dd071b0195a92b",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan-mv/README.md",
+      "destination": "data/3RScan-mv/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "b8241e9019cb14d498cb36a3bd020004923fd3bf1682c425f2ad89fe21b8082e",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan-mv/download-3RScan.py",
+      "destination": "data/3RScan-mv/download-3RScan.py",
+      "category": "upstream_preprocessing",
+      "sha256": "bca9f19ef655a25f96159c5e2340916887a7389c5b5302b52668ee6e46d051ee",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan-mv/load_3rscan_mv_data.py",
+      "destination": "data/3RScan-mv/load_3rscan_mv_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "a561e8d0d5bb132b3f5258a06cef9a56512484016ae2e2e63fa85d6384c3e1e3",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan-mv/load_3rscan_mv_data_fast.py",
+      "destination": "data/3RScan-mv/load_3rscan_mv_data_fast.py",
+      "category": "upstream_preprocessing",
+      "sha256": "d9ade9bda2d927571748b94a3350b67b9e53a4decbf3dcfcb2afb4c22b386ce6",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan-mv/load_scannet_data.py",
+      "destination": "data/3RScan-mv/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "6870791eece226b0add90c2d7abd68a89d97af79f6e39e0d960f163648580745",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan-mv/scannet_utils.py",
+      "destination": "data/3RScan-mv/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "9fe879613a67f2404319c1d407e80891ea298d46cc8160f7a7543c1756b6d551",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan/3RScan.v2 Semantic Classes - Mapping.tsv",
+      "destination": "data/3RScan/3RScan.v2 Semantic Classes - Mapping.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "9641202915b601acdb3c4650c8626980b432db397b5e2a9e22dd071b0195a92b",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan/README.md",
+      "destination": "data/3RScan/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "5b6713129eeb91c37905b2926507211b042da6fdbdaa7cbce116575b3abe3eca",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan/batch_load_3rscan_data.py",
+      "destination": "data/3RScan/batch_load_3rscan_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "f3043a7c8285153393d6e75ff5763f797be1f5ea6112e3c52983f96211a3acef",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan/load_scannet_data.py",
+      "destination": "data/3RScan/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "779e1c66a8d620ae1461b062cd1aef25f966c35397d3626bd2aa97092e17fab5",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/3RScan/scannet_utils.py",
+      "destination": "data/3RScan/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "9fe879613a67f2404319c1d407e80891ea298d46cc8160f7a7543c1756b6d551",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet-mv/README.md",
+      "destination": "data/scannet-mv/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "0e9326de97a2a85511822cbf6a59a63c16a7585b8915617af25a9b01bc1b4082",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet-mv/load_scannet_data.py",
+      "destination": "data/scannet-mv/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "05bc7df39ba19c443304906e0899d0db3a43879c9596a2ded377a7475e68c41a",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet-mv/load_scannet_mv_data.py",
+      "destination": "data/scannet-mv/load_scannet_mv_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "2c4ba2afd7997eeab52762967cf5d735e45d1fa4dbc8ffc2a560656df86f3caf",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet-mv/load_scannet_mv_data_fast.py",
+      "destination": "data/scannet-mv/load_scannet_mv_data_fast.py",
+      "category": "upstream_preprocessing",
+      "sha256": "3fbe734b28ab2cd85e5b293041bdf29f73441d97de22a5fa8f4dbe0d736bf5f9",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet/README.md",
+      "destination": "data/scannet/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "c4380a7fe46874328af46328e97587ae6f38329d63eaae9daffd5ca4eed5003f",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet/batch_load_scannet_data.py",
+      "destination": "data/scannet/batch_load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "28df65b7e661253d852ca4bff80485f028d46ca1ac9ca4fd0ad4acd33d4eca55",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet/load_scannet_data.py",
+      "destination": "data/scannet/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "e2f9019b4686b3ba1b07cbe9731690bad5463cecee2786e664f0245cbdc9b930",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet/prepare_2d_ins.py",
+      "destination": "data/scannet/prepare_2d_ins.py",
+      "category": "upstream_preprocessing",
+      "sha256": "f40ae801727f80007bc5847ea485eed65c68d5ff2f694ea626fbe876ecefd2b2",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-mv/README.md",
+      "destination": "data/scannet200-mv/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "9d73854396e2f62d2f1f65624ef4f5a43cbdde0d8169776b17833af1b2dfc469",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-mv/load_scannet_data.py",
+      "destination": "data/scannet200-mv/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "3b58c558ec5b62cd95c1f04ad1a6428f953c5570701bb6c174850ad000728e71",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-mv/load_scannet_mv_data.py",
+      "destination": "data/scannet200-mv/load_scannet_mv_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "6bac5f1e5436b753a2b30b4c8f4d93eae4b6dd20b1c8742fa96c390039c37b21",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-mv/load_scannet_mv_data_fast.py",
+      "destination": "data/scannet200-mv/load_scannet_mv_data_fast.py",
+      "category": "upstream_preprocessing",
+      "sha256": "3b90fbb1d08ef9e079ae9da272e05a6cfa7501562c4ff48e730338102c44461b",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-mv/scannet_utils.py",
+      "destination": "data/scannet200-mv/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "9fe879613a67f2404319c1d407e80891ea298d46cc8160f7a7543c1756b6d551",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-sv/README.md",
+      "destination": "data/scannet200-sv/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "a224843a48199bd714d66cd91f1b7a6c90091147a99dbe7ed12e8771c190ed6b",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-sv/load_scannet_data.py",
+      "destination": "data/scannet200-sv/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "05bc7df39ba19c443304906e0899d0db3a43879c9596a2ded377a7475e68c41a",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-sv/load_scannet_sv_data_v2.py",
+      "destination": "data/scannet200-sv/load_scannet_sv_data_v2.py",
+      "category": "upstream_preprocessing",
+      "sha256": "592ee91a3ab21ff9ebef32fc584cff54f3aae0b5749a71e6ab4285915c06bb27",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-sv/load_scannet_sv_data_v2_fast.py",
+      "destination": "data/scannet200-sv/load_scannet_sv_data_v2_fast.py",
+      "category": "upstream_preprocessing",
+      "sha256": "da37e08c768a8dfbdd4597bbe544f86e770bda2c02ab543704dd079b9e867379",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200-sv/scannet_utils.py",
+      "destination": "data/scannet200-sv/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "9fe879613a67f2404319c1d407e80891ea298d46cc8160f7a7543c1756b6d551",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200/README.md",
+      "destination": "data/scannet200/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "1ddd2a650da522366d3af4f898caa2f3abd7b70d3055ee611d400e1901d3f8ec",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200/batch_load_scannet_data.py",
+      "destination": "data/scannet200/batch_load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "c21d60d43d8b5504da69ed6866175f470e75b4c0c438921893e08a5092503693",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200/load_scannet_data.py",
+      "destination": "data/scannet200/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "e2f9019b4686b3ba1b07cbe9731690bad5463cecee2786e664f0245cbdc9b930",
+      "status": "identical"
+    },
+    {
+      "source": "AutoSeg3D/data/scannet200/scannet_utils.py",
+      "destination": "data/scannet200/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "9fe879613a67f2404319c1d407e80891ea298d46cc8160f7a7543c1756b6d551",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/delete_more_points.py",
+      "destination": "data/scannet-mv/meta_data/delete_more_points.py",
+      "category": "upstream_preprocessing",
+      "sha256": "d403b47725c2c1d99ee7ebc0a305affc03b3b244a30316851004afb0af773c0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/generate_sv_txt.py",
+      "destination": "data/scannet-mv/meta_data/generate_sv_txt.py",
+      "category": "upstream_preprocessing",
+      "sha256": "964eebe89c08b5a69b6e6afa79613d039911c745adb2735a0a8120b390994f55",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/scannet_train.txt",
+      "destination": "data/scannet-mv/meta_data/scannet_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d09be5467012676eee40f4caa841949006fe55baf1c0f98e676f37dbf9408f0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/scannetv2-labels.combined.tsv",
+      "destination": "data/scannet-mv/meta_data/scannetv2-labels.combined.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "68674782476d967c35e8d0776933b70e10d21f1ea8019eba20221d38275139c0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/scannetv2_test.txt",
+      "destination": "data/scannet-mv/meta_data/scannetv2_test.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "0214c6a3b1ee516ad653393b0321e7c0394c7662a4b3702eac1ddd7fbc00f7e0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/scannetv2_train.txt",
+      "destination": "data/scannet-mv/meta_data/scannetv2_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "96acca299b7855f02824c496b19077904d80996e7ced1bb9f0dac98f7dd4d0c8",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/scannetv2_train_debug.txt",
+      "destination": "data/scannet-mv/meta_data/scannetv2_train_debug.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "a5690be5ce049c5920e02fbb81f1cce067f315462f5864eb4fce5eac58c3a74f",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/scannetv2_val.txt",
+      "destination": "data/scannet-mv/meta_data/scannetv2_val.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d75d4971c3fa7128c643695840e279042c212ef904fe933bd00cf9918c61b083",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/scannetv2_val_50.txt",
+      "destination": "data/scannet-mv/meta_data/scannetv2_val_50.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "77bcf8ae5e931fd2a40a4cf0a0680f25c6f6f5df35c98a077293b39c35c1dba2",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/scannetv2_val_568.txt",
+      "destination": "data/scannet-mv/meta_data/scannetv2_val_568.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "f333d7eab9b8c8171553fbf4bd66359fa08b724d6ebc327994441d46cd96c771",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/meta_data/scannetv2_val_debug.txt",
+      "destination": "data/scannet-mv/meta_data/scannetv2_val_debug.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "9196a628c86de43e8d662afe3f9a3aaddabad50fb78b74c0c490841d4252a325",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-mv/scannet_utils.py",
+      "destination": "data/scannet-mv/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "9fe879613a67f2404319c1d407e80891ea298d46cc8160f7a7543c1756b6d551",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/README.md",
+      "destination": "data/scannet-sv/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "2e71edb173ceadf9923c0a9effeab57d62c068d834cbbfe257dadf74eff828ca",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/load_scannet_data.py",
+      "destination": "data/scannet-sv/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "05bc7df39ba19c443304906e0899d0db3a43879c9596a2ded377a7475e68c41a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/load_scannet_sv_data_v2.py",
+      "destination": "data/scannet-sv/load_scannet_sv_data_v2.py",
+      "category": "upstream_preprocessing",
+      "sha256": "c332a6f1e44547a99532a7bc33f1a7134610dcf1710f47e9a9bc1c8877502fb3",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/load_scannet_sv_data_v2_fast.py",
+      "destination": "data/scannet-sv/load_scannet_sv_data_v2_fast.py",
+      "category": "upstream_preprocessing",
+      "sha256": "45deef66e1f3ad7509c4a25f8c050f3f00e51fb9a76fb95a0ebcb6eaa6723267",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/meta_data/generate_sv_txt.py",
+      "destination": "data/scannet-sv/meta_data/generate_sv_txt.py",
+      "category": "upstream_preprocessing",
+      "sha256": "964eebe89c08b5a69b6e6afa79613d039911c745adb2735a0a8120b390994f55",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/meta_data/scannet_train.txt",
+      "destination": "data/scannet-sv/meta_data/scannet_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d09be5467012676eee40f4caa841949006fe55baf1c0f98e676f37dbf9408f0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/meta_data/scannetv2-labels.combined.tsv",
+      "destination": "data/scannet-sv/meta_data/scannetv2-labels.combined.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "68674782476d967c35e8d0776933b70e10d21f1ea8019eba20221d38275139c0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/meta_data/scannetv2_sv_train.txt",
+      "destination": "data/scannet-sv/meta_data/scannetv2_sv_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d307ecffc9a767bd5073bf3035a48ca8ffaa0c2568b25b0e3ca965783eb50f88",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/meta_data/scannetv2_sv_val.txt",
+      "destination": "data/scannet-sv/meta_data/scannetv2_sv_val.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "42743c7b51bdb6cff5cfdf9343159d10a2613caa6afef101f63fa0255d594c0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/meta_data/scannetv2_test.txt",
+      "destination": "data/scannet-sv/meta_data/scannetv2_test.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "0214c6a3b1ee516ad653393b0321e7c0394c7662a4b3702eac1ddd7fbc00f7e0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/meta_data/scannetv2_train.txt",
+      "destination": "data/scannet-sv/meta_data/scannetv2_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "96acca299b7855f02824c496b19077904d80996e7ced1bb9f0dac98f7dd4d0c8",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/meta_data/scannetv2_val.txt",
+      "destination": "data/scannet-sv/meta_data/scannetv2_val.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d75d4971c3fa7128c643695840e279042c212ef904fe933bd00cf9918c61b083",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet-sv/scannet_utils.py",
+      "destination": "data/scannet-sv/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "9fe879613a67f2404319c1d407e80891ea298d46cc8160f7a7543c1756b6d551",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet/meta_data/scannet_train.txt",
+      "destination": "data/scannet/meta_data/scannet_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d09be5467012676eee40f4caa841949006fe55baf1c0f98e676f37dbf9408f0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet/meta_data/scannetv2-labels.combined.tsv",
+      "destination": "data/scannet/meta_data/scannetv2-labels.combined.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "68674782476d967c35e8d0776933b70e10d21f1ea8019eba20221d38275139c0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet/meta_data/scannetv2_test.txt",
+      "destination": "data/scannet/meta_data/scannetv2_test.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "0214c6a3b1ee516ad653393b0321e7c0394c7662a4b3702eac1ddd7fbc00f7e0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet/meta_data/scannetv2_train.txt",
+      "destination": "data/scannet/meta_data/scannetv2_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "96acca299b7855f02824c496b19077904d80996e7ced1bb9f0dac98f7dd4d0c8",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet/meta_data/scannetv2_val.txt",
+      "destination": "data/scannet/meta_data/scannetv2_val.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d75d4971c3fa7128c643695840e279042c212ef904fe933bd00cf9918c61b083",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet/meta_data/scannetv2_val_50.txt",
+      "destination": "data/scannet/meta_data/scannetv2_val_50.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "77bcf8ae5e931fd2a40a4cf0a0680f25c6f6f5df35c98a077293b39c35c1dba2",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet/scannet_utils.py",
+      "destination": "data/scannet/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "9fe879613a67f2404319c1d407e80891ea298d46cc8160f7a7543c1756b6d551",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/delete_more_points.py",
+      "destination": "data/scannet200-mv/meta_data/delete_more_points.py",
+      "category": "upstream_preprocessing",
+      "sha256": "d403b47725c2c1d99ee7ebc0a305affc03b3b244a30316851004afb0af773c0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/generate_sv_txt.py",
+      "destination": "data/scannet200-mv/meta_data/generate_sv_txt.py",
+      "category": "upstream_preprocessing",
+      "sha256": "964eebe89c08b5a69b6e6afa79613d039911c745adb2735a0a8120b390994f55",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannet_train.txt",
+      "destination": "data/scannet200-mv/meta_data/scannet_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d09be5467012676eee40f4caa841949006fe55baf1c0f98e676f37dbf9408f0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2-labels.combined.tsv",
+      "destination": "data/scannet200-mv/meta_data/scannetv2-labels.combined.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "68674782476d967c35e8d0776933b70e10d21f1ea8019eba20221d38275139c0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2_test.txt",
+      "destination": "data/scannet200-mv/meta_data/scannetv2_test.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "0214c6a3b1ee516ad653393b0321e7c0394c7662a4b3702eac1ddd7fbc00f7e0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2_train.txt",
+      "destination": "data/scannet200-mv/meta_data/scannetv2_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "96acca299b7855f02824c496b19077904d80996e7ced1bb9f0dac98f7dd4d0c8",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2_train_debug.txt",
+      "destination": "data/scannet200-mv/meta_data/scannetv2_train_debug.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "a5690be5ce049c5920e02fbb81f1cce067f315462f5864eb4fce5eac58c3a74f",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2_val.txt",
+      "destination": "data/scannet200-mv/meta_data/scannetv2_val.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d75d4971c3fa7128c643695840e279042c212ef904fe933bd00cf9918c61b083",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2_val_50.txt",
+      "destination": "data/scannet200-mv/meta_data/scannetv2_val_50.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "77bcf8ae5e931fd2a40a4cf0a0680f25c6f6f5df35c98a077293b39c35c1dba2",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2_val_debug.txt",
+      "destination": "data/scannet200-mv/meta_data/scannetv2_val_debug.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "9196a628c86de43e8d662afe3f9a3aaddabad50fb78b74c0c490841d4252a325",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2_val_sorted.txt",
+      "destination": "data/scannet200-mv/meta_data/scannetv2_val_sorted.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "25a996252ef67aa84ee091c6fa593ad860bab0addcc72e4b80ef9f64daba8db4",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2_val_test1.txt",
+      "destination": "data/scannet200-mv/meta_data/scannetv2_val_test1.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "4212b66c8393e60ede7337bf0797793cdec4f27d5785f9db76aedf42070c0702",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/scannetv2_val_test2.txt",
+      "destination": "data/scannet200-mv/meta_data/scannetv2_val_test2.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "f333d7eab9b8c8171553fbf4bd66359fa08b724d6ebc327994441d46cd96c771",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-mv/meta_data/sort.py",
+      "destination": "data/scannet200-mv/meta_data/sort.py",
+      "category": "upstream_preprocessing",
+      "sha256": "fed4887797f09c3474a4646c2c6b0dfc3412ee597281008e7fb7784d6fe4c54b",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-sv/meta_data/generate_sv_txt.py",
+      "destination": "data/scannet200-sv/meta_data/generate_sv_txt.py",
+      "category": "upstream_preprocessing",
+      "sha256": "964eebe89c08b5a69b6e6afa79613d039911c745adb2735a0a8120b390994f55",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-sv/meta_data/scannet_train.txt",
+      "destination": "data/scannet200-sv/meta_data/scannet_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d09be5467012676eee40f4caa841949006fe55baf1c0f98e676f37dbf9408f0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-sv/meta_data/scannetv2-labels.combined.tsv",
+      "destination": "data/scannet200-sv/meta_data/scannetv2-labels.combined.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "68674782476d967c35e8d0776933b70e10d21f1ea8019eba20221d38275139c0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-sv/meta_data/scannetv2_sv_train.txt",
+      "destination": "data/scannet200-sv/meta_data/scannetv2_sv_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "b60651bd1f508eabbe325e7efe2789dee7849238afecb2401dbc542f16ac8750",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-sv/meta_data/scannetv2_sv_val.txt",
+      "destination": "data/scannet200-sv/meta_data/scannetv2_sv_val.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "8e2ae0e3772744f3ee28642a35a4598e55dd22bc41c7d6efb5bad2a35ff791dd",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-sv/meta_data/scannetv2_test.txt",
+      "destination": "data/scannet200-sv/meta_data/scannetv2_test.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "0214c6a3b1ee516ad653393b0321e7c0394c7662a4b3702eac1ddd7fbc00f7e0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-sv/meta_data/scannetv2_train.txt",
+      "destination": "data/scannet200-sv/meta_data/scannetv2_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "96acca299b7855f02824c496b19077904d80996e7ced1bb9f0dac98f7dd4d0c8",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200-sv/meta_data/scannetv2_val.txt",
+      "destination": "data/scannet200-sv/meta_data/scannetv2_val.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d75d4971c3fa7128c643695840e279042c212ef904fe933bd00cf9918c61b083",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200/meta_data/scannet_train.txt",
+      "destination": "data/scannet200/meta_data/scannet_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d09be5467012676eee40f4caa841949006fe55baf1c0f98e676f37dbf9408f0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200/meta_data/scannetv2-labels.combined.tsv",
+      "destination": "data/scannet200/meta_data/scannetv2-labels.combined.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "68674782476d967c35e8d0776933b70e10d21f1ea8019eba20221d38275139c0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200/meta_data/scannetv2_test.txt",
+      "destination": "data/scannet200/meta_data/scannetv2_test.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "0214c6a3b1ee516ad653393b0321e7c0394c7662a4b3702eac1ddd7fbc00f7e0",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200/meta_data/scannetv2_train.txt",
+      "destination": "data/scannet200/meta_data/scannetv2_train.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "96acca299b7855f02824c496b19077904d80996e7ced1bb9f0dac98f7dd4d0c8",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200/meta_data/scannetv2_val.txt",
+      "destination": "data/scannet200/meta_data/scannetv2_val.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "d75d4971c3fa7128c643695840e279042c212ef904fe933bd00cf9918c61b083",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scannet200/meta_data/scannetv2_val_50.txt",
+      "destination": "data/scannet200/meta_data/scannetv2_val_50.txt",
+      "category": "upstream_preprocessing",
+      "sha256": "77bcf8ae5e931fd2a40a4cf0a0680f25c6f6f5df35c98a077293b39c35c1dba2",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn-mv/README.md",
+      "destination": "data/scenenn-mv/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "aadd135e02da96b75ae1544b78505afb4c76eea77625ca5846604d285a74ef50",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn-mv/load_scannet_data.py",
+      "destination": "data/scenenn-mv/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "05bc7df39ba19c443304906e0899d0db3a43879c9596a2ded377a7475e68c41a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn-mv/load_scenenn_mv_data.py",
+      "destination": "data/scenenn-mv/load_scenenn_mv_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "7258a36d80a91e8acd15d69bcf9cdfb92788904fa941de8c7201b4b8514ae6a8",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn-mv/load_scenenn_mv_data_fast.py",
+      "destination": "data/scenenn-mv/load_scenenn_mv_data_fast.py",
+      "category": "upstream_preprocessing",
+      "sha256": "d41dce1bdffe545b6987d49c1179a30316b857eb306f4dba0f774d8ddf126cfb",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn-mv/scannet_utils.py",
+      "destination": "data/scenenn-mv/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "47d2c02a2520634bef3dd051f73b530c7129a4cc5f5740dc1d84205c10f207d6",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn-mv/scannetv2-labels.combined.tsv",
+      "destination": "data/scenenn-mv/scannetv2-labels.combined.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "9c17c0da2061beea889edc9f49ff14e8218f4cd040ab241fc70186e03b32a744",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn/README.md",
+      "destination": "data/scenenn/README.md",
+      "category": "upstream_preprocessing",
+      "sha256": "0a894f1ded56b73ee49a221d9b8c6ec2abe6fff71d2c90fb95f3ecbd6d696337",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn/batch_load_scenenn_data.py",
+      "destination": "data/scenenn/batch_load_scenenn_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "87ce68e829c5922a07df779ca02b71766808c288dd3bca084b4b9ac9aea72b0a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn/load_scannet_data.py",
+      "destination": "data/scenenn/load_scannet_data.py",
+      "category": "upstream_preprocessing",
+      "sha256": "05bc7df39ba19c443304906e0899d0db3a43879c9596a2ded377a7475e68c41a",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn/scannet_utils.py",
+      "destination": "data/scenenn/scannet_utils.py",
+      "category": "upstream_preprocessing",
+      "sha256": "f58c3314b232e2001c923fc730af8b13e43c8be2165d28df88676aabe0c76cec",
+      "status": "identical"
+    },
+    {
+      "source": "ESAM/data/scenenn/scannetv2-labels.combined.tsv",
+      "destination": "data/scenenn/scannetv2-labels.combined.tsv",
+      "category": "upstream_preprocessing",
+      "sha256": "9c17c0da2061beea889edc9f49ff14e8218f4cd040ab241fc70186e03b32a744",
+      "status": "identical"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ python -c 'import oneformer3d; print(oneformer3d.__file__)'
 
 ## 3. Prepare data and the dense feature stream
 
-The main config expects `data/scannet200-mv_fast/` and the associated ScanNet200 annotation files. Dataset downloads and redistribution are governed by the respective dataset licenses. The preprocessing instructions in `docs/dataset_preparation.md` are inherited from AutoSeg3D; preprocessing programs/data not present in this snapshot must be obtained from the attributed upstream repository.
+The main config expects `data/scannet200-mv_fast/` and the associated ScanNet200 annotation files. Dataset downloads and redistribution are governed by the respective dataset licenses. Preprocessing source and text metadata are now included under `data/`: AutoSeg3D files take precedence and ESAM supplies missing helpers. Raw datasets, binary statistics/caches and dependencies such as segmentator/pointops are not bundled. The inherited preparation instructions distinguish these external inputs.
 
 The cached feature pipeline is:
 
@@ -75,4 +75,4 @@ The snapshot does not include training checkpoints or feature caches. No checkpo
 
 ## 7. What was verified for this sync
 
-The release preparation checks Python parsing without importing GPU packages, local config inheritance paths, frozen-source SHA-256 values and README links. These checks establish archive consistency, not end-to-end training correctness. The original model algorithms are copied as research snapshots; no model-behavior refactor is part of this release.
+The release preparation checks Python parsing without importing GPU packages, Shell syntax, main local config inheritance paths, frozen-source SHA-256 values and entry-document links. An explicitly labelled historical DGI excerpt in `research_archive/` is not a standalone parseable Python module. Historical configs can reference their original remote working trees; they are evidence, not automatically runnable replacements. See `docs/SOURCE_COVERAGE.md` for the exact audit boundary. These checks establish archive consistency, not end-to-end training correctness.

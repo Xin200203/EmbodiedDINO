@@ -1,0 +1,49 @@
+experiment_id: autoseg3d_stage1_smoke_76_20260529
+status: completed
+server: xxy@10.176.56.76
+code_root: /datadisk1/xxy/AutoSeg3D_official_clone
+code_commit: 0da18380e04ca769c61ce7d1096bc80e44ab8164
+purpose: one-epoch smoke/debug for official AutoSeg3D stage1 training before any full 128-epoch run on 76
+config: configs/scannet200/codex_20260529_stage1_noload_full.py
+config_sha256: c146043bf171d043a21c0b00a079b8f8fb113b2d5a9114baa09b887634c8d589
+config_note: generated from official AutoSeg3D_scannet200_stage1.py with only load_interval=1 removed for installed mmdet3d compatibility
+command_cfg_options:
+  train_cfg.max_epochs: 1
+  train_cfg.val_interval: 1
+  default_hooks.checkpoint.interval: 1
+  default_hooks.checkpoint.max_keep_ckpts: 1
+  train_dataloader.num_workers: 2
+  val_dataloader.num_workers: 2
+data:
+  mv_root: /datadisk1/xxy/data/data-ESAM/scannet200-mv_fast/runs_mv/fastsam_everything_stride20_img640
+  rec_root: /datadisk1/xxy/3D_Reconstruction/data/scannet200
+  raw_scans: /datadisk1/xxy/data/scannet_v2/scans
+  train_pkl_bytes: 46334953
+  train_scenes: 1201
+  val_pkl_bytes: 6582919
+  val_scenes: 312
+init_checkpoint: work_dirs/AutoSeg3D_sv_scannet200/epoch_best.pth
+init_checkpoint_realpath: /datadisk3/xxy/3D_Reconstruction/work_dirs/ESAM_sv_scannet200_CA/best_all_ap_50%_epoch_128.pth
+init_checkpoint_sha256: af4071d5ca5a000b92dbceba993e38248f1bd6d76104c0c5f1457749ae508ef5
+output_checkpoint: work_dirs/codex_20260529_stage1_smoke_e1_gpu6_compat_retry2/epoch_1.pth
+output_checkpoint_sha256: 26db8171151d04c1f9ffd4adc692939fc546e7ef239089c2996a42a9cd3e21b5
+raw_log: /datadisk1/xxy/AutoSeg3D_official_clone/work_dirs/codex_20260529_logs/stage1_smoke_e1_gpu6_compat_retry2.log
+seed: 1388982924
+runtime:
+  gpu: physical GPU6
+  note: GPU6 was shared with an existing low-utilization process; do not use this run for timing/FPS claims.
+training_sanity:
+  finite_loss: true
+  first_50_iter_loss: 64.3924
+  final_logged_iter_loss: 57.2986
+  final_logged_iter: "Epoch(train) [1][300/301]"
+  max_logged_memory_mb: 13222
+metrics_after_epoch1:
+  AP: 30.01
+  AP50: 50.75
+  AP25: 72.75
+raw_metric_line: "05/28 17:17:26 - mmengine - INFO - Epoch(val) [1][312/312]    all_ap: 0.3001  all_ap_50%: 0.5075  all_ap_25%: 0.7275"
+notes:
+  - Smoke run confirms data links, config compatibility, forward/backward, loss, checkpoint saving, and validation are working on 76.
+  - Metrics are not a paper result; they are after only one epoch from SV initialization.
+  - Missing keys from SV checkpoint into stage1 memory/merge modules are expected for stage1 initialization and were recorded in the raw log.

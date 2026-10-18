@@ -1,0 +1,31 @@
+created_at: "2026-06-04T22:25:00+08:00"
+owner: "Codex experiment lead"
+local_record_dir: "/Users/xin/Research/Code/research/Online_3D/docs_audit/experiments_76_autoseg_v5_stage1_clean_20260604"
+remote:
+  main_host: "10.176.56.76"
+  main_workspace: "/datadisk1/xxy/AutoSeg3D_v5_stage1_clean_20260604"
+  base_autoseg_repo: "/datadisk1/xxy/AutoSeg3D_official_clone"
+  v5_donor_snapshot: "/datadisk1/xxy/3D_Reconstruction_v5_184sync_20260603"
+  conda_env: "ESAM"
+  python: "/datadisk1/xxy/miniconda3/envs/ESAM/bin/python"
+  excluded_host: "10.177.69.184"
+base:
+  repository: "https://github.com/AutoLab-SAI-SJTU/AutoSeg3D.git"
+  head: "0da18380e04ca769c61ce7d1096bc80e44ab8164"
+  branch: "v5_stage1_clean_20260604"
+protocol:
+  dataset: "ScanNet200 MV/Fast, class-agnostic stage1 first unless otherwise noted"
+  num_frames_train: 8
+  num_sample: 20000
+  stage1_core_flags:
+    use_query_memory: true
+    use_one2many: true
+    use_mot: false
+    merge_sp_masks: false
+  dino_projection_warning_threshold: 0.90
+  expected_projection_valid_rate: ">=0.99 on valid smoke/eval samples"
+policy:
+  no_training_on_184_for_this_line: true
+  use_clean_autoseg_workspace_as_base: true
+  register_every_run_before_launch: true
+  copy_config_and_metrics_to_local_records: true

@@ -1,0 +1,3243 @@
+diff --git a/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual.py b/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual.py
+new file mode 100644
+index 0000000..cba0890
+--- /dev/null
++++ b/configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab4_offline_dino_dual.py
+@@ -0,0 +1,474 @@
++_base_ = [
++    'mmdet3d::_base_/default_runtime.py',
++    'mmdet3d::_base_/datasets/scannet-seg.py'
++]
++custom_imports = dict(imports=['oneformer3d'])
++
++num_instance_classes = 1
++num_semantic_classes = 200
++num_instance_classes_eval = 1
++use_bbox = True
++voxel_size = 0.02
++
++# Added
++load_interval = 1
++val_load_interval = 1
++use_track_loss = False
++use_query_memory = True
++use_noise = False
++use_temporal_loss = False
++use_sp_gt_ids = False # whether to use sp_gt_ids for training, default True
++use_decouple = False # whether to use decouple loss, default False
++inst_thereshold = 0.5 # 超点实例掩码的阈值
++sem_thereshold = 0.5 
++use_aug = False
++use_mot = False
++asso_loss_weight = 0.5
++
++mot_type = 'dq_track'
++objectness_flag = False
++train_asso_only = False
++replace_bn_with_ln = False
++asso_config = dict(
++    asso_loss_weight=0.5,
++    query_trans= dict(with_att=True, with_pos= True, min_channels= 256, drop_rate= 0.0, mode='with_pos'),
++    train_asso_only= True,
++)
++use_one2many = True
++criterion_one2many = dict(
++        type='ScanNetMixedCriterion',
++        num_semantic_classes=num_semantic_classes,
++        sem_criterion=dict(
++            type='ScanNetSemanticCriterion',
++            ignore_index=num_semantic_classes,
++            loss_weight=0.5),
++        inst_criterion=dict(
++            type='MixedInstanceCriterion',
++            matcher=dict(
++            type='One2Many_Matcher',
++            costs=[
++                dict(type='QueryClassificationCost', weight=0.5),
++                dict(type='MaskBCECost', weight=1.0),
++                dict(type='MaskDiceCost', weight=1.0)],
++            topk=2),
++            bbox_loss=dict(type='AxisAlignedIoULoss'),
++            loss_weight=[0.5, 1.0, 1.0, 0.5, 0.5],
++            num_classes=num_instance_classes,
++            non_object_weight=0.1,
++            fix_dice_loss_weight=True,
++            iter_matcher=True,
++            fix_mean_loss=True)),
++matcher=dict(
++        type='SparseMatcher',
++        costs=[
++            dict(type='QueryClassificationCost', weight=0.5),
++            dict(type='MaskBCECost', weight=1.0),
++            dict(type='MaskDiceCost', weight=1.0)],
++        topk=1)
++# matcher=dict(
++#     type = 'HungarianMatcher',
++#     costs=[
++#         dict(type='QueryClassificationCost', weight=0.5),
++#         dict(type='MaskBCECost', weight=1.0),
++#         dict(type='MaskDiceCost', weight=1.0)])
++more_keys_list = ['sp_gt_inst_ids', 'sp_gt_semantic_ids']
++# Ended
++
++model = dict(
++    type='ScanNet200MixFormer3D_Online',
++    data_preprocessor=dict(type='Det3DDataPreprocessor_'),
++    voxel_size=voxel_size,
++
++    use_query_memory=use_query_memory,
++    use_noise=use_noise, 
++    use_temporal_loss=use_temporal_loss,
++    use_decouple=use_decouple,
++    use_mot=use_mot,
++    mot_type=mot_type,
++    train_asso_only=train_asso_only,
++    matcher=matcher,
++    use_aug=use_aug,
++    asso_loss_weight=asso_loss_weight,
++    asso_config=asso_config,
++    use_one2many=use_one2many,
++    criterion_one2many=criterion_one2many,
++    replace_bn_with_ln=replace_bn_with_ln,
++
++    num_classes=num_instance_classes_eval,
++    query_thr=0.5,
++    backbone=dict(
++        type='Res16UNet34C',
++        in_channels=3,
++        out_channels=96,
++        config=dict(
++            dilations=[1, 1, 1, 1],
++            conv1_kernel_size=5,
++            bn_momentum=0.02)),
++    memory=dict(type='MultilevelMemory', in_channels=[32, 64, 128, 256], queue=-1, vmp_layer=(0,1,2,3)),
++    pool=dict(type='GeoAwarePooling', channel_proj=96),
++    decoder=dict(
++        type='ScanNetMixQueryDecoder',
++        use_track_loss=use_track_loss,
++        use_temporal_loss=use_temporal_loss,
++        use_decouple=use_decouple,
++        use_mot=use_mot,
++        mot_type=mot_type,
++        
++        num_layers=3,
++        share_attn_mlp=False,
++        # use_query_memory2=True,
++        query_stage=[0, 1],
++        share_mask_mlp=False,
++        temporal_attn=False,
++        # the last mp_mode should be "P"
++        cross_attn_mode=["", "SP", "SP", "SP"], 
++        mask_pred_mode=["SP", "SP", "P", "P"],
++        num_instance_queries=0,
++        num_semantic_queries=0,
++        num_instance_classes=num_instance_classes,
++        num_semantic_classes=num_semantic_classes,
++        num_semantic_linears=1,
++        in_channels=96,
++        d_model=256,
++        num_heads=8,
++        hidden_dim=1024,
++        dropout=0.0,
++        activation_fn='gelu',
++        iter_pred=True,
++        attn_mask=True,
++        fix_attention=True,
++        objectness_flag=objectness_flag,
++        bbox_flag=use_bbox),
++    merge_head=dict(type='MergeHead', in_channels=256, out_channels=256, norm='layer'),
++    # merge_criterion=dict(type='ScanNetMergeCriterion_Fast', tmp=True, p2s=False),
++    criterion=dict(
++        type='ScanNetMixedCriterion',
++        num_semantic_classes=num_semantic_classes,
++        sem_criterion=dict(
++            type='ScanNetSemanticCriterion',
++            ignore_index=num_semantic_classes,
++            loss_weight=0.5),
++        inst_criterion=dict(
++            type='MixedInstanceCriterion',
++            matcher=matcher,
++            bbox_loss=dict(type='AxisAlignedIoULoss'),
++            loss_weight=[0.5, 1.0, 1.0, 0.5, 0.5],
++            num_classes=num_instance_classes,
++            non_object_weight=0.1,
++            fix_dice_loss_weight=True,
++            iter_matcher=True,
++            fix_mean_loss=True)),
++    train_cfg=dict(),
++    test_cfg=dict(
++        # TODO: a larger topK may be better
++        topk_insts=100,
++        inscat_topk_insts=100,
++        inst_score_thr=0.3,
++        pan_score_thr=0.5,
++        npoint_thr=100,
++        obj_normalization=True,
++        sp_score_thr=0.4,
++        nms=True,
++        matrix_nms_kernel='linear',
++        stuff_classes=[0, 1],
++        merge_type='learnable_online'))
++
++dataset_type = 'ScanNet200SegMVDataset_'
++data_root = 'data/scannet200-mv_fast/'
++
++# floor and chair are changed
++class_names = [
++    'wall', 'floor', 'chair', 'table', 'door', 'couch', 'cabinet', 'shelf',
++    'desk', 'office chair', 'bed', 'pillow', 'sink', 'picture', 'window',
++    'toilet', 'bookshelf', 'monitor', 'curtain', 'book', 'armchair',
++    'coffee table', 'box', 'refrigerator', 'lamp', 'kitchen cabinet', 'towel',
++    'clothes', 'tv', 'nightstand', 'counter', 'dresser', 'stool', 'cushion',
++    'plant', 'ceiling', 'bathtub', 'end table', 'dining table', 'keyboard',
++    'bag', 'backpack', 'toilet paper', 'printer', 'tv stand', 'whiteboard',
++    'blanket', 'shower curtain', 'trash can', 'closet', 'stairs', 'microwave',
++    'stove', 'shoe', 'computer tower', 'bottle', 'bin', 'ottoman', 'bench',
++    'board', 'washing machine', 'mirror', 'copier', 'basket', 'sofa chair',
++    'file cabinet', 'fan', 'laptop', 'shower', 'paper', 'person',
++    'paper towel dispenser', 'oven', 'blinds', 'rack', 'plate', 'blackboard',
++    'piano', 'suitcase', 'rail', 'radiator', 'recycling bin', 'container',
++    'wardrobe', 'soap dispenser', 'telephone', 'bucket', 'clock', 'stand',
++    'light', 'laundry basket', 'pipe', 'clothes dryer', 'guitar',
++    'toilet paper holder', 'seat', 'speaker', 'column', 'bicycle', 'ladder',
++    'bathroom stall', 'shower wall', 'cup', 'jacket', 'storage bin',
++    'coffee maker', 'dishwasher', 'paper towel roll', 'machine', 'mat',
++    'windowsill', 'bar', 'toaster', 'bulletin board', 'ironing board',
++    'fireplace', 'soap dish', 'kitchen counter', 'doorframe',
++    'toilet paper dispenser', 'mini fridge', 'fire extinguisher', 'ball',
++    'hat', 'shower curtain rod', 'water cooler', 'paper cutter', 'tray',
++    'shower door', 'pillar', 'ledge', 'toaster oven', 'mouse',
++    'toilet seat cover dispenser', 'furniture', 'cart', 'storage container',
++    'scale', 'tissue box', 'light switch', 'crate', 'power outlet',
++    'decoration', 'sign', 'projector', 'closet door', 'vacuum cleaner',
++    'candle', 'plunger', 'stuffed animal', 'headphones', 'dish rack',
++    'broom', 'guitar case', 'range hood', 'dustpan', 'hair dryer',
++    'water bottle', 'handicap bar', 'purse', 'vent', 'shower floor',
++    'water pitcher', 'mailbox', 'bowl', 'paper bag', 'alarm clock',
++    'music stand', 'projector screen', 'divider', 'laundry detergent',
++    'bathroom counter', 'object', 'bathroom vanity', 'closet wall',
++    'laundry hamper', 'bathroom stall door', 'ceiling light', 'trash bin',
++    'dumbbell', 'stair rail', 'tube', 'bathroom cabinet', 'cd case',
++    'closet rod', 'coffee kettle', 'structure', 'shower head',
++    'keyboard piano', 'case of water bottles', 'coat rack',
++    'storage organizer', 'folded chair', 'fire alarm', 'power strip',
++    'calendar', 'poster', 'potted plant', 'luggage', 'mattress'
++]
++
++color_mean = (
++    0.47793125906962 * 255,
++    0.4303257521323044 * 255,
++    0.3749598901421883 * 255)
++color_std = (
++    0.2834475483823543 * 255,
++    0.27566157565723015 * 255,
++    0.27018971370874995 * 255)
++
++# dataset settings
++train_pipeline = [
++    dict(
++        type='LoadAdjacentDataFromFile',
++        coord_type='DEPTH',
++        shift_height=False,
++        use_color=True,
++        load_dim=6,
++        use_dim=[0, 1, 2, 3, 4, 5],
++        num_frames=8,
++        num_sample=20000,
++        with_bbox_3d=False,
++        with_label_3d=False,
++        with_mask_3d=True,
++        with_seg_3d=True,
++        with_sp_mask_3d=True,
++        with_rec=use_bbox, cat_rec=use_bbox,
++        dataset_type='scannet200'),
++    dict(type='SwapChairAndFloorWithRec' if use_bbox else 'SwapChairAndFloor'),
++    dict(type='PointSegClassMappingWithRec' if use_bbox else 'PointSegClassMapping'),
++    dict(
++        type='RandomFlip3D',
++        sync_2d=False,
++        flip_ratio_bev_horizontal=0.5,
++        flip_ratio_bev_vertical=0.5),
++    dict(
++        type='GlobalRotScaleTrans',
++        rot_range=[-3.14, 3.14],
++        scale_ratio_range=[0.8, 1.2],
++        translation_std=[0.1, 0.1, 0.1],
++        shift_height=False),
++    dict(
++        type='NormalizePointsColor_',
++        color_mean=color_mean,
++        color_std=color_std),
++    dict(
++        type='AddSuperPointAnnotations_Online',
++        num_classes=num_semantic_classes,
++        use_sp_gt_ids=use_sp_gt_ids,  # whether to use sp_gt_ids for training
++        inst_thereshold=inst_thereshold,  # 超点实例掩码的阈值
++        sem_thereshold=sem_thereshold,  # 超点语义掩码的阈值
++        stuff_classes=[0, 1],
++        merge_non_stuff_cls=False,
++        with_rec=use_bbox),
++    dict(
++        type='ElasticTransfrom',
++        gran=[6, 20],
++        mag=[40, 160],
++        voxel_size=voxel_size,
++        p=0.5,
++        with_rec=use_bbox),
++    dict(type='BboxCalculation' if use_bbox else 'NoOperation', voxel_size=voxel_size),
++    dict(
++        type='Pack3DDetInputs_Online',
++        keys=[
++            'points', 'gt_labels_3d', 'pts_semantic_mask', 'pts_instance_mask',
++            'sp_pts_mask', 'gt_sp_masks', 'elastic_coords'
++        ] + ['gt_bboxes_3d'] if use_bbox else [], 
++        added_keys=more_keys_list)
++]
++test_pipeline = [
++    dict(
++        type='LoadAdjacentDataFromFile',
++        coord_type='DEPTH',
++        shift_height=False,
++        use_color=True,
++        load_dim=6,
++        use_dim=[0, 1, 2, 3, 4, 5],
++        num_frames=-1,
++        num_sample=20000,
++        with_bbox_3d=False,
++        with_label_3d=False,
++        with_mask_3d=True,
++        with_seg_3d=True,
++        with_sp_mask_3d=True,
++        with_rec=True),
++    dict(type='SwapChairAndFloorWithRec'),
++    dict(type='PointSegClassMappingWithRec'),
++    dict(
++        type='MultiScaleFlipAug3D',
++        img_scale=(1333, 800),
++        pts_scale_ratio=1,
++        flip=False,
++        transforms=[
++            dict(
++                type='NormalizePointsColor_',
++                color_mean=color_mean,
++                color_std=color_std),
++            dict(
++                type='AddSuperPointAnnotations_Online',
++                num_classes=num_semantic_classes,
++                stuff_classes=[0, 1],
++                merge_non_stuff_cls=False,
++                with_rec=True),
++        ]),
++    dict(type='Pack3DDetInputs_Online', keys=['points', 'sp_pts_mask'])
++]
++
++train_dataloader = dict(
++    batch_size=4,
++    num_workers=6,
++    persistent_workers=True,
++    # persistent_workers=False,
++    # num_workers=0,
++    dataset=dict(
++        type=dataset_type,
++        load_interval=load_interval,
++        ann_file='scannet200_mv_oneformer3d_infos_train.pkl',
++        data_root=data_root,
++        metainfo=dict(classes=class_names),
++        pipeline=train_pipeline,
++        ignore_index=num_semantic_classes,
++        scene_idxs=None,
++        test_mode=False))
++val_dataloader = dict(
++    num_workers=6,
++    persistent_workers=True,
++    dataset=dict(
++        type=dataset_type,
++        load_interval=val_load_interval,
++        ann_file='scannet200_mv_oneformer3d_infos_val.pkl',
++        data_root=data_root,
++        metainfo=dict(classes=class_names),
++        pipeline=test_pipeline,
++        ignore_index=num_semantic_classes,
++        test_mode=True))
++test_dataloader = val_dataloader
++
++label2cat = {i: name for i, name in enumerate(class_names + ['unlabeled'])}
++metric_meta = dict(
++    label2cat=label2cat,
++    ignore_index=[num_semantic_classes],
++    classes=class_names + ['unlabeled'])
++
++sem_mapping = [
++    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23,
++    24, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 38, 39, 40, 41, 42, 44, 45, 46,
++    47, 48, 49, 50, 51, 52, 54, 55, 56, 57, 58, 59, 62, 63, 64, 65, 66, 67, 68,
++    69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 82, 84, 86, 87, 88, 89, 90,
++    93, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 110, 112,
++    115, 116, 118, 120, 121, 122, 125, 128, 130, 131, 132, 134, 136, 138, 139,
++    140, 141, 145, 148, 154, 155, 156, 157, 159, 161, 163, 165, 166, 168, 169,
++    170, 177, 180, 185, 188, 191, 193, 195, 202, 208, 213, 214, 221, 229, 230,
++    232, 233, 242, 250, 261, 264, 276, 283, 286, 300, 304, 312, 323, 325, 331,
++    342, 356, 370, 392, 395, 399, 408, 417, 488, 540, 562, 570, 572, 581, 609,
++    748, 776, 1156, 1163, 1164, 1165, 1166, 1167, 1168, 1169, 1170, 1171, 1172,
++    1173, 1174, 1175, 1176, 1178, 1179, 1180, 1181, 1182, 1183, 1184, 1185,
++    1186, 1187, 1188, 1189, 1190, 1191
++]
++inst_mapping = sem_mapping[2:]
++
++val_evaluator = dict(
++    type='UnifiedSegMetric',
++    stuff_class_inds=[0, 1], 
++    thing_class_inds=list(range(2, num_semantic_classes)),
++    min_num_points=1, 
++    id_offset=2**16,
++    sem_mapping=sem_mapping,
++    inst_mapping=inst_mapping,
++    metric_meta=metric_meta)
++test_evaluator = val_evaluator
++
++optim_wrapper = dict(
++    type='OptimWrapper',
++    optimizer=dict(type='AdamW', lr=0.0001, weight_decay=0.05),
++    clip_grad=dict(max_norm=10, norm_type=2))
++
++# learning rate
++param_scheduler = dict(type='PolyLR', begin=0, end=128, power=0.9)
++
++custom_hooks = [dict(type='EmptyCacheHook', after_iter=True)]
++default_hooks = dict(
++    checkpoint=dict(
++        interval=1,
++        max_keep_ckpts=1,
++        save_best=['all_ap_50%'],
++        rule='greater'))
++
++# choose a best pth
++load_from = 'work_dirs/AutoSeg3D_sv_scannet200/epoch_best.pth'
++
++# training schedule for 1x
++train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=128, val_interval=16)
++val_cfg = dict(type='ValLoop')
++test_cfg = dict(type='TestLoop')
++default_hooks = dict(
++    timer=dict(type='IterTimerHook'),
++    logger=dict(type='LoggerHook', interval=50),
++    param_scheduler=dict(type='ParamSchedulerHook'),
++    checkpoint=dict(type='CheckpointHook', interval=16, max_keep_ckpts=128),
++    sampler_seed=dict(type='DistSamplerSeedHook'),
++    visualization=dict(type='Det3DVisualizationHook'))
++# ---------------- Codex v5ab4 offline-DINO dual-path overrides (2026-06-19) ----------------
++DINO_CACHE_ROOT = '/datadisk3/xxy/dino_cache/autoseg3d_v5_stage1_clean_20260604/scannet200_mv_fast/dinov2_vitl14_reg4_420x560_fp16'
++SEED = 2050318485
++
++model.update(dict(
++    dino_enable=True,
++    dino_require=True,
++    dino_debug=False,
++    dino_pose_mode='auto',
++    dino_valid_rate_warn_thr=0.90))
++model['backbone'].update(dict(
++    dino_dim=1024,
++    use_dino=True,
++    dual_output=True))
++model['backbone']['config'].update(dict(
++    dino_strict=True,
++    dino_min_hit_ratio=0.90,
++    dino_residual=True))
++model['decoder'].update(dict(
++    dual_path=True,
++    owner_residual=False))
++
++load_from = '/datadisk1/xxy/3D_Reconstruction_v5_184sync_20260603/work_dirs/source_ckpts/184_ESAM_sv_dino_best_all_ap50_epoch115.pth'
++randomness = dict(seed=SEED, deterministic=False)
++work_dir = '/datadisk3/xxy/work_dirs/autoseg3d_v5_stage1_clean_20260619/v5ab4_offline_dino_dual_stage1_seed2050318485'
++
++
++def _enable_cached_dino_pipeline(pipeline):
++    inserted = False
++    for i, step in enumerate(pipeline):
++        if step.get('type') == 'LoadAdjacentDataFromFile':
++            step['keep_img_info'] = True
++            if i + 1 >= len(pipeline) or pipeline[i + 1].get('type') != 'BuildCamInfoFromPoses':
++                pipeline.insert(i + 1, dict(type='BuildCamInfoFromPoses', dataset_type='scannet200', target_size=(420, 560)))
++                pipeline.insert(i + 2, dict(type='LoadDINOFeatureFromCache', cache_root=DINO_CACHE_ROOT, data_root='data/scannet200-mv_fast/', strict=True))
++            inserted = True
++            break
++    if not inserted:
++        raise RuntimeError('LoadAdjacentDataFromFile not found in pipeline')
++    for step in pipeline:
++        if step.get('type') == 'Pack3DDetInputs_Online':
++            keys = list(step.get('keys', []))
++            for k in ['img_paths', 'dino_feat_maps', 'cam_info', 'dino_cache_paths']:
++                if k not in keys:
++                    keys.append(k)
++            step['keys'] = keys
++    return pipeline
++
++train_pipeline = _enable_cached_dino_pipeline(train_pipeline)
++test_pipeline = _enable_cached_dino_pipeline(test_pipeline)
++train_dataloader['dataset']['pipeline'] = train_pipeline
++val_dataloader['dataset']['pipeline'] = test_pipeline
++test_dataloader['dataset']['pipeline'] = test_pipeline
+diff --git a/oneformer3d/data_preprocessor.py b/oneformer3d/data_preprocessor.py
+index ad53495..e008719 100644
+--- a/oneformer3d/data_preprocessor.py
++++ b/oneformer3d/data_preprocessor.py
+@@ -82,6 +82,20 @@ class Det3DDataPreprocessor_(Det3DDataPreprocessor):
+                 img_paths.append(batch_paths)
+             batch_inputs['img_paths'] = img_paths
+         
++        # Cached DINO / camera metadata are per sample as [B][T] after pseudo-collate;
++        # transpose to frame-major [T][B] so model.extract_feat(frame_i) can index directly.
++        for _key in ('dino_feat_maps', 'cam_info', 'dino_cache_paths'):
++            if _key in inputs:
++                val = inputs[_key]
++                try:
++                    if isinstance(val, list) and len(val) > 0 and isinstance(val[0], (list, tuple)):
++                        n_frames = len(val[0])
++                        batch_inputs[_key] = [[sample_frames[t] for sample_frames in val] for t in range(n_frames)]
++                    else:
++                        batch_inputs[_key] = val
++                except Exception:
++                    batch_inputs[_key] = val
++
+         if 'img_path' in inputs:
+             batch_inputs['img_path'] = inputs['img_path']
+         return {'inputs': batch_inputs, 'data_samples': data_samples}
+\ No newline at end of file
+diff --git a/oneformer3d/dino_sparse_fpn.py b/oneformer3d/dino_sparse_fpn.py
+new file mode 100644
+index 0000000..ae399e8
+--- /dev/null
++++ b/oneformer3d/dino_sparse_fpn.py
+@@ -0,0 +1,61 @@
++"""
++基于 MinkowskiEngine 的 DINO 多尺度 FPN 构建工具。
++
++用途：
++- 已有点级 2D 特征（如投影得到的 DINO 特征）和对应坐标，可快速构建 stride=1/2/4/8/16 的稀疏金字塔。
++- 不依赖具体模型，外部可选择合适的 1×1 投影层将各层通道对齐到 decoder 所需维度。
++
++示例：
++    # coords: (N, 1+3)，第一列为 batch 索引，后三列为网格坐标
++    # feats:  (N, C_dino)
++    fpn = build_sparse_fpn(coords, feats, tensor_stride=1, dimension=3)
++    x_s1, x_s2, x_s4, x_s8, x_s16 = fpn
++"""
++
++from typing import List, Optional
++
++import MinkowskiEngine as ME
++import torch
++
++
++def build_sparse_fpn(
++    coords: torch.Tensor,
++    feats: torch.Tensor,
++    tensor_stride: int = 1,
++    dimension: int = 3,
++    coordinate_manager: Optional[ME.CoordinateManager] = None,
++    pool: Optional[ME.MinkowskiMaxPooling] = None,
++) -> List[ME.SparseTensor]:
++    """
++    根据输入坐标与特征构建稀疏 FPN（金字塔），返回 stride 1/2/4/8/16 五个尺度。
++
++    Args:
++        coords: (N, D+1) 整型坐标，首列为 batch 索引，后续为各维网格坐标。
++        feats:  (N, C) 特征向量（如 DINO 点级特征）。
++        tensor_stride: 输入的初始 stride，一般为 1。
++        dimension: 维度，默认 3。
++        coordinate_manager: 可选，共享的 CoordinateManager。
++        pool: 可选，自定义 MinkowskiMaxPooling，否则默认 kernel=2, stride=2。
++
++    Returns:
++        List[ME.SparseTensor]: [s1, s2, s4, s8, s16]
++    """
++    if pool is None:
++        pool = ME.MinkowskiMaxPooling(kernel_size=2, stride=2, dimension=dimension)
++
++    # MinkowskiEngine 的池化目前仅在 float32/double 上有完整实现，
++    # 为避免 half 精度导致的 'local_pooling_forward_gpu' 报错，这里统一转为 float32。
++    feats = feats.float()
++    coords = coords.to(dtype=torch.int32)
++
++    x_s1 = ME.SparseTensor(
++        features=feats,
++        coordinates=coords,
++        tensor_stride=tensor_stride,
++        coordinate_manager=coordinate_manager,
++    )
++    x_s2 = pool(x_s1)
++    x_s4 = pool(x_s2)
++    x_s8 = pool(x_s4)
++    x_s16 = pool(x_s8)
++    return [x_s1, x_s2, x_s4, x_s8, x_s16]
+diff --git a/oneformer3d/formatting.py b/oneformer3d/formatting.py
+index 4c25d5e..4afae81 100644
+--- a/oneformer3d/formatting.py
++++ b/oneformer3d/formatting.py
+@@ -170,7 +170,7 @@ class Pack3DDetInputs_(Pack3DDetInputs):
+ class Pack3DDetInputs_Online(Pack3DDetInputs):
+     """Just add elastic_coords, sp_pts_mask, and gt_sp_masks.
+     """
+-    INPUTS_KEYS = ['points', 'img', 'elastic_coords', 'img_paths']
++    INPUTS_KEYS = ['points', 'img', 'elastic_coords', 'img_paths', 'dino_feat_maps', 'cam_info', 'dino_cache_paths']
+     SEG_KEYS = [
+         'gt_seg_map',
+         'pts_instance_mask',
+diff --git a/oneformer3d/img_backbone.py b/oneformer3d/img_backbone.py
+index 0b11746..0e19f08 100644
+--- a/oneformer3d/img_backbone.py
++++ b/oneformer3d/img_backbone.py
+@@ -5,11 +5,22 @@ from torch import nn as nn
+ from torch.nn import functional as F
+ import torchvision
+ import pdb
+-from ultralytics.yolo.utils import is_git_dir
+-from ultralytics.yolo.utils import ops
+-from ultralytics.yolo.utils.torch_utils import select_device, smart_inference_mode
+-from ultralytics.yolo.v8.segment import SegmentationPredictor
+-from ultralytics.yolo.cfg import get_cfg
++try:
++    from ultralytics.yolo.utils import is_git_dir
++    from ultralytics.yolo.utils import ops
++    from ultralytics.yolo.utils.torch_utils import select_device, smart_inference_mode
++    from ultralytics.yolo.v8.segment import SegmentationPredictor
++    from ultralytics.yolo.cfg import get_cfg
++except ModuleNotFoundError:
++    # Newer ultralytics versions moved the yolo.* namespace. AutoSeg3D only
++    # needs these symbols when FastSAM/YOLO image backbones are actually used;
++    # keep imports compatible so 3D/DINO configs can register modules.
++    from ultralytics.utils import ops
++    from ultralytics.utils.torch_utils import select_device, smart_inference_mode
++    from ultralytics.models.yolo.segment import SegmentationPredictor
++    from ultralytics.cfg import get_cfg
++    def is_git_dir():
++        return False
+ import sys
+ from mmengine.model import BaseModule
+ from mmdet3d.registry import MODELS
+diff --git a/oneformer3d/loading.py b/oneformer3d/loading.py
+index 7fb580c..75de8d6 100644
+--- a/oneformer3d/loading.py
++++ b/oneformer3d/loading.py
+@@ -1,6 +1,7 @@
+ # Adapted from mmdet3d/datasets/transforms/loading.py
+ import mmengine
+ import numpy as np
++import torch
+ from typing import List, Optional, Union
+ import os, pdb, json
+ 
+@@ -166,6 +167,7 @@ class LoadAdjacentDataFromFile(BaseTransform):
+                  with_rec=False,
+                  cat_rec=False,
+                  use_FF=False,
++                 keep_img_info=False,
+                  backend_args: Optional[dict] = None,
+                  dataset_type = 'scannet200') -> None:
+         self.shift_height = shift_height
+@@ -193,6 +195,7 @@ class LoadAdjacentDataFromFile(BaseTransform):
+         self.with_rec = with_rec
+         self.cat_rec = cat_rec
+         self.use_FF = use_FF
++        self.keep_img_info = keep_img_info
+         self.backend_args = backend_args
+         self.dataset_type = dataset_type
+         
+@@ -364,9 +367,9 @@ class LoadAdjacentDataFromFile(BaseTransform):
+         pts_instance_mask_paths = results['pts_instance_mask_paths']
+         pts_semantic_mask_paths = results['pts_semantic_mask_paths']
+         sp_pts_mask_paths = results['super_pts_paths']
+-        if self.use_FF:
+-            img_file_paths = results['img_paths']
+-            poses = results['poses']
++        if self.use_FF or self.keep_img_info:
++            img_file_paths = list(results.get('img_paths', []))
++            poses = list(results.get('poses', []))
+         else:
+             if 'img_paths' in results:
+                 del results['img_paths']
+@@ -381,7 +384,7 @@ class LoadAdjacentDataFromFile(BaseTransform):
+             pts_instance_mask_paths = [pts_instance_mask_paths[idx] for idx in keep_view_idx]
+             pts_semantic_mask_paths = [pts_semantic_mask_paths[idx] for idx in keep_view_idx]
+             sp_pts_mask_paths = [sp_pts_mask_paths[idx] for idx in keep_view_idx]
+-            if self.use_FF: # False
++            if self.use_FF or self.keep_img_info: # keep frame-aligned 2D metadata when using cached DINO
+                 img_file_paths = [img_file_paths[idx] for idx in keep_view_idx]
+                 poses = [poses[idx] for idx in keep_view_idx]
+ 
+@@ -395,7 +398,7 @@ class LoadAdjacentDataFromFile(BaseTransform):
+             results['pts_instance_mask_paths'] = pts_instance_mask_paths
+             results['pts_semantic_mask_paths'] = pts_semantic_mask_paths
+             results['super_pts_paths'] = sp_pts_mask_paths
+-            if self.use_FF:
++            if self.use_FF or self.keep_img_info:
+                 img_file_paths = [img_file_paths[idx] for idx in choose_seq]
+                 results['img_paths'] = img_file_paths
+                 poses = [poses[idx] for idx in choose_seq]
+@@ -461,6 +464,12 @@ class LoadAdjacentDataFromFile(BaseTransform):
+             points, points_dim=points.shape[-1], attribute_dims=attribute_dims)
+         results['points'] = points
+         
++        if self.keep_img_info and not self.use_FF:
++            results['img_paths'] = img_file_paths
++            results['poses'] = poses
++            if self.dataset_type == 'scenenn':
++                results['poses'] = [(self.transform_matrix @ pose) for pose in poses]
++
+         if self.use_FF:
+             imgs = []
+             for i in range(len(img_file_paths)):
+@@ -647,3 +656,103 @@ class LoadPointsFromFile_(BaseTransform):
+         repr_str += f'norm_elongation={self.norm_elongation})'
+         return repr_str
+   
++
++
++@TRANSFORMS.register_module()
++class LoadDINOFeatureFromCache(BaseTransform):
++    """Load pre-extracted DINO feature maps for the MV frames selected by LoadAdjacentDataFromFile."""
++    def __init__(self,
++                 cache_root: str,
++                 data_root: str = 'data/scannet200-mv_fast/',
++                 key: str = 'dino_feat_maps',
++                 dtype: str = 'float16',
++                 strict: bool = True) -> None:
++        self.cache_root = cache_root
++        self.data_root = data_root.rstrip('/') + '/'
++        self.key = key
++        self.dtype = dtype
++        self.strict = strict
++
++    def _cache_path(self, img_path: str) -> str:
++        p = str(img_path)
++        if p.startswith(self.data_root):
++            rel = p[len(self.data_root):]
++        else:
++            marker = 'scannet200-mv_fast/'
++            rel = p.split(marker, 1)[1] if marker in p else p
++        rel = os.path.splitext(rel)[0] + '.pt'
++        return os.path.join(self.cache_root, rel)
++
++    def transform(self, results: dict) -> dict:
++        img_paths = results.get('img_paths', None)
++        if img_paths is None:
++            if self.strict:
++                raise KeyError('LoadDINOFeatureFromCache requires img_paths; set LoadAdjacentDataFromFile.keep_img_info=True')
++            return results
++        feats, cache_paths = [], []
++        for img_path in img_paths:
++            cache_path = self._cache_path(img_path)
++            cache_paths.append(cache_path)
++            if not os.path.exists(cache_path):
++                if self.strict:
++                    raise FileNotFoundError(cache_path)
++                feats.append(None)
++                continue
++            payload = torch.load(cache_path, map_location='cpu')
++            feat = payload.get('feat') if isinstance(payload, dict) else payload
++            if not torch.is_tensor(feat):
++                raise TypeError(f'DINO cache payload has no tensor feat: {cache_path}')
++            feat = feat.contiguous()
++            if self.dtype in ('float16', 'fp16'):
++                feat = feat.half()
++            elif self.dtype in ('float32', 'fp32'):
++                feat = feat.float()
++            feats.append(feat)
++        results[self.key] = feats
++        results['dino_cache_paths'] = cache_paths
++        return results
++
++
++@TRANSFORMS.register_module()
++class BuildCamInfoFromPoses(BaseTransform):
++    """Build per-frame camera metadata for cached DINO projection."""
++    def __init__(self,
++                 dataset_type: str = 'scannet200',
++                 target_size=(420, 560),
++                 base_size=(480, 640),
++                 max_depth: float = 20.0) -> None:
++        self.dataset_type = dataset_type
++        self.target_size = tuple(target_size)
++        self.base_size = tuple(base_size)
++        self.max_depth = float(max_depth)
++
++    def _base_intrinsics(self):
++        if self.dataset_type in ('scannet', 'scannet200'):
++            return 577.870605, 577.870605, 319.5, 239.5
++        if self.dataset_type == 'scenenn':
++            return 544.47329, 544.47329, 320.0, 240.0
++        return 577.870605, 577.870605, 319.5, 239.5
++
++    def transform(self, results: dict) -> dict:
++        poses = results.get('poses', None)
++        img_paths = results.get('img_paths', None)
++        if poses is None:
++            raise KeyError('BuildCamInfoFromPoses requires poses; set LoadAdjacentDataFromFile.keep_img_info=True')
++        fx, fy, cx, cy = self._base_intrinsics()
++        base_h, base_w = self.base_size
++        tgt_h, tgt_w = self.target_size
++        sx, sy = float(tgt_w) / float(base_w), float(tgt_h) / float(base_h)
++        intr = [fx * sx, fy * sy, cx * sx, cy * sy]
++        cam_info = []
++        for i, pose in enumerate(poses):
++            pose_arr = np.asarray(pose, dtype=np.float32)
++            cam_info.append(dict(
++                pose=pose_arr,
++                extrinsics=pose_arr,
++                intrinsics=intr,
++                img_size_dino=[int(tgt_h), int(tgt_w)],
++                img_path=img_paths[i] if img_paths is not None and i < len(img_paths) else None,
++                max_depth=self.max_depth,
++            ))
++        results['cam_info'] = cam_info
++        return results
+diff --git a/oneformer3d/mink_unet.py b/oneformer3d/mink_unet.py
+index d3d3ece..92fb520 100644
+--- a/oneformer3d/mink_unet.py
++++ b/oneformer3d/mink_unet.py
+@@ -270,8 +270,12 @@ class Res16UNetBase(BaseModule):
+                  out_channels,
+                  config,
+                  D=3,
++                 dino_dim=None,  # 可选：DINO 通道数，提供则启用 2D 注入
++                 dual_output=False,
+                  **kwargs):
+         self.D = D
++        self.dino_dim = dino_dim
++        self._dual_output = dual_output
+         super().__init__()
+         self.network_initialization(in_channels, out_channels, config, D)
+         self.weight_initialization()
+@@ -514,74 +518,318 @@ class Res16UNetBase(BaseModule):
+         #     D=D)
+         self.relu = MinkowskiReLU(inplace=True)
+ 
+-    def forward(self, x, memory=None):
+-        out = self.conv0p1s1(x) # resulotion 1 * 0.02
++        # 若提供 dino_dim，则为各解码层准备 1x1 投影（用于后续 2D 注入）
++        self.use_dino = self.dino_dim is not None
++        if self.use_dino:
++            # 最新一次 forward 中各尺度的命中率（用于训练期 sanity hook）
++            self._last_dino_hit = {}
++            # 最新一次 forward 中各尺度的融合尺度统计（用于训练期 sanity hook）
++            self._last_dino_fuse = {}
++            # 低命中保护：当 DINO sparse 坐标与 backbone 坐标不一致时，
++            # features_at_coordinates 会大量 miss 并返回全 0，此时继续做融合会把 backbone 特征扰乱。
++            # 这里提供一个轻量保护：命中率低于阈值则退化为原始 (up ⊕ skip)。
++            self._dino_miss_warn_count = 0
++            self._dino_min_hit_ratio = float(getattr(config, 'dino_min_hit_ratio', 0.05))
++            self._dino_strict = bool(getattr(config, 'dino_strict', False))
++            # 推荐：使用 residual 形式注入（base_cat + fuse(cat+ dino)），
++            # 并将 fuse 的 1×1 conv 初始化为 0，确保加载旧 checkpoint（不含 DINO）时
++            # 主干行为保持不变，避免 AP 断崖式下降。
++            self._dino_residual = bool(getattr(config, 'dino_residual', True))
++
++            # DITR 风格：三路特征（up、skip、dino）concat 后做 1×1 投影 + BN + GELU，
++            # 输出通道数保持与原始 (up ⊕ skip) 相同，以避免重写后续 decoder blocks。
++            def _fuse(in_ch: int, out_ch: int):
++                return nn.Sequential(
++                    ME.MinkowskiConvolution(
++                        in_channels=in_ch,
++                        out_channels=out_ch,
++                        kernel_size=1,
++                        stride=1,
++                        bias=False,
++                        dimension=D,
++                    ),
++                    ME.MinkowskiBatchNorm(out_ch, momentum=bn_momentum),
++                    ME.MinkowskiGELU(),
++                )
++
++            # level stride=8/4/2/1
++            self.dino_fuse_8 = _fuse(
++                # up: PLANES[4], skip(out_b3p8): PLANES[2]
++                self.PLANES[4] + self.PLANES[2] + self.dino_dim,
++                self.PLANES[4] + self.PLANES[2],
++            )
++            self.dino_fuse_4 = _fuse(
++                # up: PLANES[5], skip(out_b2p4): PLANES[1]
++                self.PLANES[5] + self.PLANES[1] + self.dino_dim,
++                self.PLANES[5] + self.PLANES[1],
++            )
++            self.dino_fuse_2 = _fuse(
++                # up: PLANES[6], skip(out_b1p2): PLANES[0]
++                self.PLANES[6] + self.PLANES[0] + self.dino_dim,
++                self.PLANES[6] + self.PLANES[0],
++            )
++            self.dino_fuse_1 = _fuse(
++                self.PLANES[7] + self.INIT_DIM + self.dino_dim,
++                self.PLANES[7] + self.INIT_DIM,
++            )
++
++            # small-normal init (std=1e-4) to avoid gradient deadlock:
++            # zero-init causes MinkowskiEngine sparse conv to produce 0 output,
++            # which blocks backward gradient (same deadlock as W_c=0).
++            if self._dino_residual:
++                for m in (self.dino_fuse_8, self.dino_fuse_4, self.dino_fuse_2, self.dino_fuse_1):
++                    try:
++                        conv1x1 = m[0]
++                        if hasattr(conv1x1, 'kernel') and conv1x1.kernel is not None:
++                            conv1x1.kernel.data.normal_(mean=0.0, std=1e-4)
++                    except Exception:
++                        pass
++
++        # ── dual_output: semantic side branch projection ──
++        if self._dual_output:
++            # dino_fuse_1 outputs PLANES[7]+INIT_DIM channels (cat of up+skip),
++            # project to out_channels to match the main path dimension.
++            sem_in = self.PLANES[7] + self.INIT_DIM
++            self.sem_out_proj = nn.Sequential(
++                nn.Linear(sem_in, out_channels),
++                nn.LayerNorm(out_channels),
++                nn.ReLU(),
++            )
++
++    def _fuse_with_dino(self, out_up, out_skip, dino_feat, fuse):
++        """DITR 风格：在 decoder level 将三路特征 concat 后投影融合。
++
++        - out_up: 当前 decoder 上采样分支特征（convtr+bn+relu 后）
++        - out_skip: encoder skip 特征（同 stride）
++        - dino_feat: 同 stride 的 DINO 稀疏特征（可为 None）
++        - fuse: 1×1 conv + BN + GELU（输出通道与 out_up⊕out_skip 一致）
++        """
++        base_cat = me.cat(out_up, out_skip)
++
++        if dino_feat is None:
++            if getattr(self, '_dino_strict', False):
++                raise RuntimeError(
++                    f"DINO strict: missing dino_feat for tensor_stride={tuple(out_up.tensor_stride)}")
++            return base_cat
++
++        try:
++            dino_on_out = dino_feat.features_at_coordinates(out_up.coordinates.float())
++        except Exception as e:
++            if getattr(self, '_dino_strict', False):
++                raise RuntimeError(
++                    f"DINO strict: features_at_coordinates failed for tensor_stride={tuple(out_up.tensor_stride)}: {repr(e)}")
++            return base_cat
++
++        if dino_on_out.dim() != 2 or dino_on_out.shape[0] != out_up.features.shape[0]:
++            if getattr(self, '_dino_strict', False):
++                raise RuntimeError(
++                    "DINO strict: features_at_coordinates returned invalid shape "
++                    f"got={tuple(getattr(dino_on_out, 'shape', []))}, expected=({out_up.features.shape[0]}, C)")
++            return base_cat
++
++        # 命中率检查（避免坐标 miss 时把 backbone 特征通过随机 fuse 破坏掉）
++        try:
++            hit = (dino_on_out.abs().sum(dim=1) > 1e-8).float().mean().item()
++            # 记录到成员变量，供训练期 sanity hook 汇总
++            try:
++                s = int(getattr(out_up, 'tensor_stride', (0,))[0])
++                key = {1: 's1', 2: 's2', 4: 's4', 8: 's8', 16: 's16'}.get(s, f's{s}')
++                if hasattr(self, '_last_dino_hit') and isinstance(self._last_dino_hit, dict):
++                    self._last_dino_hit[key] = float(hit)
++            except Exception:
++                pass
++            if hit < getattr(self, '_dino_min_hit_ratio', 0.0):
++                if getattr(self, '_dino_strict', False):
++                    raise RuntimeError(
++                        f"DINO strict: low hit_ratio={hit:.4f} (<{self._dino_min_hit_ratio:.4f}) "
++                        f"at tensor_stride={tuple(out_up.tensor_stride)}; check elastic/flip/resize/intrinsics sync.")
++                if getattr(self, '_dino_miss_warn_count', 0) < 3:
++                    print(f"[DINO][warn] low hit_ratio={hit:.4f} (<{self._dino_min_hit_ratio:.4f}), fallback to 3D-only concat")
++                    self._dino_miss_warn_count += 1
++                return base_cat
++        except Exception:
++            # 若检查失败，宁可继续走融合（不影响正常训练）
++            pass
++
++        dino_on_out = dino_on_out.to(dtype=out_up.features.dtype)
++        dino_on_out = ME.SparseTensor(
++            features=dino_on_out,
++            coordinate_map_key=out_up.coordinate_map_key,
++            tensor_stride=out_up.tensor_stride,
++            coordinate_manager=out_up.coordinate_manager,
++        )
++        fused_in = me.cat(out_up, out_skip, dino_on_out)
++        fused_out = fuse(fused_in)
++        # 记录融合尺度统计（仅用于训练期监控）
++        try:
++            s = int(getattr(out_up, 'tensor_stride', (0,))[0])
++            key = {1: 's1', 2: 's2', 4: 's4', 8: 's8', 16: 's16'}.get(s, f's{s}')
++            base_feat = base_cat.features
++            fuse_feat = fused_out.features
++            # 均值/方差
++            dino_mean = float(dino_on_out.features.mean())
++            dino_std = float(dino_on_out.features.std())
++            base_mean = float(base_feat.mean())
++            base_std = float(base_feat.std())
++            # L2 norm 比例
++            base_norm = float(base_feat.norm(p=2, dim=1).mean())
++            fuse_norm = float(fuse_feat.norm(p=2, dim=1).mean())
++            ratio = float(fuse_norm / (base_norm + 1e-6))
++            if hasattr(self, '_last_dino_fuse') and isinstance(self._last_dino_fuse, dict):
++                self._last_dino_fuse[key] = dict(
++                    base_norm=base_norm,
++                    fuse_norm=fuse_norm,
++                    ratio=ratio,
++                    dino_mean=dino_mean,
++                    dino_std=dino_std,
++                    base_mean=base_mean,
++                    base_std=base_std,
++                )
++        except Exception:
++            pass
++        if getattr(self, '_dino_residual', False):
++            return base_cat + fused_out
++        return fused_out
++
++    def forward(self, x, dino_feats=None, memory=None):
++        """dino_feats: 可选 list/tuple，期望顺序 [s1, s2, s4, s8, s16]
++        解码注入逻辑：
++          - 仅在 self.use_dino 且提供 dino_feats 时生效；
++          - 在各 decoder level，将 (up, skip, dino) 三路特征 concat 后做 1×1+BN+GELU 融合；
++          - 输出通道与原始 (up ⊕ skip) 一致，保持 U-Net 主干结构与 block 输入不变。
++        """
++        if self.use_dino and hasattr(self, '_last_dino_hit') and isinstance(self._last_dino_hit, dict):
++            self._last_dino_hit = {}
++        if self.use_dino and hasattr(self, '_last_dino_fuse') and isinstance(self._last_dino_fuse, dict):
++            self._last_dino_fuse = {}
++
++        dino_s1 = dino_s2 = dino_s4 = dino_s8 = dino_s16 = None
++        if self.use_dino and dino_feats is not None and len(dino_feats) >= 4:
++            # build_sparse_fpn 返回 [s1, s2, s4, s8, s16]
++            dino_s1 = dino_feats[0]
++            dino_s2 = dino_feats[1]
++            dino_s4 = dino_feats[2]
++            dino_s8 = dino_feats[3]
++            if len(dino_feats) >= 5:
++                dino_s16 = dino_feats[4]
++
++        out = self.conv0p1s1(x)
+         out = self.bn0(out)
+-        out_p1 = self.relu(out) 
++        out_p1 = self.relu(out)
+ 
+-        out = self.conv1p1s2(out_p1) # resulotion 2 * 0.02
++        out = self.conv1p1s2(out_p1)
+         out = self.bn1(out)
+         out = self.relu(out)
+-        out_b1p2 = self.block1(out) 
++        out_b1p2 = self.block1(out)
+ 
+-        out = self.conv2p2s2(out_b1p2) # resulotion 4 * 0.02
++        out = self.conv2p2s2(out_b1p2)
+         out = self.bn2(out)
+         out = self.relu(out)
+-        out_b2p4 = self.block2(out) 
++        out_b2p4 = self.block2(out)
+ 
+-        out = self.conv3p4s2(out_b2p4) # resulotion 8 * 0.02
++        out = self.conv3p4s2(out_b2p4)
+         out = self.bn3(out)
+         out = self.relu(out)
+         out_b3p8 = self.block3(out)
+ 
+         # pixel_dist=16
+-        out = self.conv4p8s2(out_b3p8) # resulotion 16 * 0.02
++        out = self.conv4p8s2(out_b3p8)
+         out = self.bn4(out)
+         out = self.relu(out)
+         out = self.block4(out)
+ 
+-        if memory is not None: # 对于不同尺度的特征基于memory进行融合
++        # stride=16 的坐标命中率统计（不参与融合，只用于 sanity/调试）
++        if self.use_dino and dino_s16 is not None:
++            try:
++                d16 = dino_s16.features_at_coordinates(out.coordinates.float())
++                hit16 = (d16.abs().sum(dim=1) > 1e-8).float().mean().item()
++                if hasattr(self, '_last_dino_hit') and isinstance(self._last_dino_hit, dict):
++                    self._last_dino_hit['s16'] = float(hit16)
++            except Exception:
++                pass
++
++        if memory is not None:
+             out_b1p2_temp, out_b2p4_temp, out_b3p8_temp, out_temp = out_b1p2, out_b2p4, out_b3p8, out
+-            out_b1p2, out_b2p4, out_b3p8, out = memory([out_b1p2, out_b2p4, out_b3p8, out]) # 对于不同尺度的特征基于memory进行融合
++            out_b1p2, out_b2p4, out_b3p8, out = memory([out_b1p2, out_b2p4, out_b3p8, out])
+             out_b1p2 = ME.SparseTensor(coordinate_map_key=out_b1p2_temp.coordinate_map_key, features=out_b1p2.features_at_coordinates(out_b1p2_temp.coordinates.float()), tensor_stride=out_b1p2_temp.tensor_stride, coordinate_manager=out_b1p2_temp.coordinate_manager)
+             out_b2p4 = ME.SparseTensor(coordinate_map_key=out_b2p4_temp.coordinate_map_key, features=out_b2p4.features_at_coordinates(out_b2p4_temp.coordinates.float()), tensor_stride=out_b2p4_temp.tensor_stride, coordinate_manager=out_b2p4_temp.coordinate_manager)
+             out_b3p8 = ME.SparseTensor(coordinate_map_key=out_b3p8_temp.coordinate_map_key, features=out_b3p8.features_at_coordinates(out_b3p8_temp.coordinates.float()), tensor_stride=out_b3p8_temp.tensor_stride, coordinate_manager=out_b3p8_temp.coordinate_manager)
+             out = ME.SparseTensor(coordinate_map_key=out_temp.coordinate_map_key, features=out.features_at_coordinates(out_temp.coordinates.float()), tensor_stride=out_temp.tensor_stride, coordinate_manager=out_temp.coordinate_manager)
+ 
+-        # pixel_dist=8 进行上采样
++        # pixel_dist=8
+         out = self.convtr4p16s2(out)
+         out = self.bntr4(out)
+         out = self.relu(out)
+-        out = me.cat(out, out_b3p8)
++        if self.use_dino and not self._dual_output:
++            out = self._fuse_with_dino(out, out_b3p8, dino_s8, self.dino_fuse_8)
++        else:
++            out = me.cat(out, out_b3p8)
+         out = self.block5(out)
+ 
+         # pixel_dist=4
+         out = self.convtr5p8s2(out)
+         out = self.bntr5(out)
+         out = self.relu(out)
+-        out = me.cat(out, out_b2p4)
++        if self.use_dino and not self._dual_output:
++            out = self._fuse_with_dino(out, out_b2p4, dino_s4, self.dino_fuse_4)
++        else:
++            out = me.cat(out, out_b2p4)
+         out = self.block6(out)
+ 
+         # pixel_dist=2
+         out = self.convtr6p4s2(out)
+         out = self.bntr6(out)
+         out = self.relu(out)
+-        out = me.cat(out, out_b1p2)
++        if self.use_dino and not self._dual_output:
++            out = self._fuse_with_dino(out, out_b1p2, dino_s2, self.dino_fuse_2)
++        else:
++            out = me.cat(out, out_b1p2)
+         out = self.block7(out)
+ 
+         # pixel_dist=1
+         out = self.convtr7p2s2(out)
+         out = self.bntr7(out)
+         out = self.relu(out)
+-        out = me.cat(out, out_p1)
+-        out = self.block8(out)
+ 
+-        return out
++        if self._dual_output and self.use_dino:
++            # ── Semantic side branch: detach 3D features + DINO fusion ──
++            out_sg = ME.SparseTensor(
++                features=out.features.detach(),
++                coordinate_map_key=out.coordinate_map_key,
++                tensor_stride=out.tensor_stride,
++                coordinate_manager=out.coordinate_manager,
++            )
++            sem_feat = self._fuse_with_dino(out_sg, out_p1, dino_s1, self.dino_fuse_1)
++            sem_1_feats = self.sem_out_proj(sem_feat.features)
++            sem_1 = ME.SparseTensor(
++                features=sem_1_feats,
++                coordinate_map_key=sem_feat.coordinate_map_key,
++                tensor_stride=sem_feat.tensor_stride,
++                coordinate_manager=sem_feat.coordinate_manager,
++            )
++            # Main path: pure 3D (no DINO injection)
++            out = me.cat(out, out_p1)
++            out = self.block8(out)
++            return out, sem_1
++        else:
++            if self.use_dino:
++                out = self._fuse_with_dino(out, out_p1, dino_s1, self.dino_fuse_1)
++            else:
++                out = me.cat(out, out_p1)
++            out = self.block8(out)
++            return out
+ 
+ class Res16UNetBase_FF(Res16UNetBase):
+     """Base class for Minkowski U-Net."""
+ 
+-    def forward(self, x, f=None, memory=None):
++    def forward(self, x, f=None, dino_feats=None, memory=None):
++        dino_s1 = dino_s2 = dino_s4 = dino_s8 = None
++        if self.use_dino and dino_feats is not None and len(dino_feats) >= 4:
++            dino_s1 = dino_feats[0]
++            dino_s2 = dino_feats[1]
++            dino_s4 = dino_feats[2]
++            dino_s8 = dino_feats[3]
++
+         out = self.conv0p1s1(x)
+         out = self.bn0(out)
+         out_p1 = self.relu(out)
+@@ -621,6 +869,8 @@ class Res16UNetBase_FF(Res16UNetBase):
+         out = self.convtr4p16s2(out)
+         out = self.bntr4(out)
+         out = self.relu(out)
++        if self.use_dino:
++            out = self._inject_dino(out, dino_s8, self.dino_proj_8)
+         out = me.cat(out, out_b3p8)
+         out = self.block5(out)
+ 
+@@ -628,6 +878,8 @@ class Res16UNetBase_FF(Res16UNetBase):
+         out = self.convtr5p8s2(out)
+         out = self.bntr5(out)
+         out = self.relu(out)
++        if self.use_dino:
++            out = self._inject_dino(out, dino_s4, self.dino_proj_4)
+         out = me.cat(out, out_b2p4)
+         out = self.block6(out)
+ 
+@@ -635,6 +887,8 @@ class Res16UNetBase_FF(Res16UNetBase):
+         out = self.convtr6p4s2(out)
+         out = self.bntr6(out)
+         out = self.relu(out)
++        if self.use_dino:
++            out = self._inject_dino(out, dino_s2, self.dino_proj_2)
+         out = me.cat(out, out_b1p2)
+         out = self.block7(out)
+ 
+@@ -642,6 +896,8 @@ class Res16UNetBase_FF(Res16UNetBase):
+         out = self.convtr7p2s2(out)
+         out = self.bntr7(out)
+         out = self.relu(out)
++        if self.use_dino:
++            out = self._inject_dino(out, dino_s1, self.dino_proj_1)
+         out = me.cat(out, out_p1)
+         out = self.block8(out)
+ 
+diff --git a/oneformer3d/mixformer3d.py b/oneformer3d/mixformer3d.py
+index 11e6792..e35c79c 100644
+--- a/oneformer3d/mixformer3d.py
++++ b/oneformer3d/mixformer3d.py
+@@ -15,7 +15,9 @@ from .mask_matrix_nms import mask_matrix_nms
+ from .oneformer3d import ScanNetOneFormer3DMixin
+ from .instance_merge import ins_merge_mat, ins_cat, ins_merge, OnlineMerge, GTMerge, DQ_Track_OnlineMerge
+ import numpy as np
+-from .img_backbone import point_sample
++from .img_backbone import point_sample, apply_3d_transformation
++from .projection_utils import project_points_to_uv, sample_img_feat
++from .dino_sparse_fpn import build_sparse_fpn
+ import os
+ # Added
+ from mmdet3d.registry import TASK_UTILS
+@@ -527,7 +529,12 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+                  use_relative_asso=False,
+                  merge_sp_masks = False,
+                  replace_bn_with_ln=False,
+-                 debug_mode=False
++                 debug_mode=False,
++                 dino_enable=False,
++                 dino_require=False,
++                 dino_debug=False,
++                 dino_pose_mode='auto',
++                 dino_valid_rate_warn_thr=0.90
+                  ):
+         super(Base3DDetector, self).__init__(
+             data_preprocessor=data_preprocessor, init_cfg=init_cfg)
+@@ -543,6 +550,11 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+             self.merge_head = MODELS.build(merge_head)
+         if merge_criterion is not None:
+             self.merge_criterion = MODELS.build(merge_criterion)
++        if getattr(self.decoder, '_dual_path', False):
++            self.query_merge_fusion = nn.Linear(2 * self.decoder.d_model, self.decoder.d_model, bias=False)
++            with torch.no_grad():
++                self.query_merge_fusion.weight[:, :self.decoder.d_model].copy_(torch.eye(self.decoder.d_model))
++                self.query_merge_fusion.weight[:, self.decoder.d_model:].copy_(torch.eye(self.decoder.d_model))
+         self.criterion = MODELS.build(criterion)
+         self.decoder_online = decoder['temporal_attn']
+         self.use_bbox = decoder['bbox_flag']
+@@ -648,6 +660,14 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+         if replace_bn_with_ln:
+             replace_bn(self)
+         self.debug_mode = debug_mode
++        self.dino_enable = bool(dino_enable)
++        self.dino_require = bool(dino_require)
++        self.dino_debug = bool(dino_debug)
++        self.dino_pose_mode = str(dino_pose_mode)
++        self.dino_valid_rate_warn_thr = float(dino_valid_rate_warn_thr)
++        self._dino_warn_count = 0
++        self._last_dino_valid_rate = None
++        self._last_dino_valid_rate_per_sample = []
+         self.init_weights()
+     
+     def init_weights(self):
+@@ -661,9 +681,188 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+             self.query_memory = None
+             self.pos_memory = None
+ 
++    def _frame_batch(self, value, frame_i):
++        if value is None:
++            return None
++        if isinstance(value, (list, tuple)):
++            if len(value) == 0:
++                return []
++            # frame-major [T][B]
++            if frame_i < len(value) and isinstance(value[frame_i], (list, tuple)):
++                return list(value[frame_i])
++            # sample-major [B][T] as Python lists
++            if isinstance(value[0], (list, tuple)) and frame_i < len(value[0]):
++                return [sample_frames[frame_i] for sample_frames in value]
++            # sample-major [B] tensors with leading frame dimension, e.g. elastic_coords
++            if torch.is_tensor(value[0]) and value[0].ndim >= 3 and frame_i < value[0].shape[0]:
++                return [sample_frames[frame_i] for sample_frames in value]
++            if isinstance(value[0], np.ndarray) and value[0].ndim >= 3 and frame_i < value[0].shape[0]:
++                return [sample_frames[frame_i] for sample_frames in value]
++        return value
++
++    def _select_pose(self, pose_in, frame_i, device, dtype):
++        if pose_in is None:
++            return None
++        if isinstance(pose_in, (list, tuple)) and len(pose_in) > 0:
++            pose_in = pose_in[frame_i] if frame_i < len(pose_in) else pose_in[0]
++        if torch.is_tensor(pose_in):
++            pose_t = pose_in
++            if pose_t.ndim == 3 and pose_t.shape[0] > 0:
++                idx = frame_i if frame_i < pose_t.shape[0] else 0
++                pose_t = pose_t[idx]
++            return pose_t.to(device=device, dtype=dtype) if pose_t.shape == (4, 4) else None
++        try:
++            pose_t = torch.as_tensor(np.asarray(pose_in), device=device, dtype=dtype)
++            if pose_t.ndim == 3 and pose_t.shape[0] > 0:
++                idx = frame_i if frame_i < pose_t.shape[0] else 0
++                pose_t = pose_t[idx]
++            return pose_t if pose_t.shape == (4, 4) else None
++        except Exception:
++            return None
++
++    def _project_with_pose(self, xyz_world, pose_t, mode, intr_feat, feat_hw, max_depth):
++        if mode == 'identity' or pose_t is None:
++            xyz_cam = xyz_world
++        else:
++            if mode == 'direct':
++                T_w2c = pose_t
++            else:
++                try:
++                    T_w2c = torch.linalg.inv(pose_t)
++                except Exception:
++                    T_w2c = torch.inverse(pose_t)
++            ones = torch.ones((xyz_world.shape[0], 1), device=xyz_world.device, dtype=xyz_world.dtype)
++            xyz_h = torch.cat([xyz_world, ones], dim=1)
++            xyz_cam = (xyz_h @ T_w2c.t())[:, :3]
++        uv, valid = project_points_to_uv(
++            xyz_cam, feat_hw=feat_hw, max_depth=max_depth,
++            standard_intrinsics=intr_feat, already_scaled=True)
++        ratio = float(valid.float().mean().item()) if valid.numel() > 0 else 0.0
++        return uv, valid, ratio
++
++    def _build_dino_fpn_cached(self, batch_inputs_dict, batch_data_samples, frame_i):
++        feat_frame = self._frame_batch(batch_inputs_dict.get('dino_feat_maps', None), frame_i)
++        cam_frame = self._frame_batch(batch_inputs_dict.get('cam_info', None), frame_i)
++        if feat_frame is None or cam_frame is None:
++            if self.dino_require:
++                raise RuntimeError(f'[DINO][strict] missing cached feat/cam_info at frame={frame_i}; keys={list(batch_inputs_dict.keys())}')
++            return None
++        if not isinstance(feat_frame, (list, tuple)):
++            feat_frame = [feat_frame]
++        if not isinstance(cam_frame, (list, tuple)):
++            cam_frame = [cam_frame]
++        coords_list, feats_list = [], []
++        valid_counts, total_counts = [], []
++        points_list = batch_inputs_dict['points']
++        elastic = batch_inputs_dict.get('elastic_coords', None)
++        elastic_frame = self._frame_batch(elastic, frame_i) if elastic is not None else None
++        for b_idx, pts_seq in enumerate(points_list):
++            if b_idx >= len(feat_frame) or b_idx >= len(cam_frame):
++                continue
++            feat_map = feat_frame[b_idx]
++            cam_meta = cam_frame[b_idx]
++            if feat_map is None or cam_meta is None:
++                continue
++            if not torch.is_tensor(feat_map):
++                feat_map = torch.as_tensor(feat_map)
++            pts = pts_seq[frame_i]
++            xyz_train = pts[:, :3]
++            device = xyz_train.device
++            feat_map = feat_map.to(device=device, dtype=torch.float16 if feat_map.dtype == torch.float16 else torch.float32)
++            try:
++                img_meta = getattr(batch_data_samples[b_idx], 'img_metas', {})
++                xyz_world_np = apply_3d_transformation(xyz_train.clone(), coord_type='DEPTH', img_meta=img_meta, reverse=True)
++                xyz_world = torch.as_tensor(xyz_world_np, device=device, dtype=xyz_train.dtype)
++            except Exception:
++                xyz_world = xyz_train
++            if not isinstance(cam_meta, dict):
++                cam_meta = {}
++            intr = cam_meta.get('intrinsics', [577.870605 * 560.0 / 640.0, 577.870605 * 420.0 / 480.0, 319.5 * 560.0 / 640.0, 239.5 * 420.0 / 480.0])
++            if torch.is_tensor(intr):
++                intr = [float(x) for x in intr.reshape(-1)[:4]]
++            else:
++                intr_arr = np.asarray(intr, dtype=np.float32).reshape(-1)
++                intr = [float(x) for x in intr_arr[:4]]
++            if len(intr) < 4:
++                raise RuntimeError(f'[DINO][strict] invalid intrinsics={cam_meta.get("intrinsics", None)}')
++            img_hw = cam_meta.get('img_size_dino', [420, 560])
++            if torch.is_tensor(img_hw):
++                img_hw = [int(x) for x in img_hw.reshape(-1)[:2]]
++            else:
++                img_hw_arr = np.asarray(img_hw).reshape(-1)
++                img_hw = [int(img_hw_arr[0]), int(img_hw_arr[1])]
++            H_img, W_img = int(img_hw[0]), int(img_hw[1])
++            C, H_feat, W_feat = feat_map.shape
++            scale_w = float(W_feat) / float(W_img)
++            scale_h = float(H_feat) / float(H_img)
++            fx_feat = intr[0] * scale_w
++            fy_feat = intr[1] * scale_h
++            cx_feat = (intr[2] + 0.5) * scale_w - 0.5
++            cy_feat = (intr[3] + 0.5) * scale_h - 0.5
++            intr_feat = (fx_feat, fy_feat, cx_feat, cy_feat)
++            pose = cam_meta.get('pose', cam_meta.get('extrinsics', None))
++            pose_t = self._select_pose(pose, frame_i, device, xyz_train.dtype)
++            modes = ['inv', 'direct', 'identity'] if self.dino_pose_mode == 'auto' else [self.dino_pose_mode]
++            best = None
++            for mode in modes:
++                max_depth_raw = cam_meta.get('max_depth', 20.0)
++                if torch.is_tensor(max_depth_raw):
++                    max_depth_val = float(max_depth_raw.reshape(-1)[0].item())
++                else:
++                    max_depth_val = float(np.asarray(max_depth_raw).reshape(-1)[0])
++                uv, valid, ratio = self._project_with_pose(xyz_world, pose_t, mode, intr_feat, (H_feat, W_feat), max_depth_val)
++                if best is None or ratio > best[2]:
++                    best = (uv, valid, ratio, mode)
++            if best is None:
++                continue
++            uv, valid, ratio, mode = best
++            valid_counts.append(int(valid.sum().item()))
++            total_counts.append(int(valid.numel()))
++            if ratio < self.dino_valid_rate_warn_thr and self._dino_warn_count < 20:
++                print(f"[DINO][warn] frame={frame_i} batch={b_idx} valid_rate={ratio:.4f} < {self.dino_valid_rate_warn_thr:.2f} mode={mode}")
++                self._dino_warn_count += 1
++                if self.dino_require:
++                    raise RuntimeError(f"[DINO][strict] low projection valid_rate={ratio:.4f} at frame={frame_i}, batch={b_idx}")
++            sampled = sample_img_feat(feat_map.unsqueeze(0), uv, valid, align_corners=False)
++            if elastic_frame is not None and b_idx < len(elastic_frame) and elastic_frame[b_idx] is not None:
++                e = elastic_frame[b_idx]
++                e = e.to(device=device, dtype=xyz_train.dtype) if torch.is_tensor(e) else torch.as_tensor(e, device=device, dtype=xyz_train.dtype)
++                coords = torch.floor(e).to(torch.int32)
++            else:
++                coords = torch.floor(xyz_train / self.voxel_size).to(torch.int32)
++            batch_col = torch.full((coords.shape[0], 1), b_idx, dtype=torch.int32, device=device)
++            coords_list.append(torch.cat([batch_col, coords], dim=1))
++            feats_list.append(sampled.to(device=device))
++        if total_counts and sum(total_counts) > 0:
++            self._last_dino_valid_rate = float(sum(valid_counts)) / float(sum(total_counts))
++            self._last_dino_valid_rate_per_sample = [float(v) / float(t) if t else 0.0 for v, t in zip(valid_counts, total_counts)]
++            if self.dino_debug and self._dino_warn_count < 20:
++                print(f"[DINO][valid_rate] frame={frame_i} rate={self._last_dino_valid_rate:.4f} per_sample={self._last_dino_valid_rate_per_sample}")
++        else:
++            self._last_dino_valid_rate = None
++            self._last_dino_valid_rate_per_sample = []
++        if not coords_list:
++            if self.dino_require:
++                raise RuntimeError(f'[DINO][strict] no coords built for cached DINO at frame={frame_i}')
++            return None
++        coords_batch = torch.cat(coords_list, dim=0)
++        feats_batch = torch.cat(feats_list, dim=0)
++        return build_sparse_fpn(coords_batch, feats_batch)
++
++    def _merge_query_feats_for_head(self, out_dict):
++        queries = out_dict['queries']
++        queries_cls = out_dict.get('queries_cls', None)
++        if hasattr(self, 'query_merge_fusion') and queries_cls is not None:
++            return [self.query_merge_fusion(torch.cat([q, qc], dim=-1)) for q, qc in zip(queries, queries_cls)]
++        return queries
++
+     def extract_feat(self, batch_inputs_dict, batch_data_samples, frame_i, track_instances=None):
+-        """Extract features from sparse tensor.
+-        """
++        """Extract features from sparse tensor, with optional offline DINO FPN injection."""
++        dino_feats = None
++        if self.dino_enable or ('dino_feat_maps' in batch_inputs_dict):
++            dino_feats = self._build_dino_fpn_cached(batch_inputs_dict, batch_data_samples, frame_i)
++            if dino_feats is None and self.dino_require:
++                raise RuntimeError(f'[DINO][strict] failed to build cached DINO FPN at frame={frame_i}')
+         # construct tensor field
+         coordinates, features = [], []
+         for i in range(len(batch_inputs_dict['points'])):
+@@ -678,14 +877,19 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+         coordinates, features = ME.utils.batch_sparse_collate( # [20000, 4] [20000, 3]
+             [(c / self.voxel_size, f) for c, f in zip(coordinates, features)],
+             device=coordinates[0].device)
+-        field = ME.TensorField(coordinates=coordinates, features=features) 
++        field = ME.TensorField(coordinates=coordinates, features=features)
+ 
+         # forward of backbone and neck
+-        x = self.backbone(field.sparse(), memory=self.memory if hasattr(self,'memory') else None) # [13141, 96]
++        bb_out = self.backbone(field.sparse(), dino_feats=dino_feats,
++                               memory=self.memory if hasattr(self,'memory') else None)
++        x_sem = None
++        if isinstance(bb_out, tuple):
++            bb_out, x_sem = bb_out
++        x = bb_out
+         if self.with_neck:
+             x = self.neck(x)
+         x = x.slice(field) # [20000, 96]
+-        point_features = [torch.cat([c,f], dim=-1) for c,f in zip(all_xyz, x.decomposed_features)] # [20000, 99] 坐标和特征进行拼接
++        point_features = [torch.cat([c,f], dim=-1) for c,f in zip(all_xyz, x.decomposed_features)] # [20000, 99]
+         x = x.features # [20000, 96]
+ 
+         # apply scatter_mean
+@@ -693,16 +897,27 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+         if self.use_temporal_loss and self.inst_dict is not None:
+             best_obj_ids_list = []
+         for batch_idx, (data_sample, tmp_xyz) in enumerate(zip(batch_data_samples, all_xyz)):
+-            sp_pts_mask = data_sample.gt_pts_seg.sp_pts_mask[frame_i].clone() # [20000] 每个点属于的segment ID
+-            if self.use_temporal_loss and self.inst_dict is not None:
+-                points_xyz = all_xyz[batch_idx]  # (N,3)
+-                point_ids  = sp_pts_mask # (N,)dd
+-                bboxes_6d  = self.inst_dict['bboxes_3d'][batch_idx]  # (M,6)
+-
+-            sp_pts_masks.append(sp_pts_mask + sum(n_super_points)) # [20000] 每个点在所有点中的ID
++            sp_pts_mask = data_sample.gt_pts_seg.sp_pts_mask[frame_i].clone() # [20000]
++            sp_pts_masks.append(sp_pts_mask + sum(n_super_points))
+             n_super_points.append(sp_pts_mask.max() + 1)
+         sp_idx = torch.cat(sp_pts_masks) # [20000]
+-        x, all_xyz_w = self.pool(x, sp_idx, all_xyz, with_xyz=True) # [N_segment, 96], [20000, 1]
++        x, all_xyz_w = self.pool(x, sp_idx, all_xyz, with_xyz=True) # [N_segment, 99]
++
++        sp_feats_sem = None
++        if x_sem is not None:
++            x_sem = x_sem.slice(field)
++            sem_feat = scatter_mean(x_sem.features, sp_idx, dim=0)
++            sp_feats_sem = []
++            for i in range(len(n_super_points)):
++                begin = sum(n_super_points[:i])
++                end = sum(n_super_points[:i + 1])
++                sp_feats_sem.append(sem_feat[begin: end])
++        elif getattr(self.decoder, '_dual_path', False):
++            sp_feats_sem = []
++            for i in range(len(n_super_points)):
++                begin = sum(n_super_points[:i])
++                end = sum(n_super_points[:i + 1])
++                sp_feats_sem.append(x[begin: end, :-3])
+ 
+         if self.use_temporal_loss and self.inst_dict is not None:
+             self.inst_dict['best_obj_ids_list'] = best_obj_ids_list
+@@ -714,7 +929,7 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+             end = sum(n_super_points[:i + 1])
+             features.append(x[begin: end, :-3])
+             sp_xyz_list.append(x[begin: end, -3:])
+-        return features, point_features, all_xyz_w, sp_xyz_list # [N_segment, 96], [20000, 99], [20000, 1], [N_segment, 3]
++        return features, point_features, all_xyz_w, sp_xyz_list, sp_feats_sem # [N_segment, 96], [20000, 99], [20000, 1], [N_segment, 3]
+ 
+     def merge_superpixels_extract_feat(self, batch_inputs_dict, batch_data_samples, frame_i, overlap_threshold=0.99):
+         """Merge superpixels and extract features once.
+@@ -1245,12 +1460,12 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+                 if self.mot_type == 'dq_track':
+                     if self.asso_config.get('train_asso_only', True):
+                         with frozen_inference(self.backbone), frozen_inference(self.memory):
+-                            x, point_features, all_xyz_w, sp_xyz = self.extract_feat(batch_inputs_dict, batch_data_samples, frame_i)
++                            x, point_features, all_xyz_w, sp_xyz, sp_feats_sem = self.extract_feat(batch_inputs_dict, batch_data_samples, frame_i)
+                     else:
+                         raise NotImplementedError(f"mot_type {self.mot_type} and train_asso_only {self.asso_config.get('train_asso_only', True)} is not supported")
+ 
+             else:
+-                x, point_features, all_xyz_w, sp_xyz = self.extract_feat(batch_inputs_dict, batch_data_samples, frame_i)
++                x, point_features, all_xyz_w, sp_xyz, sp_feats_sem = self.extract_feat(batch_inputs_dict, batch_data_samples, frame_i)
+             ## GT-prepare
+             gt_instances = [s.gt_instances_3d for s in batch_data_samples]
+ 
+@@ -1299,11 +1514,11 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+             if self.use_mot:
+                 if self.mot_type == 'dq_track' and self.asso_config.get('train_asso_only', True):
+                     with frozen_inference(self.decoder):
+-                        x = self.decoder(x, point_features, queries, super_points, use_temporal_loss=self.use_temporal_loss, inst_dict=self.inst_dict if self.use_temporal_loss else None)
++                        x = self.decoder(x, point_features, queries, super_points, use_temporal_loss=self.use_temporal_loss, inst_dict=self.inst_dict if self.use_temporal_loss else None, sp_feats_sem=sp_feats_sem)
+                 else:
+                     raise NotImplementedError(f"mot_type {self.mot_type} and train_asso_only {self.asso_config.get('train_asso_only', True)} is not supported")
+             else:
+-                x = self.decoder(x, point_features, queries, super_points, use_temporal_loss=self.use_temporal_loss, inst_dict=self.inst_dict if self.use_temporal_loss else None, use_one2many=self.use_one2many) # ! 还是这里？
++                x = self.decoder(x, point_features, queries, super_points, use_temporal_loss=self.use_temporal_loss, inst_dict=self.inst_dict if self.use_temporal_loss else None, use_one2many=self.use_one2many, sp_feats_sem=sp_feats_sem) # ! 还是这里？
+             if self.use_mot:          
+                 untracked_tgt_indexes_list = []
+                 # new_indexes_list = []
+@@ -1493,7 +1708,7 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+                         for i in range(ins_masks_query.shape[0])]
+                 ins_masks_query_batch.append(ins_masks_query)
+             if hasattr(self, 'merge_head'): # True
+-                merge_feat = self.merge_head(x['queries'])
++                merge_feat = self.merge_head(self._merge_query_feats_for_head(x))
+                 merge_feat_n_frames.append(merge_feat)
+                 ins_masks_query_n_frames.append(ins_masks_query_batch)
+             
+@@ -1633,11 +1848,12 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+         for frame_i in range(num_frames):
+             ## Backbone + SP merge (optional)  -> features, point_features, all_xyz_w, sp_xyz
+             if self.merge_sp_masks:
+-                # Integrated path: merge SPs and extract features once
++                # Integrated path: merge SPs and extract features once. DINO dual side branch is disabled on this legacy path until stage2-specific integration.
+                 x, point_features, all_xyz_w, sp_xyz = self.merge_superpixels_extract_feat(
+                     batch_inputs_dict, batch_data_samples, frame_i)
++                sp_feats_sem = None
+             else:
+-                x, point_features, all_xyz_w, sp_xyz = self.extract_feat(batch_inputs_dict, batch_data_samples, frame_i)
++                x, point_features, all_xyz_w, sp_xyz, sp_feats_sem = self.extract_feat(batch_inputs_dict, batch_data_samples, frame_i)
+             ## Query
+             if self.use_query_memory:
+                 x = self.query_memory_aggregation_predict(x, sp_xyz)
+@@ -1660,7 +1876,7 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+                         active_queries_num = [len(q) for q in init_track_instances.queries]  # Set to 0 if queries is empty
+             ## Decoder 
+             super_points = ([bds.gt_pts_seg.sp_pts_mask[frame_i] for bds in batch_data_samples], all_xyz_w) # ([20000], [20000, 1])
+-            x = self.decoder(x, point_features, x, super_points) # [N_segment, 96] [20000, 99] [N_segment, 96] ([20000], [20000, 1])
++            x = self.decoder(x, point_features, x, super_points, sp_feats_sem=sp_feats_sem) # [N_segment, 96] [20000, 99] [N_segment, 96] ([20000], [20000, 1])
+             ## Post-processing
+             pred_pts_seg, mapping = self.predict_by_feat(
+                 x, batch_data_samples[0].gt_pts_seg.sp_pts_mask[frame_i])
+@@ -1799,7 +2015,7 @@ class ScanNet200MixFormer3D_Online(ScanNetOneFormer3DMixin, Base3DDetector):
+ 
+             ## Query projector, semantic and geometric information
+             if hasattr(self, 'merge_head'): # True
+-                query_feats = self.merge_head(x['queries'][0])
++                query_feats = self.merge_head(self._merge_query_feats_for_head(x)[0])
+                 query_feats_list.append([query_feats[mapping[0]], query_feats[mapping[1]]]) # 取出对应的query
+                 sem_preds = x['cls_preds'][0]
+                 sem_preds_list.append([sem_preds[mapping[0]], sem_preds[mapping[1]]]) # 前景背景
+diff --git a/oneformer3d/projection_utils.py b/oneformer3d/projection_utils.py
+new file mode 100644
+index 0000000..db1f103
+--- /dev/null
++++ b/oneformer3d/projection_utils.py
+@@ -0,0 +1,262 @@
++#!/usr/bin/env python
++import torch
++import torch.nn.functional as F
++from typing import Tuple
++
++SCANET_INTRINSICS = (577.870605, 577.870605, 319.5, 239.5)
++BASE_IMAGE_SIZE = (480.0, 640.0)
++MIN_DEPTH = 0.3
++
++
++def _scale_intrinsics(standard_intrinsics: Tuple[float, float, float, float],
++                      feat_hw: Tuple[int, int]) -> Tuple[float, float, float, float]:
++    fx0, fy0, cx0, cy0 = standard_intrinsics
++    Hf, Wf = feat_hw
++    base_h, base_w = BASE_IMAGE_SIZE
++    scale_w = Wf / base_w
++    scale_h = Hf / base_h
++    fx_feat = fx0 * scale_w
++    fy_feat = fy0 * scale_h
++    cx_feat = cx0 * scale_w
++    cy_feat = cy0 * scale_h
++    return fx_feat, fy_feat, cx_feat, cy_feat
++
++
++def pixels_to_grid(uv_feat: torch.Tensor,
++                   feat_hw: Tuple[int, int],
++                   align_corners: bool = True) -> torch.Tensor:
++    H, W = feat_hw
++    u = uv_feat[:, 0]
++    v = uv_feat[:, 1]
++    if align_corners:
++        x_norm = 2.0 * u / max(float(W - 1), 1.0) - 1.0
++        y_norm = 2.0 * v / max(float(H - 1), 1.0) - 1.0
++    else:
++        x_norm = 2.0 * (u + 0.5) / float(W) - 1.0
++        y_norm = 2.0 * (v + 0.5) / float(H) - 1.0
++    grid = torch.stack([x_norm, y_norm], dim=-1).view(1, -1, 1, 2)
++    return grid
++
++
++def sample_img_feat(feat_map: torch.Tensor,
++                     uv_feat: torch.Tensor,
++                     valid_mask: torch.Tensor,
++                     align_corners: bool = True) -> torch.Tensor:
++    assert feat_map.dim() == 4 and feat_map.size(0) == 1
++    if feat_map.device.type == 'cpu' and feat_map.dtype == torch.float16:
++        feat_map = feat_map.float()
++    H, W = feat_map.shape[-2], feat_map.shape[-1]
++    idx = torch.nonzero(valid_mask, as_tuple=False).squeeze(-1)
++    if idx.numel() == 0:
++        return feat_map.new_zeros((uv_feat.size(0), feat_map.size(1)))
++    uv_valid = uv_feat[idx]
++    grid = pixels_to_grid(uv_valid, (H, W), align_corners=align_corners)
++    if grid.dtype != feat_map.dtype:
++        grid = grid.to(feat_map.dtype)
++    sampled = F.grid_sample(
++        feat_map, grid, mode='bilinear', align_corners=align_corners
++    ).squeeze(3).squeeze(0).T
++    out = feat_map.new_zeros((uv_feat.size(0), feat_map.size(1)))
++    out[idx] = sampled
++    return out
++
++
++def project_points_to_uv(xyz_cam: torch.Tensor,
++                         feat_hw: Tuple[int, int],
++                         max_depth: float,
++                         standard_intrinsics: Tuple[float, float, float, float] = SCANET_INTRINSICS,
++                         debug: bool = False,
++                         debug_prefix: str = "",
++                         already_scaled: bool = False) -> Tuple[torch.Tensor, torch.Tensor]:
++    """Project 3D points in camera coordinates to 2D feature grid.
++
++    Args:
++        xyz_cam: (N,3) points in camera coordinates.
++        feat_hw: (H_feat, W_feat) of the target grid (image or feature map).
++        max_depth: maximum valid depth.
++        standard_intrinsics: intrinsics of the base image or already scaled intrinsics.
++        debug: whether to print debug statistics.
++        debug_prefix: prefix for debug prints.
++        already_scaled: if True, `standard_intrinsics` are treated as the
++            final intrinsics for `feat_hw` and will NOT be rescaled inside
++            this function. This is useful for cases where intrinsics have
++            already been updated by 2D augmentations (resize/flip) and
++            stored in metadata.
++    """
++    if already_scaled:
++        fx_feat, fy_feat, cx_feat, cy_feat = standard_intrinsics
++    else:
++        fx_feat, fy_feat, cx_feat, cy_feat = _scale_intrinsics(standard_intrinsics, feat_hw)
++    x, y, z = xyz_cam[:, 0], xyz_cam[:, 1], xyz_cam[:, 2]
++    valid_z = (z > MIN_DEPTH) & (z < max_depth)
++    ratio_x = torch.zeros_like(x)
++    ratio_y = torch.zeros_like(y)
++    valid_ratio_mask = valid_z & (torch.abs(z) > torch.finfo(z.dtype).eps)
++    if valid_ratio_mask.any():
++        ratio_x[valid_ratio_mask] = x[valid_ratio_mask] / z[valid_ratio_mask]
++        ratio_y[valid_ratio_mask] = y[valid_ratio_mask] / z[valid_ratio_mask]
++    u_feat = fx_feat * ratio_x + cx_feat
++    v_feat = fy_feat * ratio_y + cy_feat
++    u_feat = torch.where(valid_z, u_feat, torch.full_like(u_feat, -1.0))
++    v_feat = torch.where(valid_z, v_feat, torch.full_like(v_feat, -1.0))
++    Wf = float(feat_hw[1])
++    Hf = float(feat_hw[0])
++    valid_u = (u_feat >= 0) & (u_feat < Wf)
++    valid_v = (v_feat >= 0) & (v_feat < Hf)
++    valid = valid_z & valid_u & valid_v
++    if debug:
++        total_points = len(z)
++        depth_valid = int(valid_z.sum().item())
++        boundary_valid = int(valid.sum().item())
++        u_min, u_max = float(u_feat.min().item()), float(u_feat.max().item())
++        v_min, v_max = float(v_feat.min().item()), float(v_feat.max().item())
++        prefix = f"{debug_prefix} " if debug_prefix else ""
++        print(f"{prefix}projection stats: depth_ok={depth_valid}/{total_points}, "
++              f"boundary_ok={boundary_valid}/{total_points}, "
++              f"u_range=[{u_min:.1f}, {u_max:.1f}], v_range=[{v_min:.1f}, {v_max:.1f}]")
++    uv_feat = torch.stack([u_feat, v_feat], dim=-1)
++    return uv_feat, valid
++
++
++def unified_projection_and_sample(xyz_cam: torch.Tensor,
++                                  feat_map: torch.Tensor,
++                                  max_depth: float,
++                                  align_corners: bool = True,
++                                  standard_intrinsics: Tuple[float, float, float, float] = SCANET_INTRINSICS,
++                                  debug: bool = False,
++                                  debug_prefix: str = "") -> Tuple[torch.Tensor, torch.Tensor]:
++    Hf, Wf = feat_map.shape[2], feat_map.shape[3]
++    uv_feat, valid = project_points_to_uv(
++        xyz_cam,
++        (Hf, Wf),
++        max_depth=max_depth,
++        standard_intrinsics=standard_intrinsics,
++        debug=debug,
++        debug_prefix=debug_prefix
++    )
++    sampled = sample_img_feat(feat_map, uv_feat, valid, align_corners=align_corners)
++    return sampled, valid
++
++
++def splat_to_grid(uv: torch.Tensor,
++                  z: torch.Tensor,
++                  feats: torch.Tensor,
++                  valid: torch.Tensor,
++                  H: int,
++                  W: int,
++                  mode: str = 'bilinear',
++                  depth_tol: float = 0.05) -> Tuple[torch.Tensor, torch.Tensor]:
++    """Rasterize点特征到像素网格。
++
++    Args:
++        uv: (N, 2) 像素坐标 (u, v)。
++        z:  (N,) 深度值。
++        feats: (N, C) 点特征。
++        valid: (N,) bool，表示该点是否有效。
++        H, W: 输出特征图高/宽。
++        mode: 'bilinear'（默认）或 'zbuf'。
++        depth_tol: z-buffer 模式下的深度容差。
++
++    Returns:
++        Tuple[Tensor, Tensor]: (C, H, W) 的融合特征，以及 (1, H, W) 的覆盖权重。
++    """
++    if feats.numel() == 0:
++        return feats.new_zeros((feats.shape[1], H, W)), feats.new_zeros((1, H, W))
++
++    device = feats.device
++    dtype = feats.dtype
++    C = feats.shape[1]
++
++    valid = valid if valid is not None else torch.ones_like(z, dtype=torch.bool)
++    idx = torch.nonzero(valid, as_tuple=False).squeeze(-1)
++    if idx.numel() == 0:
++        return feats.new_zeros((C, H, W)), feats.new_zeros((1, H, W))
++
++    uv_valid = uv[idx]
++    z_valid = z[idx]
++    feats_valid = feats[idx]
++
++    if mode.lower() not in ('bilinear', 'zbuf'):
++        raise ValueError(f"Unsupported splat mode: {mode}")
++
++    if mode.lower() == 'bilinear':
++        x = uv_valid[:, 0]
++        y = uv_valid[:, 1]
++        x0 = torch.floor(x)
++        y0 = torch.floor(y)
++        dx = x - x0
++        dy = y - y0
++
++        x0 = x0.clamp(0, W - 1).long()
++        y0 = y0.clamp(0, H - 1).long()
++        x1 = (x0 + 1).clamp(0, W - 1)
++        y1 = (y0 + 1).clamp(0, H - 1)
++
++        # 统一 dtype，避免 AMP 下 half/float 混用导致 index_add_ 报错
++        target_dtype = feats_valid.dtype
++        w00 = ((1.0 - dx) * (1.0 - dy)).to(target_dtype)
++        w01 = ((1.0 - dx) * dy).to(target_dtype)
++        w10 = (dx * (1.0 - dy)).to(target_dtype)
++        w11 = (dx * dy).to(target_dtype)
++
++        grids = []
++        covers = []
++        accum_feat = feats_valid.new_zeros((H * W, C))
++        accum_cover = feats_valid.new_zeros((H * W,))
++
++        weights = (w00, w01, w10, w11)
++        xs = (x0, x0, x1, x1)
++        ys = (y0, y1, y0, y1)
++
++        flat_size = H * W
++        for w, xx, yy in zip(weights, xs, ys):
++            w = w.clamp(min=0.0)
++            flat_idx = (yy * W + xx).long()
++            accum_feat.index_add_(0, flat_idx, feats_valid * w.unsqueeze(1))
++            accum_cover.index_add_(0, flat_idx, w)
++
++        F2D = accum_feat.t().reshape(C, H, W)
++        cover = accum_cover.view(1, H, W)
++        return F2D, cover
++
++    # z-buffer
++    x = uv_valid[:, 0]
++    y = uv_valid[:, 1]
++    cols = torch.round(x).clamp(0, W - 1).long()
++    rows = torch.round(y).clamp(0, H - 1).long()
++    flat_idx = (rows * W + cols).long()
++
++    flat_size = H * W
++    device = feats_valid.device
++
++    if hasattr(torch.Tensor, 'scatter_reduce_'):
++        depth_init = torch.full((flat_size,), float('inf'), device=device, dtype=z_valid.dtype)
++        depth_min = depth_init.scatter_reduce(0, flat_idx, z_valid, reduce='amin', include_self=True)
++    else:
++        depth_min_cpu = torch.full((flat_size,), float('inf'), device='cpu', dtype=z_valid.dtype)
++        flat_cpu = flat_idx.cpu()
++        z_cpu = z_valid.cpu()
++        for pixel, depth in zip(flat_cpu.tolist(), z_cpu.tolist()):
++            if depth < depth_min_cpu[pixel]:
++                depth_min_cpu[pixel] = depth
++        depth_min = depth_min_cpu.to(z_valid.device)
++
++    min_depth = depth_min[flat_idx]
++    depth_mask = torch.isfinite(min_depth) & ((z_valid - min_depth).abs() <= depth_tol)
++
++    if not depth_mask.any():
++        return feats.new_zeros((C, H, W)), feats.new_zeros((1, H, W))
++
++    flat_idx = flat_idx[depth_mask]
++    feats_valid = feats_valid[depth_mask]
++    depth_counts = torch.ones_like(z_valid[depth_mask], dtype=feats_valid.dtype)
++
++    accum_feat = feats_valid.new_zeros((flat_size, C))
++    accum_cover = feats_valid.new_zeros((flat_size,))
++
++    accum_feat.index_add_(0, flat_idx, feats_valid)
++    accum_cover.index_add_(0, flat_idx, depth_counts)
++
++    cover = accum_cover.view(1, H, W)
++    F2D = (accum_feat / accum_cover.clamp_min(1.0).unsqueeze(1)).t().reshape(C, H, W)
++    return F2D, cover
+diff --git a/oneformer3d/query_decoder.py b/oneformer3d/query_decoder.py
+index 0855c86..273fd2b 100644
+--- a/oneformer3d/query_decoder.py
++++ b/oneformer3d/query_decoder.py
+@@ -160,6 +160,7 @@ class QueryDecoder(BaseModule):
+                  dropout, activation_fn, iter_pred, attn_mask, fix_attention,
+                  objectness_flag, use_track_loss=False, **kwargs):
+         super().__init__()
++        self.d_model = d_model
+         self.objectness_flag = objectness_flag
+         self.input_proj = nn.Sequential(
+             nn.Linear(in_channels, d_model), nn.LayerNorm(d_model), nn.ReLU())
+@@ -487,7 +488,8 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+     """
+     def __init__(self, num_instance_classes, num_semantic_classes,
+                  d_model, num_semantic_linears, in_channels, share_attn_mlp, share_mask_mlp,
+-                 cross_attn_mode, mask_pred_mode, temporal_attn=False, bbox_flag=False, 
++                 cross_attn_mode, mask_pred_mode, temporal_attn=False, bbox_flag=False,
++                 owner_residual=False, dual_path=False,
+                  use_query_memory2=False, query_stage=[0],use_track_loss=False, use_temporal_loss=False, use_decouple=False, use_mot=False, mot_type=None, **kwargs):
+         super().__init__(
+             num_classes=num_instance_classes, d_model=d_model, in_channels=in_channels,use_track_loss=use_track_loss, **kwargs)
+@@ -526,6 +528,24 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+         else:
+             self.out_sem = nn.Linear(d_model, num_semantic_classes + 1)
+ 
++        # v5 dual-path: mask query stays geometry/mask-oriented, cls query is
++        # updated from detached mask query + semantic DINO side-branch features.
++        self.owner_residual = owner_residual  # kept for config compatibility; disabled in current v5.
++        self._dual_path = dual_path
++        if self._dual_path:
++            self.sem_proj = nn.Sequential(
++                nn.Linear(in_channels, d_model),
++                nn.LayerNorm(d_model),
++                nn.ReLU(),
++            )
++            self.cls_update_mlp = nn.Sequential(
++                nn.Linear(d_model * 3, d_model),
++                nn.ReLU(),
++                nn.Linear(d_model, d_model),
++            )
++            nn.init.normal_(self.cls_update_mlp[-1].weight, mean=0.0, std=0.01)
++            nn.init.zeros_(self.cls_update_mlp[-1].bias)
++
+         # ADDED
+         self.use_query_memory2 = use_query_memory2
+         if self.use_query_memory2:
+@@ -567,64 +587,69 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+             self.query_memory2 = [None for _ in range(len(self.query_stage))]
+             self.pred_bbox_memory = [None for _ in range(len(self.query_stage))]
+ 
+-    def _forward_head(self, queries, mask_feats, mask_pts_feats, last_flag, layer):
+-        """Prediction head forward.
+-
+-        Args:
+-            queries (List[Tensor] | Tensor): List of len batch_size,
+-                each of shape (n_queries_i, d_model). Or tensor of
+-                shape (batch_size, n_queries, d_model).
+-            mask_feats (List[Tensor]): of len batch_size,
+-                each of shape (n_points_i, d_model).
+-
+-        Returns:
+-            Tuple:
+-                List[Tensor]: Classification predictions of len batch_size,
+-                    each of shape (n_queries_i, n_instance_classes + 1).
+-                List[Tensor] or None: Semantic predictions of len batch_size,
+-                    each of shape (n_queries_i, n_semantic_classes + 1).
+-                List[Tensor]: Confidence scores of len batch_size,
+-                    each of shape (n_queries_i, 1).
+-                List[Tensor]: Predicted masks of len batch_size,
+-                    each of shape (n_queries_i, n_points_i).
+-                List[Tensor] or None: Attention masks of len batch_size,
+-                    each of shape (n_queries_i, n_points_i).
+-        """
++    def _forward_head(self, queries, mask_feats, mask_pts_feats, last_flag, layer,
++                      cls_queries=None):
++        """Prediction head forward with optional v5 dual-path cls queries."""
+         cls_preds, sem_preds, pred_scores, pred_masks, attn_masks, pred_bboxes = [], [], [], [], [], []
+         object_queries = []
++        object_queries_cls = []
+         for i in range(len(queries)): # batch_size
+-            norm_query = self.out_norm(queries[i]) # [N_segments, 256]
+-            object_queries.append(norm_query)
+-            cls_preds.append(self.out_cls(norm_query)) # 每个的类别 [N_segments, 256] —> [N_segments, 2(CA 200) or 19]
+-            if last_flag:
+-                sem_preds.append(self.out_sem(norm_query))
+-            pred_score = self.out_score(norm_query) if self.objectness_flag else None # None
+-            # pred_score = self.out_track_score(norm_query) if self.use_track_loss else pred_score
+-            pred_scores.append(pred_score) # 这个不存在
+-            if self.bbox_flag: # False (True in CA 200)
+-                reg_final = self.out_reg(norm_query) # [N_segments, 256] -> [N_segments, 6]
+-                reg_distance = torch.exp(reg_final[:, 3:6])
+-                pred_bbox = torch.cat([reg_final[:, :3], reg_distance], dim=1)
+-            else: pred_bbox = None
+-            pred_bboxes.append(pred_bbox)
+-            if self.mask_pred_mode[layer] == "SP": # ['SP', 'SP', 'P', 'P']
+-                pred_mask = torch.einsum('nd,md->nm', norm_query, mask_feats[i]) # ? 计算点积 [N_q, N_seg] 为啥数量不一样, * (0.5 ~ 1) train的时候有query选择的部分
+-            elif self.mask_pred_mode[layer] == "P":
+-                pred_mask = torch.einsum('nd,md->nm', norm_query, mask_pts_feats[i]) # ? [61, 20000] 这个mask是完全基于特征相似度的吗？ 
++            if self._dual_path and cls_queries is not None:
++                norm_query_mask = self.out_norm(queries[i])
++                norm_query_cls = self.out_norm(cls_queries[i])
++                object_queries.append(norm_query_mask)
++                object_queries_cls.append(norm_query_cls)
++                cls_preds.append(self.out_cls(norm_query_cls))
++                if last_flag:
++                    sem_preds.append(self.out_sem(norm_query_cls))
++                pred_score = self.out_score(norm_query_mask) if self.objectness_flag else None
++                pred_scores.append(pred_score)
++                if self.bbox_flag:
++                    reg_final = self.out_reg(norm_query_mask)
++                    reg_distance = torch.exp(reg_final[:, 3:6])
++                    pred_bbox = torch.cat([reg_final[:, :3], reg_distance], dim=1)
++                else:
++                    pred_bbox = None
++                pred_bboxes.append(pred_bbox)
++                if self.mask_pred_mode[layer] == "SP":
++                    pred_mask = torch.einsum('nd,md->nm', norm_query_mask, mask_feats[i])
++                elif self.mask_pred_mode[layer] == "P":
++                    pred_mask = torch.einsum('nd,md->nm', norm_query_mask, mask_pts_feats[i])
++                else:
++                    raise NotImplementedError("Query decoder not implemented!")
+             else:
+-                raise NotImplementedError("Query decoder not implemented!")
++                norm_query = self.out_norm(queries[i]) # [N_segments, 256]
++                object_queries.append(norm_query)
++                cls_preds.append(self.out_cls(norm_query))
++                if last_flag:
++                    sem_preds.append(self.out_sem(norm_query))
++                pred_score = self.out_score(norm_query) if self.objectness_flag else None
++                pred_scores.append(pred_score)
++                if self.bbox_flag:
++                    reg_final = self.out_reg(norm_query)
++                    reg_distance = torch.exp(reg_final[:, 3:6])
++                    pred_bbox = torch.cat([reg_final[:, :3], reg_distance], dim=1)
++                else:
++                    pred_bbox = None
++                pred_bboxes.append(pred_bbox)
++                if self.mask_pred_mode[layer] == "SP":
++                    pred_mask = torch.einsum('nd,md->nm', norm_query, mask_feats[i])
++                elif self.mask_pred_mode[layer] == "P":
++                    pred_mask = torch.einsum('nd,md->nm', norm_query, mask_pts_feats[i])
++                else:
++                    raise NotImplementedError("Query decoder not implemented!")
+             if self.attn_mask:
+-                attn_mask = (pred_mask.sigmoid() < 0.5).bool() # [N_q, N_seg] -> [N_q, N_seg]
++                attn_mask = (pred_mask.sigmoid() < 0.5).bool()
+                 attn_mask[torch.where(
+-                    attn_mask.sum(-1) == attn_mask.shape[-1])] = False # 如果所有键位置都被遮蔽，查询将无法与任何键进行交互，导致注意力权重无法正常计算。这可能会引发数值问题，如 NaN（非数字）值。
++                    attn_mask.sum(-1) == attn_mask.shape[-1])] = False
+                 attn_mask = attn_mask.detach()
+                 attn_masks.append(attn_mask)
+             pred_masks.append(pred_mask)
+         attn_masks = attn_masks if self.attn_mask else None
+         sem_preds = sem_preds if last_flag else None
+-        return cls_preds, sem_preds, pred_scores, pred_masks, attn_masks, object_queries, pred_bboxes
++        return cls_preds, sem_preds, pred_scores, pred_masks, attn_masks, object_queries, pred_bboxes, object_queries_cls
+ 
+-    def forward_iter_pred(self, sp_feats, p_feats, queries, super_points, prev_queries=None, use_temporal_loss=False, inst_dict=None, track_instances=None, use_one2many=False):
++    def forward_iter_pred(self, sp_feats, p_feats, queries, super_points, prev_queries=None, use_temporal_loss=False, inst_dict=None, track_instances=None, use_one2many=False, sp_feats_sem=None):
+         """Iterative forward pass.
+         
+         Args:
+@@ -639,6 +664,7 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+         """
+         cls_preds, sem_preds, pred_scores, pred_masks = [], [], [], []
+         object_queries, pred_bboxes = [], []
++        object_queries_cls_all = []
+         inst_feats = [self.input_proj(y) for y in sp_feats] if "SP" in self.cross_attn_mode else None # [N_segments, 96] -> [N_segments, 256]
+         if use_temporal_loss and inst_dict is not None:
+             before_features = inst_dict['querys']
+@@ -670,14 +696,22 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+         mask_pts_feats = [self.x_mask(y) if self.share_mask_mlp else self.x_pts_mask(y)
+              for y in p_feats] if "P" in self.mask_pred_mode else None # [20000, 99] -> [20000, 256]
+         queries = self._get_queries(queries, len(sp_feats)) # [N_segments, 96] -> [N_segments, 256] # ! 这个和inst_feats差不多？
+-        cls_pred, sem_pred, pred_score, pred_mask, attn_mask, object_query, pred_bbox = \
+-             self._forward_head(queries, mask_feats, mask_pts_feats, last_flag=False, layer=0)
++        _dp_sem_feats = None
++        _dp_queries_cls = None
++        if self._dual_path and sp_feats_sem is not None:
++            _dp_sem_feats = [self.sem_proj(y) for y in sp_feats_sem]
++            _dp_queries_cls = [q.clone().detach() for q in queries]
++        cls_pred, sem_pred, pred_score, pred_mask, attn_mask, object_query, pred_bbox, object_query_cls = \
++             self._forward_head(queries, mask_feats, mask_pts_feats, last_flag=False, layer=0,
++                                cls_queries=_dp_queries_cls)
+         cls_preds.append(cls_pred) # [N_segments, 2]
+         sem_preds.append(sem_pred) # None
+         pred_scores.append(pred_score) # None
+         pred_masks.append(pred_mask) # [N_segments, N_segments]
+         object_queries.append(object_query) # [N_segments, 256]
+         pred_bboxes.append(pred_bbox) # [N_segments, 6]
++        if self._dual_path and object_query_cls:
++            object_queries_cls_all.append(object_query_cls)
+ 
+             
+         if use_one2many:
+@@ -753,11 +787,21 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+             if self.use_decouple and i == 2:
+                 if self.before_query_memory is not None:
+                     queries = self.query_inter([pred_bbox[j][:, :3] for j in range(len(pred_bbox))], queries, self.before_query_memory, self.before_query_memory, self.before_query_boxes)
+-            cls_pred, sem_pred, pred_score, pred_mask, attn_mask, object_query, pred_bbox = \
+-                 self._forward_head(queries, mask_feats, mask_pts_feats, last_flag, layer=i+1)
++            if self._dual_path and _dp_sem_feats is not None:
++                for b in range(len(queries)):
++                    _w = pred_mask[b].detach().sigmoid()
++                    if _w.shape[1] != _dp_sem_feats[b].shape[0]:
++                        _w = scatter_mean(_w, super_points[0][b], dim=1)
++                    _w_sum = _w.sum(dim=1, keepdim=True).clamp(min=1e-6)
++                    _z_sem = (_w @ _dp_sem_feats[b]) / _w_sum
++                    _q_cls_in = torch.cat([_dp_queries_cls[b], queries[b].detach(), _z_sem], dim=-1)
++                    _dp_queries_cls[b] = queries[b].detach() + self.cls_update_mlp(_q_cls_in)
++            cls_pred, sem_pred, pred_score, pred_mask, attn_mask, object_query, pred_bbox, object_query_cls = \
++                 self._forward_head(queries, mask_feats, mask_pts_feats, last_flag, layer=i+1,
++                                    cls_queries=_dp_queries_cls if self._dual_path else None)
+             if use_one2many:
+                 one2many_cls_pred, one2many_sem_pred, one2many_pred_score, one2many_pred_mask, one2many_attn_mask, one2many_object_query, one2many_pred_bbox = \
+-                        self._forward_head(one2many_queries, mask_feats, mask_pts_feats, last_flag, layer=i+1)
++                        self._forward_head(one2many_queries, mask_feats, mask_pts_feats, last_flag, layer=i+1)[:7]
+                 # one2many_output = dict(
+                 #     cls_preds=one2many_cls_pred, sem_preds=one2many_sem_pred, masks=one2many_pred_mask, scores=one2many_pred_score,
+                 #     queries=one2many_object_query, bboxes=one2many_pred_bbox)
+@@ -786,6 +830,8 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+             pred_masks.append(pred_mask)
+             object_queries.append(object_query)
+             pred_bboxes.append(pred_bbox)
++            if self._dual_path and object_query_cls:
++                object_queries_cls_all.append(object_query_cls)
+         
+         neq_sum_list = []
+         for cls_pred in cls_preds[:-1]:
+@@ -819,6 +865,7 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+                 masks=pred_masks[-1],
+                 scores=pred_scores[-1],
+                 queries=object_queries[-1],
++                queries_cls=(object_queries_cls_all[-1] if object_queries_cls_all else object_queries[-1]),
+                 bboxes=pred_bboxes[-1],
+                 aux_outputs=aux_outputs,
+                 one2many_outputs=one2many_outputs,)
+@@ -829,10 +876,11 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+                 masks=pred_masks[-1],
+                 scores=pred_scores[-1],
+                 queries=object_queries[-1],
++                queries_cls=(object_queries_cls_all[-1] if object_queries_cls_all else object_queries[-1]),
+                 bboxes=pred_bboxes[-1],
+                 aux_outputs=aux_outputs)
+     
+-    def forward(self, sp_feats, p_feats, queries, super_points, prev_queries=None, use_temporal_loss=False, inst_dict=False,track_instances=None, use_one2many=False):
++    def forward(self, sp_feats, p_feats, queries, super_points, prev_queries=None, use_temporal_loss=False, inst_dict=False,track_instances=None, use_one2many=False, sp_feats_sem=None):
+         """Forward pass.
+         
+         Args:
+@@ -845,7 +893,7 @@ class ScanNetMixQueryDecoder(QueryDecoder):
+             Dict: with labels, masks, scores, and possibly aux_outputs.
+         """
+         if self.iter_pred:
+-            return self.forward_iter_pred(sp_feats, p_feats, queries, super_points, prev_queries, use_temporal_loss=use_temporal_loss, inst_dict=inst_dict, track_instances=track_instances, use_one2many=use_one2many)
++            return self.forward_iter_pred(sp_feats, p_feats, queries, super_points, prev_queries, use_temporal_loss=use_temporal_loss, inst_dict=inst_dict, track_instances=track_instances, use_one2many=use_one2many, sp_feats_sem=sp_feats_sem)
+         else:
+             raise NotImplementedError("No simple forward!!!")
+ 
+diff --git a/oneformer3d/scannet_dataset.py b/oneformer3d/scannet_dataset.py
+index cf54a98..ed19bdb 100644
+--- a/oneformer3d/scannet_dataset.py
++++ b/oneformer3d/scannet_dataset.py
+@@ -8,7 +8,13 @@ from mmdet3d.registry import DATASETS
+ 
+ @DATASETS.register_module()
+ class ScanNetSegDataset_(ScanNetSegDataset):
+-    """We just add super_pts_path."""
++    """We just add super_pts_path and keep AutoSeg3D load_interval compatibility."""
++
++    def __init__(self, load_interval=1, **kwargs):
++        self.load_interval = int(load_interval)
++        super().__init__(**kwargs)
++        if self.load_interval > 1:
++            self.data_list = self.data_list[::self.load_interval]
+ 
+     def get_scene_idxs(self, *args, **kwargs):
+         """Compute scene_idxs for data sampling."""
+diff --git a/scripts/codex_tools/build_mv_dino_manifest.py b/scripts/codex_tools/build_mv_dino_manifest.py
+new file mode 100755
+index 0000000..04966c4
+--- /dev/null
++++ b/scripts/codex_tools/build_mv_dino_manifest.py
+@@ -0,0 +1,128 @@
++#!/usr/bin/env python3
++"""Build a DINO cache manifest from ScanNet MV pkl img_paths only.
++
++This script intentionally does not scan raw 2D directories. It only records
++frames referenced by the MV info pkl files, so the offline cache is aligned
++with the actual ESAM/AutoSeg3D MV protocol.
++"""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++import pickle
++from pathlib import Path
++from typing import Dict, List
++
++
++def sha256_file(path: Path, chunk_size: int = 1 << 20) -> str:
++    h = hashlib.sha256()
++    with path.open('rb') as f:
++        while True:
++            b = f.read(chunk_size)
++            if not b:
++                break
++            h.update(b)
++    return h.hexdigest()
++
++
++def load_data_list(pkl_path: Path) -> List[dict]:
++    with pkl_path.open('rb') as f:
++        obj = pickle.load(f)
++    if isinstance(obj, dict) and 'data_list' in obj:
++        return obj['data_list']
++    if isinstance(obj, list):
++        return obj
++    raise TypeError(f'Unsupported pkl format: {pkl_path}, type={type(obj)}')
++
++
++def cache_rel_for_img(rel_img: str, suffix: str = '.pt') -> str:
++    p = Path(rel_img)
++    return str(p.with_suffix(suffix))
++
++
++def main() -> None:
++    ap = argparse.ArgumentParser()
++    ap.add_argument('--data-root', default='data/scannet200-mv_fast')
++    ap.add_argument('--train-pkl', default='data/scannet200-mv_fast/scannet200_mv_oneformer3d_infos_train.pkl')
++    ap.add_argument('--val-pkl', default='data/scannet200-mv_fast/scannet200_mv_oneformer3d_infos_val.pkl')
++    ap.add_argument('--cache-root', required=True)
++    ap.add_argument('--out-dir', required=True)
++    ap.add_argument('--subset-size', type=int, default=128)
++    ap.add_argument('--seed', type=int, default=2050318485)
++    args = ap.parse_args()
++
++    data_root = Path(args.data_root)
++    cache_root = Path(args.cache_root)
++    out_dir = Path(args.out_dir)
++    out_dir.mkdir(parents=True, exist_ok=True)
++
++    records: Dict[str, dict] = {}
++    split_counts = {}
++    pkl_info = {}
++    for split, pkl in [('train', Path(args.train_pkl)), ('val', Path(args.val_pkl))]:
++        dl = load_data_list(pkl)
++        pkl_info[split] = {
++            'path': str(pkl),
++            'sha256': sha256_file(pkl),
++            'num_scenes': len(dl),
++        }
++        n_refs = 0
++        for scene_idx, item in enumerate(dl):
++            for frame_idx, rel in enumerate(item.get('img_paths', []) or []):
++                n_refs += 1
++                rel = str(rel)
++                abs_img = data_root / rel
++                rec = records.setdefault(rel, {
++                    'rel_img_path': rel,
++                    'abs_img_path': str(abs_img),
++                    'cache_rel_path': cache_rel_for_img(rel),
++                    'cache_path': str(cache_root / cache_rel_for_img(rel)),
++                    'splits': [],
++                    'refs': [],
++                    'exists': abs_img.exists(),
++                })
++                if split not in rec['splits']:
++                    rec['splits'].append(split)
++                if len(rec['refs']) < 8:
++                    rec['refs'].append({'split': split, 'scene_idx': scene_idx, 'frame_idx': frame_idx})
++        split_counts[split] = {'num_scenes': len(dl), 'num_frame_refs': n_refs}
++
++    all_recs = [records[k] for k in sorted(records)]
++    missing = [r for r in all_recs if not r['exists']]
++    manifest = out_dir / 'scannet200_mv_fast_dino_used_frames_manifest.jsonl'
++    with manifest.open('w') as f:
++        for r in all_recs:
++            f.write(json.dumps(r, ensure_ascii=False) + '\n')
++
++    import random
++    rng = random.Random(args.seed)
++    subset = list(all_recs)
++    rng.shuffle(subset)
++    subset = subset[: min(args.subset_size, len(subset))]
++    subset_path = out_dir / f'scannet200_mv_fast_dino_used_frames_subset{len(subset)}_seed{args.seed}.jsonl'
++    with subset_path.open('w') as f:
++        for r in subset:
++            f.write(json.dumps(r, ensure_ascii=False) + '\n')
++
++    summary = {
++        'data_root': str(data_root),
++        'cache_root': str(cache_root),
++        'manifest': str(manifest),
++        'subset_manifest': str(subset_path),
++        'seed': args.seed,
++        'pkl_info': pkl_info,
++        'split_counts': split_counts,
++        'unique_frames': len(all_recs),
++        'missing_images': len(missing),
++        'missing_examples': missing[:10],
++    }
++    summary_path = out_dir / 'scannet200_mv_fast_dino_used_frames_summary.json'
++    summary_path.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
++    print(json.dumps(summary, indent=2, ensure_ascii=False))
++    if missing:
++        raise SystemExit(f'{len(missing)} images referenced by pkl are missing')
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/scripts/codex_tools/compact_dino_cache.py b/scripts/codex_tools/compact_dino_cache.py
+new file mode 100644
+index 0000000..68041b8
+--- /dev/null
++++ b/scripts/codex_tools/compact_dino_cache.py
+@@ -0,0 +1,89 @@
++#!/usr/bin/env python3
++"""Compact DINO cache files accidentally saved from batch-view tensors.
++
++When a per-frame feature is a view into a batch tensor, torch.save stores the
++whole underlying batch storage. This script rewrites each payload with
++payload['feat'].contiguous().clone() so the file stores only one feature map.
++"""
++from __future__ import annotations
++import argparse
++import json
++import os
++import time
++from concurrent.futures import ProcessPoolExecutor, as_completed
++from pathlib import Path
++
++import torch
++
++
++def compact_one(path_str: str, max_expected_mb: float, dry_run: bool = False):
++    path = Path(path_str)
++    before = path.stat().st_size
++    if before <= max_expected_mb * 1024 * 1024:
++        return {'path': str(path), 'status': 'skip_small', 'before': before, 'after': before}
++    try:
++        payload = torch.load(path, map_location='cpu')
++        if isinstance(payload, dict) and torch.is_tensor(payload.get('feat')):
++            payload['feat'] = payload['feat'].contiguous().clone()
++        elif torch.is_tensor(payload):
++            payload = payload.contiguous().clone()
++        else:
++            return {'path': str(path), 'status': 'skip_unknown_payload', 'before': before, 'after': before}
++        if dry_run:
++            return {'path': str(path), 'status': 'dry_run', 'before': before, 'after': before}
++        tmp = path.with_suffix(path.suffix + '.compact_tmp')
++        torch.save(payload, tmp)
++        tmp.replace(path)
++        after = path.stat().st_size
++        return {'path': str(path), 'status': 'compacted', 'before': before, 'after': after}
++    except Exception as exc:
++        return {'path': str(path), 'status': 'failed', 'before': before, 'after': before, 'error': repr(exc)}
++
++
++def main():
++    ap = argparse.ArgumentParser()
++    ap.add_argument('--cache-root', required=True)
++    ap.add_argument('--summary', required=True)
++    ap.add_argument('--workers', type=int, default=8)
++    ap.add_argument('--max-expected-mb', type=float, default=6.0)
++    ap.add_argument('--dry-run', action='store_true')
++    args = ap.parse_args()
++
++    root = Path(args.cache_root)
++    files = [str(p) for p in root.rglob('*.pt')]
++    t0 = time.time()
++    status_counts = {}
++    before_total = 0
++    after_total = 0
++    failures = []
++    n = len(files)
++    with ProcessPoolExecutor(max_workers=args.workers) as ex:
++        futs = [ex.submit(compact_one, p, args.max_expected_mb, args.dry_run) for p in files]
++        for i, fut in enumerate(as_completed(futs), 1):
++            res = fut.result()
++            status_counts[res['status']] = status_counts.get(res['status'], 0) + 1
++            before_total += int(res.get('before', 0))
++            after_total += int(res.get('after', 0))
++            if res['status'] == 'failed':
++                failures.append(res)
++            if i % 500 == 0 or i == n:
++                print(json.dumps({'progress': [i, n], 'status_counts': status_counts}, ensure_ascii=False), flush=True)
++    summary = {
++        'cache_root': str(root),
++        'num_files': n,
++        'workers': args.workers,
++        'status_counts': status_counts,
++        'before_bytes_sum_seen': before_total,
++        'after_bytes_sum_seen': after_total,
++        'saved_bytes_sum_seen': before_total - after_total,
++        'elapsed_sec': round(time.time() - t0, 3),
++        'failures': failures[:50],
++    }
++    Path(args.summary).parent.mkdir(parents=True, exist_ok=True)
++    Path(args.summary).write_text(json.dumps(summary, indent=2, ensure_ascii=False))
++    print(json.dumps(summary, indent=2, ensure_ascii=False), flush=True)
++    if failures:
++        raise SystemExit(f'{len(failures)} compaction failures')
++
++if __name__ == '__main__':
++    main()
+diff --git a/scripts/codex_tools/extract_mv_dino_cache.py b/scripts/codex_tools/extract_mv_dino_cache.py
+new file mode 100755
+index 0000000..e257814
+--- /dev/null
++++ b/scripts/codex_tools/extract_mv_dino_cache.py
+@@ -0,0 +1,190 @@
++#!/usr/bin/env python3
++"""Extract offline DINOv2 feature maps for a JSONL manifest.
++
++The cache unit is an RGB frame feature map after deterministic resize to
++420x560. Output tensor shape is Cx30x40 for ViT-L/14. Projection to 3D remains
++online during training/smoke, so cache is independent of point sampling.
++"""
++from __future__ import annotations
++
++import argparse
++import json
++import os
++import time
++import sys
++from pathlib import Path
++
++REPO_ROOT = Path(__file__).resolve().parents[2]
++if str(REPO_ROOT) not in sys.path:
++    sys.path.insert(0, str(REPO_ROOT))
++from typing import List, Tuple
++
++import torch
++import torchvision.transforms as T
++from PIL import Image
++from tqdm import tqdm
++
++from tools.extract_dinov2_features import DINOv2FeatureExtractor
++
++DINO_MEAN = (0.485, 0.456, 0.406)
++DINO_STD = (0.229, 0.224, 0.225)
++PATCH_SIZE = 14
++
++
++def load_jsonl(path: Path) -> List[dict]:
++    out = []
++    with path.open() as f:
++        for line in f:
++            line = line.strip()
++            if line:
++                out.append(json.loads(line))
++    return out
++
++
++def preprocess(path: Path, target_hw: Tuple[int, int]) -> Tuple[torch.Tensor, Tuple[int, int]]:
++    img = Image.open(path).convert('RGB')
++    src_wh = img.size
++    h, w = target_hw
++    img = img.resize((w, h), Image.BILINEAR)
++    x = T.ToTensor()(img)
++    x = T.Normalize(DINO_MEAN, DINO_STD)(x)
++    return x, (src_wh[1], src_wh[0])
++
++
++@torch.inference_mode()
++def forward_batch(model, imgs: torch.Tensor) -> torch.Tensor:
++    weight_dtype = model.patch_embed.proj.weight.dtype
++    imgs = imgs.to(device=next(model.parameters()).device, dtype=weight_dtype)
++    feats = model.forward_features(imgs)
++    if isinstance(feats, dict):
++        tokens = feats.get('x_norm_patchtokens', None)
++        h = feats.get('h', None)
++        w = feats.get('w', None)
++        if isinstance(h, torch.Tensor):
++            h = int(h.item())
++        if isinstance(w, torch.Tensor):
++            w = int(w.item())
++    else:
++        tokens, h, w = feats, None, None
++    if tokens is None:
++        raise RuntimeError('DINO forward_features did not return patch tokens')
++    b, l, c = tokens.shape
++    if h is None or w is None:
++        h = imgs.shape[-2] // PATCH_SIZE
++        w = imgs.shape[-1] // PATCH_SIZE
++    if h * w > l:
++        raise RuntimeError(f'Invalid DINO grid h*w={h*w} > tokens={l}')
++    return tokens[:, :h*w, :].transpose(1, 2).reshape(b, c, h, w).contiguous()
++
++
++def main() -> None:
++    ap = argparse.ArgumentParser()
++    ap.add_argument('--manifest', required=True)
++    ap.add_argument('--cache-root', required=True)
++    ap.add_argument('--checkpoint', default='/datadisk1/xxy/data/models/dinov2_vitl14_reg4_pretrain.pth')
++    ap.add_argument('--arch', default='dinov2_vitl14_reg')
++    ap.add_argument('--device', default='cuda:0')
++    ap.add_argument('--batch-size', type=int, default=8)
++    ap.add_argument('--target-h', type=int, default=420)
++    ap.add_argument('--target-w', type=int, default=560)
++    ap.add_argument('--dtype', choices=['fp16', 'fp32'], default='fp16')
++    ap.add_argument('--limit', type=int, default=0)
++    ap.add_argument('--shard-index', type=int, default=0)
++    ap.add_argument('--num-shards', type=int, default=1)
++    ap.add_argument('--overwrite', action='store_true')
++    ap.add_argument('--summary', required=True)
++    args = ap.parse_args()
++
++    if args.device.startswith('cuda:'):
++        os.environ.setdefault('CUDA_VISIBLE_DEVICES', args.device.split(':')[-1])
++        device = 'cuda:0'
++    else:
++        device = args.device
++    manifest = Path(args.manifest)
++    cache_root = Path(args.cache_root)
++    cache_root.mkdir(parents=True, exist_ok=True)
++    recs = load_jsonl(manifest)
++    recs = [r for i, r in enumerate(recs) if i % args.num_shards == args.shard_index]
++    if args.limit > 0:
++        recs = recs[:args.limit]
++
++    dtype = torch.float16 if args.dtype == 'fp16' else torch.float32
++    extractor = DINOv2FeatureExtractor(arch=args.arch, device=device, dtype=dtype, checkpoint=args.checkpoint)
++    model = extractor.model.eval()
++
++    done = skipped = failed = 0
++    shapes = {}
++    t0 = time.time()
++    batch_imgs, batch_recs, batch_src = [], [], []
++
++    def flush():
++        nonlocal done, batch_imgs, batch_recs, batch_src
++        if not batch_imgs:
++            return
++        imgs = torch.stack(batch_imgs, dim=0)
++        feats = forward_batch(model, imgs)
++        feats = feats.half().cpu() if dtype == torch.float16 else feats.float().cpu()
++        for feat, rec, src_hw in zip(feats, batch_recs, batch_src):
++            # IMPORTANT: feat is a slice/view into the batch tensor. Saving a view with
++            # torch.save serializes the whole underlying batch storage (~8x larger for
++            # batch_size=8). Clone to compact standalone storage before caching.
++            feat = feat.contiguous().clone()
++            out = cache_root / rec['cache_rel_path']
++            out.parent.mkdir(parents=True, exist_ok=True)
++            payload = {
++                'feat': feat,
++                'rel_img_path': rec['rel_img_path'],
++                'src_hw': src_hw,
++                'target_hw': [args.target_h, args.target_w],
++                'arch': args.arch,
++                'checkpoint': args.checkpoint,
++                'dtype': args.dtype,
++            }
++            tmp_out = out.with_suffix(out.suffix + '.tmp')
++            torch.save(payload, tmp_out)
++            tmp_out.replace(out)
++            shapes[str(tuple(feat.shape))] = shapes.get(str(tuple(feat.shape)), 0) + 1
++            done += 1
++        batch_imgs, batch_recs, batch_src = [], [], []
++
++    for rec in tqdm(recs, desc=f'shard {args.shard_index}/{args.num_shards}'):
++        out = cache_root / rec['cache_rel_path']
++        if out.exists() and not args.overwrite:
++            skipped += 1
++            continue
++        try:
++            x, src_hw = preprocess(Path(rec['abs_img_path']), (args.target_h, args.target_w))
++            batch_imgs.append(x)
++            batch_recs.append(rec)
++            batch_src.append(src_hw)
++            if len(batch_imgs) >= args.batch_size:
++                flush()
++        except Exception as e:
++            failed += 1
++            print(json.dumps({'failed': rec, 'error': repr(e)}, ensure_ascii=False), flush=True)
++    flush()
++    summary = {
++        'manifest': str(manifest),
++        'cache_root': str(cache_root),
++        'checkpoint': args.checkpoint,
++        'arch': args.arch,
++        'device': args.device,
++        'batch_size': args.batch_size,
++        'target_hw': [args.target_h, args.target_w],
++        'dtype': args.dtype,
++        'num_input_records_after_shard_limit': len(recs),
++        'num_done': done,
++        'num_skipped': skipped,
++        'num_failed': failed,
++        'shape_counts': shapes,
++        'elapsed_sec': round(time.time() - t0, 3),
++    }
++    Path(args.summary).parent.mkdir(parents=True, exist_ok=True)
++    Path(args.summary).write_text(json.dumps(summary, indent=2, ensure_ascii=False))
++    print(json.dumps(summary, indent=2, ensure_ascii=False))
++    if failed:
++        raise SystemExit(f'{failed} extraction failures')
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/scripts/codex_tools/smoke_mv_dino_projection.py b/scripts/codex_tools/smoke_mv_dino_projection.py
+new file mode 100755
+index 0000000..ea91d29
+--- /dev/null
++++ b/scripts/codex_tools/smoke_mv_dino_projection.py
+@@ -0,0 +1,240 @@
++#!/usr/bin/env python3
++"""Standalone projection smoke for offline DINO cache.
++
++It validates the protocol-critical part before full training: MV pkl img_paths
++map to cache files, 2D feature maps have expected shape, and points project into
++feature-grid coordinates with high valid ratio under the same pose convention
++used by v5 (`inv`, with optional auto comparison).
++"""
++from __future__ import annotations
++
++import argparse
++import json
++import pickle
++from pathlib import Path
++from typing import Any, Dict, List, Tuple
++
++import numpy as np
++import torch
++
++REPO_ROOT = Path(__file__).resolve().parents[2]
++import sys
++if str(REPO_ROOT) not in sys.path:
++    sys.path.insert(0, str(REPO_ROOT))
++
++import importlib.util
++_proj_path = REPO_ROOT / "oneformer3d" / "projection_utils.py"
++_spec = importlib.util.spec_from_file_location("codex_projection_utils", _proj_path)
++_projection_utils = importlib.util.module_from_spec(_spec)
++assert _spec and _spec.loader
++_spec.loader.exec_module(_projection_utils)
++project_points_to_uv = _projection_utils.project_points_to_uv
++sample_img_feat = _projection_utils.sample_img_feat
++
++SCANNT_INTR = (577.870605, 577.870605, 319.5, 239.5)
++
++
++def load_data_list(path: Path) -> List[dict]:
++    with path.open('rb') as f:
++        obj = pickle.load(f)
++    if isinstance(obj, dict) and 'data_list' in obj:
++        return obj['data_list']
++    if isinstance(obj, list):
++        return obj
++    raise TypeError(type(obj))
++
++
++def read_bin(path: Path, dtype, cols: int) -> np.ndarray:
++    arr = np.fromfile(path, dtype=dtype)
++    if arr.size % cols != 0:
++        raise RuntimeError(f'{path} size {arr.size} not divisible by {cols}')
++    return arr.reshape(-1, cols)
++
++
++def load_points(data_root: Path, item: dict, frame_idx: int) -> torch.Tensor:
++    pts_paths = item.get('pts_paths') or item.get('point_cloud', {}).get('pts_paths')
++    if pts_paths is None:
++        raise KeyError('pts_paths')
++    rel = pts_paths[frame_idx]
++    path = data_root / rel
++    # ESAM/AutoSeg ScanNet pkl stores float32 points with xyzrgb-like features.
++    raw = np.fromfile(path, dtype=np.float32)
++    for cols in (6, 9, 12, 3):
++        if raw.size % cols == 0:
++            arr = raw.reshape(-1, cols)
++            if arr.shape[1] >= 3:
++                return torch.from_numpy(arr[:, :3].copy()).float()
++    raise RuntimeError(f'cannot infer point columns for {path}, raw_size={raw.size}')
++
++
++def parse_cache(cache_path: Path) -> torch.Tensor:
++    payload = torch.load(cache_path, map_location='cpu')
++    feat = payload['feat'] if isinstance(payload, dict) and 'feat' in payload else payload
++    if not torch.is_tensor(feat):
++        raise TypeError(f'cache {cache_path} does not contain tensor feat')
++    if tuple(feat.shape[-2:]) != (30, 40) or feat.shape[0] != 1024:
++        raise RuntimeError(f'unexpected feature shape {tuple(feat.shape)} for {cache_path}')
++    return feat.float().unsqueeze(0)
++
++
++def project_one(points: torch.Tensor, pose: Any, feat: torch.Tensor, mode: str) -> Tuple[float, int, int, str]:
++    device = feat.device
++    xyz_world = points.to(device)
++    pose_t = torch.as_tensor(pose, device=device, dtype=xyz_world.dtype)
++    candidates = []
++    if mode in ('inv', 'auto'):
++        candidates.append(('inv', torch.linalg.inv(pose_t)))
++    if mode in ('direct', 'auto'):
++        candidates.append(('direct', pose_t))
++    if mode in ('identity', 'auto'):
++        candidates.append(('identity', None))
++    best = None
++    H_feat, W_feat = feat.shape[-2:]
++    # Match BuildCamInfoFromPoses + ResizeForDINO: ScanNet intrinsics are
++    # first scaled from original 640x480 image to target 560x420, then mapped
++    # to DINO patch grid.
++    H0, W0 = 480.0, 640.0
++    H_img, W_img = 420.0, 560.0
++    fx0, fy0, cx0, cy0 = SCANNT_INTR
++    fx = fx0 * (W_img / W0)
++    fy = fy0 * (H_img / H0)
++    cx = cx0 * (W_img / W0)
++    cy = cy0 * (H_img / H0)
++    scale_w, scale_h = W_feat / W_img, H_feat / H_img
++    intr_feat = (fx * scale_w, fy * scale_h, (cx + 0.5) * scale_w - 0.5, (cy + 0.5) * scale_h - 0.5)
++    ones = torch.ones((xyz_world.shape[0], 1), device=device, dtype=xyz_world.dtype)
++    xyz_h = torch.cat([xyz_world, ones], dim=1)
++    for name, T in candidates:
++        xyz_cam = xyz_world if T is None else (xyz_h @ T.t())[:, :3]
++        uv, valid = project_points_to_uv(
++            xyz_cam,
++            feat_hw=(H_feat, W_feat),
++            max_depth=20.0,
++            standard_intrinsics=intr_feat,
++            already_scaled=True,
++        )
++        cnt = int(valid.sum().item())
++        total = int(valid.numel())
++        rate = cnt / max(total, 1)
++        if best is None or rate > best[0]:
++            best = (rate, cnt, total, name, uv, valid)
++    assert best is not None
++    # Also sample once to catch grid_sample / coordinate errors.
++    _ = sample_img_feat(feat, best[4], best[5], align_corners=False)
++    return float(best[0]), int(best[1]), int(best[2]), str(best[3])
++
++
++def main() -> None:
++    ap = argparse.ArgumentParser()
++    ap.add_argument('--pkl', default='data/scannet200-mv_fast/scannet200_mv_oneformer3d_infos_train.pkl')
++    ap.add_argument('--data-root', default='data/scannet200-mv_fast')
++    ap.add_argument('--cache-root', required=True)
++    ap.add_argument('--manifest', required=True)
++    ap.add_argument('--num-scenes', type=int, default=8)
++    ap.add_argument('--frames-per-scene', type=int, default=4)
++    ap.add_argument('--pose-mode', choices=['inv', 'direct', 'identity', 'auto'], default='auto')
++    ap.add_argument('--summary', required=True)
++    args = ap.parse_args()
++
++    data_root = Path(args.data_root)
++    cache_root = Path(args.cache_root)
++    manifest_rels = []
++    with Path(args.manifest).open() as f:
++        for line in f:
++            if line.strip():
++                manifest_rels.append(json.loads(line)['rel_img_path'])
++    manifest_set = set(manifest_rels)
++    dl = load_data_list(Path(args.pkl))
++    rows = []
++    total_valid = 0
++    total_points = 0
++    pose_counts: Dict[str, int] = {}
++    checked = 0
++
++    # Prefer exact scene/frame references stored in the manifest. This lets a
++    # random subset cache smoke validate only frames that were actually cached.
++    target_pairs = []
++    manifest_records = []
++    with Path(args.manifest).open() as f:
++        for line in f:
++            if line.strip():
++                manifest_records.append(json.loads(line))
++    for rec in manifest_records:
++        cache_path = cache_root / rec['cache_rel_path']
++        if not cache_path.exists():
++            continue
++        refs = rec.get('refs') or []
++        chosen_ref = None
++        for ref in refs:
++            if ref.get('split') == 'train':
++                chosen_ref = ref
++                break
++        # This smoke loads the train pkl; skip val-only cached frames here.
++        if chosen_ref is not None:
++            target_pairs.append((int(chosen_ref['scene_idx']), int(chosen_ref['frame_idx']), rec['rel_img_path']))
++    if not target_pairs:
++        # Fallback: deterministic first scenes, useful only after a full cache exists.
++        for scene_idx, item in enumerate(dl[:args.num_scenes]):
++            img_paths = item['img_paths']
++            if not img_paths:
++                continue
++            idxs = np.linspace(0, len(img_paths) - 1, num=min(args.frames_per_scene, len(img_paths)), dtype=int).tolist()
++            for frame_idx in idxs:
++                target_pairs.append((scene_idx, int(frame_idx), img_paths[int(frame_idx)]))
++    max_checks = args.num_scenes * args.frames_per_scene
++    target_pairs = target_pairs[:max_checks]
++
++    for scene_idx, frame_idx, rel in target_pairs:
++        item = dl[scene_idx]
++        poses = item['poses']
++        if rel not in manifest_set:
++            raise RuntimeError(f'{rel} absent from manifest')
++        cache_path = cache_root / Path(rel).with_suffix('.pt')
++        if not cache_path.exists():
++            rows.append({'scene_idx': scene_idx, 'frame_idx': frame_idx, 'rel_img_path': rel, 'status': 'missing_cache'})
++            continue
++        feat = parse_cache(cache_path)
++        points = load_points(data_root, item, frame_idx)
++        rate, cnt, total, chosen = project_one(points, poses[frame_idx], feat, args.pose_mode)
++        total_valid += cnt
++        total_points += total
++        pose_counts[chosen] = pose_counts.get(chosen, 0) + 1
++        checked += 1
++        rows.append({
++            'scene_idx': scene_idx,
++            'frame_idx': frame_idx,
++            'rel_img_path': rel,
++            'cache_path': str(cache_path),
++            'valid_rate': rate,
++            'valid_count': cnt,
++            'total_points': total,
++            'pose_mode': chosen,
++            'feature_shape': list(feat.shape),
++            'status': 'ok',
++        })
++    rates = [r['valid_rate'] for r in rows if r.get('status') == 'ok']
++    summary = {
++        'pkl': args.pkl,
++        'data_root': args.data_root,
++        'cache_root': str(cache_root),
++        'manifest': args.manifest,
++        'num_checked': checked,
++        'num_missing_cache': sum(1 for r in rows if r.get('status') == 'missing_cache'),
++        'mean_valid_rate': (sum(rates) / len(rates)) if rates else None,
++        'min_valid_rate': min(rates) if rates else None,
++        'max_valid_rate': max(rates) if rates else None,
++        'global_valid_rate': (total_valid / total_points) if total_points else None,
++        'pose_mode_counts': pose_counts,
++        'rows': rows,
++    }
++    Path(args.summary).parent.mkdir(parents=True, exist_ok=True)
++    Path(args.summary).write_text(json.dumps(summary, indent=2, ensure_ascii=False))
++    print(json.dumps(summary, indent=2, ensure_ascii=False))
++    if checked == 0:
++        raise SystemExit('no cached frames checked')
++    if summary['min_valid_rate'] is not None and summary['min_valid_rate'] < 0.90:
++        raise SystemExit(f"projection valid rate below 0.90: min={summary['min_valid_rate']}")
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/scripts/codex_tools/smoke_v5ab4_one_batch.py b/scripts/codex_tools/smoke_v5ab4_one_batch.py
+new file mode 100644
+index 0000000..586faa3
+--- /dev/null
++++ b/scripts/codex_tools/smoke_v5ab4_one_batch.py
+@@ -0,0 +1,92 @@
++#!/usr/bin/env python3
++from __future__ import annotations
++import argparse, json, os, sys, time, traceback
++from pathlib import Path
++
++REPO_ROOT = Path(__file__).resolve().parents[2]
++if str(REPO_ROOT) not in sys.path:
++    sys.path.insert(0, str(REPO_ROOT))
++
++import torch
++from mmengine.config import Config
++from mmengine.registry import init_default_scope
++from mmengine.runner import Runner
++from mmdet3d.registry import MODELS
++
++
++def _loss_to_float(x):
++    if torch.is_tensor(x):
++        return float(x.detach().mean().cpu())
++    if isinstance(x, (list, tuple)):
++        vals=[_loss_to_float(v) for v in x]
++        return float(sum(vals)) if vals else 0.0
++    return float(x) if isinstance(x,(int,float)) else None
++
++
++def main():
++    ap=argparse.ArgumentParser()
++    ap.add_argument('--config', required=True)
++    ap.add_argument('--device', default='cuda:0')
++    ap.add_argument('--max-tries', type=int, default=20)
++    ap.add_argument('--summary', required=True)
++    ap.add_argument('--no-loss', action='store_true', help='only preprocess and build DINO FPN for frame 0')
++    args=ap.parse_args()
++    cfg=Config.fromfile(args.config)
++    cfg.train_dataloader.batch_size=1
++    cfg.train_dataloader.num_workers=0
++    cfg.train_dataloader.persistent_workers=False
++    cfg.model.dino_debug=True
++    init_default_scope('mmdet3d')
++    dataloader=Runner.build_dataloader(cfg.train_dataloader)
++    model=MODELS.build(cfg.model)
++    model.to(args.device)
++    model.train()
++    result={'config':args.config,'device':args.device,'max_tries':args.max_tries,'attempts':[]}
++    t0=time.time()
++    ok=False
++    data_iter = iter(dataloader)
++    for i in range(args.max_tries):
++        attempt={'iter':i}
++        try:
++            batch = next(data_iter)
++            data=model.data_preprocessor(batch, training=True)
++            inputs=data['inputs']
++            attempt['input_keys']=list(inputs.keys())
++            attempt['num_points_batches']=len(inputs.get('points', []))
++            if 'dino_feat_maps' in inputs:
++                df=inputs['dino_feat_maps']
++                attempt['dino_layout']='frame_major' if isinstance(df,list) and df and isinstance(df[0],list) else str(type(df))
++                try:
++                    attempt['dino_shape0']=tuple(df[0][0].shape)
++                except Exception:
++                    pass
++            if args.no_loss:
++                with torch.no_grad():
++                    fpn=model._build_dino_fpn_cached(inputs, data['data_samples'], frame_i=0)
++                attempt['fpn_shapes']=[tuple(x.shape) for x in fpn] if fpn is not None else None
++            else:
++                with torch.no_grad():
++                    losses=model(**data, mode='loss')
++                attempt['loss_keys']=list(losses.keys())
++                attempt['losses']={k:_loss_to_float(v) for k,v in losses.items()}
++            attempt['last_dino_valid_rate']=getattr(model,'_last_dino_valid_rate',None)
++            attempt['last_dino_valid_rate_per_sample']=getattr(model,'_last_dino_valid_rate_per_sample',None)
++            result['attempts'].append(attempt)
++            ok=True
++            break
++        except Exception as exc:
++            attempt['error']=repr(exc)
++            attempt['traceback']=traceback.format_exc(limit=6)
++            result['attempts'].append(attempt)
++            if 'DINO cache' not in repr(exc) and 'FileNotFoundError' not in repr(exc):
++                break
++    result['ok']=ok
++    result['elapsed_sec']=round(time.time()-t0,3)
++    Path(args.summary).parent.mkdir(parents=True, exist_ok=True)
++    Path(args.summary).write_text(json.dumps(result, indent=2, ensure_ascii=False))
++    print(json.dumps(result, indent=2, ensure_ascii=False))
++    if not ok:
++        raise SystemExit('smoke failed')
++
++if __name__ == '__main__':
++    main()
+diff --git a/tools/extract_dinov2_features.py b/tools/extract_dinov2_features.py
+new file mode 100644
+index 0000000..7834b02
+--- /dev/null
++++ b/tools/extract_dinov2_features.py
+@@ -0,0 +1,350 @@
++#!/usr/bin/env python3
++"""
++离线提取 DINOv2 ViT 特征（保持几何一致性，不裁剪、不拉伸）。
++
++要点：
++1) 输入：默认使用 480×640 原图（与深度一致），仅做 ToTensor + DINOv2 归一化。
++2) 模型：torch.hub 加载 facebookresearch/dinov2 的 vitl14（可改配置）。
++3) 输出：最后一层 patch token 特征，reshape 为 (C, H_p, W_p)，保存到 clip_feat 目录。
++4) 路径/命名：保持与 RN50 脚本一致，便于 create_data.py 的 _add_clip_paths_to_pkl 复用。
++
++使用示例：
++python tools/extract_dinov2_features.py \
++  --data-root data/scannet200-sv/2D \
++  --output-root data/scannet200-sv/clip_feat_dino \
++  --frame-interval 200 \
++  --device cuda --dtype fp16
++"""
++
++import argparse
++import json
++import logging
++import time
++from pathlib import Path
++from typing import List, Optional, Tuple
++
++import numpy as np
++import torch
++import torchvision.transforms as T
++from PIL import Image
++from tqdm import tqdm
++
++logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
++logger = logging.getLogger("dinov2_extract")
++
++# DINOv2 预训练的归一化参数（ImageNet 标准）
++DINO_MEAN = (0.485, 0.456, 0.406)
++DINO_STD = (0.229, 0.224, 0.225)
++
++# ViT-14 的 patch 大小（与 notebook 中保持一致）
++PATCH_SIZE = 14
++
++
++def preprocess_image(image_pil: Image.Image,
++                     expect_size: Tuple[int, int] = (480, 640),
++                     strict: bool = False,
++                     patch_size: int = 14) -> torch.Tensor:
++    """预处理：RGB -> Tensor -> Normalize，并在需要时 pad 到 patch_size 的倍数。
++
++    - 不做拉伸/裁剪，保持几何一致性。
++    - 若 H 或 W 不是 patch_size 的倍数，则在右/下做零填充到最近的倍数。
++    """
++    img = image_pil.convert("RGB")
++    if strict and img.size != (expect_size[1], expect_size[0]):
++        logger.warning(f"输入尺寸 {img.size} 与期望 {expect_size[1]}x{expect_size[0]} 不一致，请确认数据预处理。")
++    transform = T.Compose([
++        T.ToTensor(),
++        T.Normalize(mean=DINO_MEAN, std=DINO_STD),
++    ])
++    tensor = transform(img)  # (3, H, W)
++    _, h, w = tensor.shape
++    # pad 到 patch_size 的倍数（只在下/右填充，避免几何失真）
++    pad_h = (patch_size - h % patch_size) % patch_size
++    pad_w = (patch_size - w % patch_size) % patch_size
++    if pad_h or pad_w:
++        tensor = torch.nn.functional.pad(tensor, (0, pad_w, 0, pad_h), mode="constant", value=0.0)
++    return tensor
++
++
++class DINOv2FeatureExtractor:
++    """DINOv2 提取器：加载模型 -> 前向 -> 取 patch token 特征 -> reshape 保存。"""
++
++    def __init__(self,
++                 arch: str = "dinov2_vitl14",
++                 device: str = "cuda",
++                 dtype: torch.dtype = torch.float16,
++                 checkpoint: Optional[str] = None):
++        self.arch = arch
++        self.device = device
++        self.dtype = dtype
++        self.checkpoint = checkpoint
++        self.model = None
++        self._load_model()
++
++    def _load_model(self):
++        """加载 DINOv2；若提供 checkpoint 则优先使用本地权重。
++
++        优先尝试使用本地 cache / repo，避免每次都访问网络。
++        """
++        import os
++        import torch.hub
++
++        valid_arch = {
++            "dinov2_vits14", "dinov2_vits14_reg",
++            "dinov2_vitb14", "dinov2_vitb14_reg",
++            "dinov2_vitl14", "dinov2_vitl14_reg",
++            "dinov2_vitg14", "dinov2_vitg14_reg",
++        }
++        if self.arch not in valid_arch:
++            raise RuntimeError(f"arch={self.arch} 不在合法列表 {valid_arch}")
++
++        # 1) 优先尝试从本地 hub cache 加载，避免重复访问 GitHub
++        hub_dir = torch.hub.get_dir()
++        local_repo = os.path.join(hub_dir, "facebookresearch_dinov2_main")
++
++        try:
++            if os.path.isdir(local_repo):
++                logger.info(f"从本地 DINOv2 repo 加载: {local_repo}")
++                self.model = torch.hub.load(
++                    local_repo,
++                    self.arch,
++                    source="local",
++                    pretrained=self.checkpoint is None,
++                )
++            else:
++                # 若本地 repo 不存在，回退到默认的远程加载（可能触发网络访问）
++                logger.info("未找到本地 DINOv2 repo，尝试从 GitHub 加载。")
++                self.model = torch.hub.load(
++                    "facebookresearch/dinov2",
++                    self.arch,
++                    pretrained=self.checkpoint is None,
++                )
++
++            if self.checkpoint:
++                ckpt = torch.load(self.checkpoint, map_location=self.device)
++                # 兼容多种保存格式
++                if isinstance(ckpt, dict):
++                    if "model" in ckpt:
++                        state_dict = ckpt["model"]
++                    elif "state_dict" in ckpt:
++                        state_dict = ckpt["state_dict"]
++                    else:
++                        state_dict = ckpt
++                else:
++                    state_dict = ckpt
++                missing, unexpected = self.model.load_state_dict(state_dict, strict=False)
++                if missing:
++                    logger.warning(f"load_state_dict 缺少参数: {missing[:5]}{' ...' if len(missing)>5 else ''}")
++                if unexpected:
++                    logger.warning(f"load_state_dict 存在未使用参数: {unexpected[:5]}{' ...' if len(unexpected)>5 else ''}")
++                logger.info(f"✓ 从本地权重加载: {self.checkpoint}")
++
++            self.model.eval()
++            self.model.to(self.device)
++            logger.info(f"✓ 成功加载 {self.arch}")
++        except Exception as e:
++            logger.error(f"加载 DINOv2 模型失败: {e}")
++            raise
++
++    @torch.inference_mode()
++    def extract_features(self, image_path: Path, debug: bool = False) -> torch.Tensor:
++        """对单张图像提取特征，返回 (C, H_p, W_p)。
++
++        若 debug=True，会额外打印图像与 patch 网格的一些形状信息，便于排查 PCA 可视化问题。
++        """
++        img = Image.open(image_path).convert("RGB")
++        if debug:
++            logger.info(f"[DINOv2] image_path={image_path}, PIL_size={img.size}")  # (W,H)
++
++        # 仅做归一化 + pad，不做 resize；同时记录 pad 后尺寸，便于根据 H_pad/W_pad 推断 h,w
++        img_tensor = preprocess_image(img, patch_size=PATCH_SIZE)  # (3, H_pad, W_pad), float32
++        _, H_pad, W_pad = img_tensor.shape
++        if debug:
++            logger.info(f"[DINOv2] after preprocess: tensor shape={tuple(img_tensor.shape)} (H_pad={H_pad}, W_pad={W_pad})")
++
++        img_tensor = img_tensor.unsqueeze(0).to(self.device)
++        # 对齐模型权重 dtype（通常 float32）
++        img_tensor = img_tensor.to(dtype=self.model.patch_embed.proj.weight.dtype)
++
++        # forward_features 输出包含 patch tokens，需要 reshape
++        feats = self.model.forward_features(img_tensor)
++        # 兼容不同返回格式，避免对 Tensor 取布尔值
++        if isinstance(feats, dict):
++            if "x_norm_patchtokens" in feats:
++                tokens = feats["x_norm_patchtokens"]
++            elif "x_prenorm" in feats:
++                tokens = feats["x_prenorm"]
++            else:
++                tokens = None
++            h, w = feats.get("h"), feats.get("w")
++            if isinstance(h, torch.Tensor):
++                h = int(h.item())
++            if isinstance(w, torch.Tensor):
++                w = int(w.item())
++        else:
++            # 退化情形，不应出现；留作兜底
++            tokens, h, w = feats, None, None
++
++        if tokens is None:
++            raise RuntimeError("未能从 forward_features 得到 patch tokens。")
++        # tokens: (B, L, C)
++        B, L, C = tokens.shape
++        if debug:
++            logger.info(f"[DINOv2] tokens shape: B={B}, L={L}, C={C}, h={h}, w={w}")
++
++        if h is None or w is None:
++            # 若未提供 h, w，则优先根据 pad 后尺寸和 patch_size 推断
++            h = H_pad // PATCH_SIZE
++            w = W_pad // PATCH_SIZE
++            if debug:
++                logger.info(
++                    f"[DINOv2] infer h,w from H_pad/W_pad: "
++                    f"H_pad={H_pad}, W_pad={W_pad}, PATCH_SIZE={PATCH_SIZE} -> h={h}, w={w}, h*w={h*w}, L={L}"
++                )
++
++        # 理论上 h*w 应该等于 L（纯 patch tokens）；若出现不一致，作为兜底才使用 sqrt(L)
++        if h * w > L:
++            hw = int(np.sqrt(L))
++            if debug:
++                logger.warning(
++                    f"[DINOv2] h*w={h*w} > L={L}, fallback to sqrt(L) grid: h=w={hw}, h*w={hw*hw}"
++                )
++            h = w = hw
++
++        tokens = tokens[0, :h * w, :]  # (L, C)
++        feat_map = tokens.transpose(0, 1).reshape(C, h, w).contiguous()  # (C, H_p, W_p)
++
++        # 若需要节省存储，可保存 fp16
++        if self.dtype == torch.float16:
++            feat_map = feat_map.half()
++        return feat_map.cpu()
++
++    def save(self, tensor: torch.Tensor, save_path: Path):
++        save_path.parent.mkdir(parents=True, exist_ok=True)
++        torch.save(tensor, save_path)
++
++
++def get_scene_image_paths(scene_dir: Path, frame_interval: int) -> List[Path]:
++    """按帧号间隔采样场景中的 color/*.jpg。"""
++    color_dir = scene_dir / "color"
++    if not color_dir.exists():
++        return []
++    image_files = sorted(color_dir.glob("*.jpg"), key=lambda x: int(x.stem))
++    if not image_files:
++        return []
++
++    sampled = []
++    frame_numbers = [int(f.stem) for f in image_files]
++    min_frame, max_frame = min(frame_numbers), max(frame_numbers)
++    current = min_frame
++    while current <= max_frame:
++        # 选最近的帧号
++        closest = min(frame_numbers, key=lambda x: abs(x - current))
++        for f in image_files:
++            if int(f.stem) == closest:
++                if f not in sampled:
++                    sampled.append(f)
++                break
++        current += frame_interval
++    return sampled
++
++
++def process_scene(scene_name: str,
++                  data_root: Path,
++                  output_root: Path,
++                  extractor: DINOv2FeatureExtractor,
++                  frame_interval: int,
++                  strict_size: bool = False) -> int:
++    """处理单个场景，返回成功处理的帧数。"""
++    scene_dir = data_root / scene_name
++    output_scene_dir = output_root / scene_name
++    if not scene_dir.exists():
++        logger.warning(f"场景目录不存在: {scene_dir}")
++        return 0
++
++    image_paths = get_scene_image_paths(scene_dir, frame_interval)
++    if not image_paths:
++        logger.warning(f"场景 {scene_name} 未找到图像")
++        return 0
++
++    logger.info(f"处理场景 {scene_name}: {len(image_paths)} 帧")
++    count = 0
++    for img_path in tqdm(image_paths, desc=f"{scene_name}", leave=False):
++        out_path = output_scene_dir / f"{img_path.stem}.pt"
++        if out_path.exists():
++            count += 1
++            continue
++        try:
++            # 预处理严格尺寸检查（可选）
++            _ = preprocess_image(Image.open(img_path), strict=strict_size)
++            feat = extractor.extract_features(img_path)
++            extractor.save(feat, out_path)
++            count += 1
++        except Exception as e:
++            logger.error(f"处理 {img_path} 失败: {e}")
++            continue
++    return count
++
++
++def main():
++    parser = argparse.ArgumentParser(description="离线提取 DINOv2 特征并保存为 clip_feat/*.pt")
++    parser.add_argument("--data-root", default="data/scannet200-sv/2D", help="2D 图像根目录")
++    parser.add_argument("--output-root", default="data/scannet200-sv/clip_feat_dino", help="特征输出目录")
++    parser.add_argument("--scenes", nargs="+", default=None, help="指定场景列表（默认自动遍历 scene*）")
++    parser.add_argument("--frame-interval", type=int, default=200, help="帧采样间隔（SV=200，MV=40）")
++    parser.add_argument("--device", default="cuda", help="设备（cuda/cpu）")
++    parser.add_argument("--dtype", choices=["fp16", "fp32"], default="fp16", help="保存精度")
++    parser.add_argument("--arch", default="dinov2_vitl14", help="DINOv2 模型架构标识（hubconf 名称，如 dinov2_vitl14_reg）")
++    parser.add_argument("--checkpoint", type=str, default=None, help="本地权重路径，提供则不自动下载")
++    parser.add_argument("--strict-size", action="store_true", help="严格检查输入分辨率与期望尺寸一致")
++    args = parser.parse_args()
++
++    data_root = Path(args.data_root)
++    output_root = Path(args.output_root)
++    if not data_root.exists():
++        logger.error(f"数据根目录不存在: {data_root}")
++        return
++    output_root.mkdir(parents=True, exist_ok=True)
++
++    device = torch.device(args.device if torch.cuda.is_available() else "cpu")
++    dtype = torch.float16 if args.dtype == "fp16" else torch.float32
++    logger.info(f"设备: {device}, dtype: {dtype}, 帧采样间隔: {args.frame_interval}")
++
++    # 初始化提取器
++    extractor = DINOv2FeatureExtractor(
++        arch=args.arch, device=str(device), dtype=dtype, checkpoint=args.checkpoint
++    )
++
++    # 场景列表
++    if args.scenes:
++        scene_names = args.scenes
++    else:
++        scene_dirs = [d for d in data_root.iterdir() if d.is_dir() and d.name.startswith("scene")]
++        scene_names = [d.name for d in sorted(scene_dirs)]
++    logger.info(f"待处理场景: {len(scene_names)}")
++
++    total_frames = 0
++    start = time.time()
++    for idx, scene in enumerate(scene_names):
++        logger.info(f"[{idx+1}/{len(scene_names)}] 处理 {scene}")
++        n = process_scene(scene, data_root, output_root, extractor, args.frame_interval, strict_size=args.strict_size)
++        total_frames += n
++    elapsed = time.time() - start
++    logger.info(f"完成。场景数 {len(scene_names)}，帧数 {total_frames}，总用时 {elapsed/60:.1f} 分钟")
++
++    info = {
++        "scenes": len(scene_names),
++        "frames": total_frames,
++        "frame_interval": args.frame_interval,
++        "arch": args.arch,
++        "dtype": args.dtype,
++        "output_root": str(output_root),
++        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
++    }
++    with open(output_root / "extraction_info.json", "w") as f:
++        json.dump(info, f, indent=2)
++    logger.info(f"信息已保存到 {output_root/'extraction_info.json'}")
++
++
++if __name__ == "__main__":
++    main()

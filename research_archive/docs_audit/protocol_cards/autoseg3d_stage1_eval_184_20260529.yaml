@@ -1,0 +1,35 @@
+experiment_id: autoseg3d_stage1_eval_184_20260529
+status: completed
+server: nebula@10.177.69.184
+code_root: /home/nebula/xxy/AutoSeg3D_official_0da1838
+code_commit: 0da18380e04ca769c61ce7d1096bc80e44ab8164
+purpose: official AutoSeg3D ScanNet200-MV class-agnostic stage1 checkpoint evaluation under controlled local protocol
+config: configs/scannet200/codex_20260529_stage1_noload_full.py
+config_sha256: c146043bf171d043a21c0b00a079b8f8fb113b2d5a9114baa09b887634c8d589
+config_note: generated from official AutoSeg3D_scannet200_stage1.py with only load_interval=1 removed for installed mmdet3d compatibility
+checkpoint: work_dirs/source_ckpts/stage1_epoch128.pth
+checkpoint_realpath: /home/nebula/xxy/AutoSeg3D/work_dirs/AutoSeg3D_scannet200_stage1/epoch_128.pth
+checkpoint_sha256: 247c754c1fb1392e14ea954508ae672105afafe2dc148258b4d1147a18466adb
+data:
+  mv_root: /home/nebula/xxy/3D_Reconstruction/data/scannet200-mv
+  rec_root: /home/nebula/xxy/3D_Reconstruction/data/scannet200
+  raw_scans: /home/nebula/xxy/dataset/scannet_v2/scans
+  train_pkl_sha256: 0b24e0c968d768062558a939c7a284d0bd998eab3211f1f627fcb73b606210f2
+  val_pkl_sha256: ba6778f88bcdff868331bb1ac1f80e9a059f6a76ba810a7251abf711ba3785bb
+  train_scenes: 1201
+  val_scenes: 312
+command: >-
+  CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/home/nebula/xxy/ESAM/thirdparty/FastSAM:$PWD:$PYTHONPATH
+  /home/nebula/miniconda3/envs/ESAM/bin/python tools/test.py
+  configs/scannet200/codex_20260529_stage1_noload_full.py
+  work_dirs/source_ckpts/stage1_epoch128.pth
+  --work-dir work_dirs/codex_20260529_official_stage1_eval_epoch128_compat_retry2
+raw_log: /home/nebula/xxy/AutoSeg3D_official_0da1838/work_dirs/codex_20260529_logs/official_stage1_stage2_eval_compat_retry2.log
+metrics:
+  AP: 44.89
+  AP50: 66.47
+  AP25: 81.01
+raw_metric_line: "05/29 00:47:23 - mmengine - INFO - Epoch(test) [312/312]    all_ap: 0.4489  all_ap_50%: 0.6647  all_ap_25%: 0.8101"
+notes:
+  - Result is below AutoSeg3D official 46.2/67.9/81.7 but matches existing local Jan run for stage1 epoch128.
+  - Stage1 is not final AutoSeg3D full; stage2 eval follows in same log.
