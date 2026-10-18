@@ -1,8 +1,20 @@
 # EmbodiedDINO: Dense Visual Features for Online 3D Instance Segmentation
 
-本仓库整理 **EmbodiedDINO 的 AAAI-27 投稿相关研究代码**，研究从连续 posed RGB-D 观测中进行在线 3D 实例分割。仓库名为 `EmbodiedDINO`，主分支为 `main`。代码来自有实验记录的本地研究快照。
+本仓库整理 **EmbodiedDINO 的 AAAI-27 投稿相关研究代码**，研究从连续 posed RGB-D 观测中进行在线 3D 实例分割。EmbodiedDINO 将冻结 DINOv2 的稠密视觉特征提升到 3D，并在 proposal 解码前进行多尺度融合，进一步探索物体级反馈。主分支为 `main`，包含本地研究代码和从训练服务器、工作站核验回收的源码快照。
 
 This is an EmbodiedDINO research-code snapshot built on AutoSeg3D/EmbodiedSAM. It does not imply conference acceptance or a fully packaged, one-command reproduction release.
+
+[源码下载](https://github.com/Xin200203/EmbodiedDINO/archive/refs/heads/main.zip) · [实验版本选择](docs/REMOTE_SOURCE_SYNC_20261018.md) · [详细复现指南](docs/EMBODIEDDINO_REPRODUCIBILITY.md) · [数据准备](docs/dataset_preparation.md)
+
+## 推荐阅读与运行顺序
+
+1. **先选实验版本**：ScanNet200 stage-1 主表、多种子与类别敏感实验使用 `remote_sources/host76_stage1/`；SceneNN/3RScan 迁移使用 `remote_sources/host184_transfer/`；OCWE 使用对应的 object-world 快照。
+2. **准备匹配环境**：按下文两端实测版本安装 CUDA/PyTorch、MinkowskiEngine 和 OpenMMLab 组件，再准备其余依赖。
+3. **准备数据与权重**：预处理数据、DINO 特征缓存、annotation 文件和 checkpoint 需要独立准备。配置中的路径必须对应自己的机器。
+4. **在所选快照内运行**：从该目录执行 `tools/train.py` 或 `tools/test.py`，并把该目录放到 `PYTHONPATH` 首位。
+5. **按同一协议比对**：核对 seed、初始化、checkpoint 选择、数据划分和 evaluator，再与归档结果比较。
+
+**首次阅读推荐从 stage-1 快照开始。** 根目录保存的是 76 object-world 研究版本；它不是所有历史实验共用的一份模型实现。
 
 ## 服务器补全已完成
 
@@ -21,7 +33,7 @@ This is an EmbodiedDINO research-code snapshot built on AutoSeg3D/EmbodiedSAM. I
 | [`host76_granlearn`](remote_sources/host76_granlearn/) | 124 | 历史 granularity 消融源码 |
 | [`host76_phaseD`](remote_sources/host76_phaseD/) | 127 | 历史 Phase D joint 消融源码 |
 
-GitHub 源码包：[下载 main ZIP](https://github.com/Xin200203/EmbodiedDINO/archive/refs/heads/main.zip)。
+GitHub 源码包：[最新 main ZIP](https://github.com/Xin200203/EmbodiedDINO/archive/refs/heads/main.zip) · [已核验源码版本 855f7cc ZIP](https://github.com/Xin200203/EmbodiedDINO/archive/855f7cc6a998880b673746343ff5bf6b1eb1eff0.zip)。源码补全后的仓库共 1,077 个受版本控制的文件，含代码、配置、文档和验证记录；644 是其中远端来源文件的数量，两者口径不同。
 
 ## 同步覆盖范围
 
@@ -94,6 +106,19 @@ OCWE 冻结实验不是持久物体记忆，也不是主表全部增益的来源
 
 参考[数据准备](docs/dataset_preparation.md)与[实测服务器环境](docs/REMOTE_SOURCE_SYNC_20261018.md)。原[安装说明](docs/installation.md)属于历史上游记录，MMEngine/MMCV/CUDA 版本与当前服务器不完全相同。76 使用 PyTorch 1.13.1+cu117，184 使用 1.13.1+cu116；两端均为 MMEngine 0.10.7、MMCV 2.1.0、MMDetection3D 1.4.0。完整包版本已归档。本次验证了原服务器模块导入与配置加载，没有在 Mac 上安装 CUDA 环境。
 
+| 依赖 | 76 服务器 | 184 工作站 |
+| --- | --- | --- |
+| Python | 3.8.18 | 3.8.20 |
+| PyTorch / torchvision | 1.13.1+cu117 / 0.14.1+cu117 | 1.13.1+cu116 / 0.14.1+cu116 |
+| MMEngine / MMCV | 0.10.7 / 2.1.0 | 0.10.7 / 2.1.0 |
+| MMDetection / MMDetection3D | 3.2.0 / 1.4.0 | 3.2.0 / 1.4.0 |
+| MinkowskiEngine | 0.5.4 | 0.5.4 |
+| torch-scatter | 2.1.1+pt113cu117 | 2.1.2 |
+| networkx / easydict | 3.1 / 1.13 | 3.1 / 1.13 |
+| NumPy | 1.24.1 | 1.24.1 |
+
+`requirements.txt` 是继承的依赖清单，不能单独安装完整的 CUDA 稀疏卷积环境。请使用与所选 PyTorch/CUDA 对应的扩展构建，完整已安装包版本见 `evidence/remote_environment_*.json`。这些记录来自工作环境，尚未作为全新机器上的自动安装方案验证。
+
 运行前需要准备：
 
 - 获得使用许可的数据集、预处理点云、annotation pickle。
@@ -105,13 +130,18 @@ Git 同步不包含数据集、缓存和权重，也没有未经核验的权重�
 
 ## 训练与评测入口
 
-从仓库根目录运行，确保导入本次同步版本的 `oneformer3d`：
+以下以 stage-1 主实验为例。先克隆，再进入匹配的完整快照：
 
 ```bash
 git clone git@github.com:Xin200203/EmbodiedDINO.git
 cd EmbodiedDINO
+export EDINO_ROOT="$PWD"
+cd "$EDINO_ROOT/remote_sources/host76_stage1"
 export PYTHONPATH="$PWD:${PYTHONPATH:-}"
+python -c 'import oneformer3d; print(oneformer3d.__file__)'
 ```
+
+输出应指向当前 `host76_stage1/oneformer3d/`。该快照的相对 `data/`、初始化权重和缓存路径必须先准备好；根目录的 `data/` 只包含预处理代码及文本元数据。
 
 修改配置中的数据与缓存路径，并准备正确权重后，可使用下面的命令模板。`/path/to/...` 必须替换，初始化权重与评测权重用途不同。
 
@@ -127,9 +157,44 @@ python tools/test.py \
   --work-dir work_dirs/embodieddino_eval
 ```
 
-Matched host 使用 `configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py`。复现须同时匹配数据划分、初始化、seed、训练预算、checkpoint selection 和 evaluator。复现 stage-1 历史主表应选择 `remote_sources/host76_stage1/` 完整快照；复现迁移实验应选择 `remote_sources/host184_transfer/`，不要只将配置复制到另一版本的模型旁边。
+Matched host 使用同一快照中的 `configs/codex_v5/AutoSeg3D_scannet200_stage1_v5ab0_autoseg_clean_sameinit.py`。多种子配置保存在同目录下的 `*_seed7.py`、`*_seed123.py` 中。复现须同时匹配数据划分、初始化、seed、训练预算、checkpoint selection 和 evaluator。
+
+### SceneNN 迁移评测
+
+从刚才记录的仓库路径切换到 transfer 快照，并重新设置导入路径：
+
+```bash
+cd "$EDINO_ROOT/remote_sources/host184_transfer"
+export PYTHONPATH="$PWD:${PYTHONPATH:-}"
+python tools/test.py \
+  configs/codex_v5/AutoSeg3D_v5ab1_eval_scenenn.py \
+  /path/to/matching/transfer_checkpoint.pth \
+  --work-dir /path/to/new/scenenn_evaluation
+```
+
+Host 对照使用 `AutoSeg3D_v5ab0_eval_scenenn.py`。同目录也包含 `AutoSeg3D_v5ab0_eval_3rscan.py` 和 `AutoSeg3D_v5ab1_eval_3rscan.py`。准备各自数据与缓存后再运行；根目录中补回的同名配置仅保证文件可追溯，不能代替对应快照的模型版本。
+
+### OCWE 与类别敏感实验
+
+| 实验 | 工作目录 | 配置入口 |
+| --- | --- | --- |
+| OCWE adapter 完整验证集 | `remote_sources/host76_object_world/` | `configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py` |
+| cls198 object-only joint | 对应 host 的 object-world 快照 | `configs/codex_owf/AutoSeg3D_scannet200_stage1_v5cls1_owf_objectonly_joint.py` |
+| 198 类 matched host | `remote_sources/host76_stage1/` | `configs/codex_v5/AutoSeg3D_scannet200_stage1_v5cls0_nodino_cls198.py` |
+| 198 类 DINO proposal injection | `remote_sources/host76_stage1/` | `configs/codex_v5/AutoSeg3D_scannet200_stage1_v5cls1_dino_cls198.py` |
 
 OCWE 完整验证集入口为 `configs/codex_owf/AutoSeg3D_scannet200_stage1_v5ab1_owf_fullval.py`，继承 subset50、sub10 和 LGQC 配置。不要单独复制一个配置。`OWF_*` 环境变量控制模式、特征组成、路径等设置；冻结 DINO-only 设置请对照冻结脚本，不能从通用默认值推断。
+
+## 如何核验下载内容
+
+回到仓库根目录执行：
+
+```bash
+cd "$EDINO_ROOT"
+shasum -a 256 -c SHA256SUMS
+```
+
+根目录清单覆盖受控文件并排除清单自身；每个远端快照另有 `SOURCE_MANIFEST.json` 记录来源路径、文件大小和哈希。当前验证证据包括 644 个远端文件哈希、4 次主要模型导入和 122 个配置加载。它们验证代码收集和配置可读性，不等同于重新验证训练曲线或论文指标。
 
 ## 来源与复现边界
 
